@@ -49,8 +49,8 @@ public class Task6 {
         if (total == KDECIMAL) {
             return callsCount;
         } else {
-            callsCount++;
+            int newCallsCount = callsCount + 1;
+            return countK(total, newCallsCount);
         }
-        return countK(total, callsCount);
     }
 }
