@@ -38,9 +38,7 @@ public class TestTask1 {
         String str = "12:12:12";
 
         // when
-        assertThrows(InvalidFormatTimeException.class, () -> {
-           minutesToSeconds(str);
-        });
+        assertThrows(InvalidFormatTimeException.class, () -> minutesToSeconds(str));
     }
 
     @Test
@@ -49,9 +47,7 @@ public class TestTask1 {
         String str = "12";
 
         // when
-        assertThrows(InvalidFormatTimeException.class, () -> {
-            minutesToSeconds(str);
-        });
+        assertThrows(InvalidFormatTimeException.class, () -> minutesToSeconds(str));
     }
 
     @Test
@@ -60,9 +56,7 @@ public class TestTask1 {
         String str = "12:60";
 
         // when
-        assertThrows(InvalidSecondFormatException.class, () -> {
-            minutesToSeconds(str);
-        });
+        assertThrows(InvalidSecondFormatException.class, () -> minutesToSeconds(str));
     }
 
     @Test
@@ -71,8 +65,6 @@ public class TestTask1 {
         String str = "12:ABC";
 
         // when
-        assertThrows(NumberFormatException.class, () -> {
-            minutesToSeconds(str);
-        });
+        assertThrows(NumberFormatException.class, () -> minutesToSeconds(str));
     }
 }
