@@ -26,7 +26,7 @@ public class Task3 {
     }
 
     public static void main(String[] args) {
-        System.out.println(isNestable(new int[] {1, 2, 3, 4}, new int[] {0, 6}));
+
     }
 }
 

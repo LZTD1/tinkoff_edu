@@ -13,8 +13,5 @@ public class Task7 {
     }
 
     public static void main(String[] args) {
-        System.out.println(rotateRight(8, 1));  // 4
-        System.out.println(rotateLeft(16, 1)); // 1
-        System.out.println(rotateLeft(17, 2)); // 6
     }
 }

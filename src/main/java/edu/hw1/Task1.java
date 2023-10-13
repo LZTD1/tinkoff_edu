@@ -22,8 +22,6 @@ public class Task1 {
         }
     }
 
-    public static void main(String[] args) throws InvalidSecondFormatException, InvalidFormatTimeException {
-        int result = minutesToSeconds("10:10");
-        System.out.println(result);
+    public static void main(String[] args){
     }
 }
