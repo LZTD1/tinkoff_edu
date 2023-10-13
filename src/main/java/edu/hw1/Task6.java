@@ -5,21 +5,19 @@ import java.util.Arrays;
 
 public class Task6 {
     public static int sortingCharArray(char[] arr) {
-        char[] object = arr;
-        Arrays.sort(object);
+        Arrays.sort(arr);
 
-        return Integer.parseInt(new String(object));
+        return Integer.parseInt(new String(arr));
     }
 
     public static int sortingReverseCharArray(char[] arr) {
-        char[] object = arr;
-        Arrays.sort(object);
-        for (int i = 0; i < object.length / 2; i++) {
-            char temp = object[i];
-            object[i] = object[object.length - 1 - i];
-            object[object.length - 1 - i] = temp;
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length / 2; i++) {
+            char temp = arr[i];
+            arr[i] = arr[arr.length - 1 - i];
+            arr[arr.length - 1 - i] = temp;
         }
-        return Integer.parseInt(new String(object));
+        return Integer.parseInt(new String(arr));
     }
 
     public static int countK(int decimal) {
@@ -34,7 +32,7 @@ public class Task6 {
 
         int sortedInt = sortingCharArray(numberStr);
         int reverseInt = sortingReverseCharArray(numberStr);
-        int total = 0;
+        int total;
         if (sortedInt > reverseInt) {
             total = sortedInt - reverseInt;
         } else {
