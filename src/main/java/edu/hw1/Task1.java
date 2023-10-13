@@ -6,6 +6,7 @@ import edu.hw1.Exceptions.InvalidSecondFormatException;
 public class Task1 {
     private Task1() {
     }
+
     private static final int SECONDSPERMINUTE = 60;
 
     public static int minutesToSeconds(String time) throws InvalidFormatTimeException, InvalidSecondFormatException {

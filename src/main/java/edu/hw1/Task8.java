@@ -3,6 +3,7 @@ package edu.hw1;
 public class Task8 {
     private Task8() {
     }
+
     private static final int[][] MOVES = {
         {-2, -1}, {-2, 1},
         {2, -1}, {2, 1},
