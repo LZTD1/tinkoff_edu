@@ -4,13 +4,14 @@ import edu.hw1.Exceptions.InvalidDecimalInFunction;
 import java.util.Arrays;
 
 public class task_6 {
-    public static int sortingCharArray(char[] arr){
+    public static int sortingCharArray(char[] arr) {
         char[] object = arr;
         Arrays.sort(object);
 
         return Integer.parseInt(new String(object));
     }
-    public static int sortingReverseCharArray(char[] arr){
+
+    public static int sortingReverseCharArray(char[] arr) {
         char[] object = arr;
         Arrays.sort(object);
         for (int i = 0; i < object.length / 2; i++) {
@@ -20,11 +21,13 @@ public class task_6 {
         }
         return Integer.parseInt(new String(object));
     }
-    public static int countK(int decimal){
+
+    public static int countK(int decimal) {
         return countK(decimal, 1);
     }
-    public static int countK(int decimal, int counter){
-        if(decimal <= 1000 || decimal > 9999){
+
+    public static int countK(int decimal, int counter) {
+        if (decimal <= 1000 || decimal > 9999) {
             throw new InvalidDecimalInFunction("Введите число в рамках (1000;9999] !");
         }
         char[] numberStr = Integer.toString(decimal).toCharArray();
@@ -32,14 +35,14 @@ public class task_6 {
         int sortedInt = sortingCharArray(numberStr);
         int reverseInt = sortingReverseCharArray(numberStr);
         int total = 0;
-        if(sortedInt > reverseInt){
-            total = sortedInt-reverseInt;
-        }else{
-            total = reverseInt-sortedInt;
+        if (sortedInt > reverseInt) {
+            total = sortedInt - reverseInt;
+        } else {
+            total = reverseInt - sortedInt;
         }
-        if(total == 6174){
+        if (total == 6174) {
             return counter;
-        }else{
+        } else {
             counter++;
         }
         return countK(total, counter);

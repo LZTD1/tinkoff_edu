@@ -7,7 +7,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Test_Task8 {
     @Test
-    void boardTest(){
+    void boardTest() {
         // given
         int[][] board = {
             {0, 0, 0, 1, 0, 0, 0, 0},
@@ -26,8 +26,9 @@ public class Test_Task8 {
         // then
         assertThat(res).isEqualTo(true);
     }
+
     @Test
-    void boardTest_2(){
+    void boardTest_2() {
         // given
         int[][] board = {
             {1, 0, 1, 0, 1, 0, 1, 0},
@@ -45,8 +46,10 @@ public class Test_Task8 {
 
         // then
         assertThat(res).isEqualTo(false);
-    }@Test
-    void boardTest_3(){
+    }
+
+    @Test
+    void boardTest_3() {
         // given
         int[][] board = {
             {0, 0, 0, 0, 1, 0, 0, 0},

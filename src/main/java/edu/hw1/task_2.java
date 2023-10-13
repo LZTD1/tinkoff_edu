@@ -1,10 +1,10 @@
 package edu.hw1;
 
 public class task_2 {
-    public static int countDigits(int decimal){
+    public static int countDigits(int decimal) {
         int digitsCount = 0;
 
-        while(decimal > 0){
+        while (decimal > 0) {
             decimal = decimal / 10;
             digitsCount++;
         }

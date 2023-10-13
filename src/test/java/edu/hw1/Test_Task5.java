@@ -7,7 +7,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Test_Task5 {
     @Test
-    void isPalindromeOK(){
+    void isPalindromeOK() {
         // given
         int decimal = 11211230;
 
@@ -17,8 +17,9 @@ public class Test_Task5 {
         // then
         assertThat(result).isEqualTo(true);
     }
+
     @Test
-    void isPalindromeOK_2(){
+    void isPalindromeOK_2() {
         // given
         int decimal = 13001120;
 
@@ -28,8 +29,9 @@ public class Test_Task5 {
         // then
         assertThat(result).isEqualTo(true);
     }
+
     @Test
-    void isPalindromeOK_3(){
+    void isPalindromeOK_3() {
         // given
         int decimal = 23336014;
 
@@ -39,8 +41,9 @@ public class Test_Task5 {
         // then
         assertThat(result).isEqualTo(true);
     }
+
     @Test
-    void isPalindromeOK_4(){
+    void isPalindromeOK_4() {
         // given
         int decimal = 11;
 
@@ -50,8 +53,9 @@ public class Test_Task5 {
         // then
         assertThat(result).isEqualTo(true);
     }
+
     @Test
-    void reduceArrayOK(){
+    void reduceArrayOK() {
         // given
         int numbers = 11211230;
 
@@ -61,8 +65,9 @@ public class Test_Task5 {
         // then
         assertThat(result).isEqualTo(2333);
     }
+
     @Test
-    void reduceArrayOK_2(){
+    void reduceArrayOK_2() {
         // given
         int numbers = 2333;
 
@@ -72,15 +77,16 @@ public class Test_Task5 {
         // then
         assertThat(result).isEqualTo(56);
     }
+
     @Test
-    void reduceArrayOK_3(){
+    void reduceArrayOK_3() {
         // given
-        int numbers = 13001120 ;
+        int numbers = 13001120;
 
         // when
         int result = reduceArray(numbers);
 
         // then
-        assertThat(result).isEqualTo(4022 );
+        assertThat(result).isEqualTo(4022);
     }
 }

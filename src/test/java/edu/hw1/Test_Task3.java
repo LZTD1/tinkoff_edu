@@ -6,10 +6,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Test_Task3 {
     @Test
-    void sucessfullTest(){
+    void sucessfullTest() {
         // given
-        int[] a1 = {1,2,3,4};
-        int[] a2 = {0,6};
+        int[] a1 = {1, 2, 3, 4};
+        int[] a2 = {0, 6};
 
         // when
         boolean result = isNestable(a1, a2);
@@ -17,8 +17,9 @@ public class Test_Task3 {
         // then
         assertThat(result).isEqualTo(true);
     }
+
     @Test
-    void sucessfullTest_2(){
+    void sucessfullTest_2() {
         // given
         int[] a1 = {3, 1};
         int[] a2 = {4, 0};
@@ -29,11 +30,12 @@ public class Test_Task3 {
         // then
         assertThat(result).isEqualTo(true);
     }
+
     @Test
-    void sucessfullTest_3(){
+    void sucessfullTest_3() {
         // given
-        int[] a1 = {9,9, 8};
-        int[] a2 = {8,9 };
+        int[] a1 = {9, 9, 8};
+        int[] a2 = {8, 9};
 
         // when
         boolean result = isNestable(a1, a2);
@@ -41,11 +43,12 @@ public class Test_Task3 {
         // then
         assertThat(result).isEqualTo(false);
     }
+
     @Test
-    void sucessfullTest_4(){
+    void sucessfullTest_4() {
         // given
-        int[] a1 = {1,2,3,4};
-        int[] a2 = {2,3};
+        int[] a1 = {1, 2, 3, 4};
+        int[] a2 = {2, 3};
 
         // when
         boolean result = isNestable(a1, a2);

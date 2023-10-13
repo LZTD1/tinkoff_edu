@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Test_Task2 {
     @Test
-    void sucessfullLenTest(){
+    void sucessfullLenTest() {
         // given
         int str = 333;
 
@@ -16,8 +16,9 @@ public class Test_Task2 {
         // then
         assertThat(converted).isEqualTo(3);
     }
+
     @Test
-    void sucessfullLenTest_2(){
+    void sucessfullLenTest_2() {
         // given
         int str = 1414241;
 
@@ -27,8 +28,9 @@ public class Test_Task2 {
         // then
         assertThat(converted).isEqualTo(7);
     }
+
     @Test
-    void sucessfullLenTest_3(){
+    void sucessfullLenTest_3() {
         // given
         int str = 1;
 

@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Test_Task6 {
     @Test
-    void CountK_OK(){
+    void CountK_OK() {
         // given
         int numbers = 1234;
 
@@ -16,8 +16,9 @@ public class Test_Task6 {
         // then
         assertThat(result).isEqualTo(3);
     }
+
     @Test
-    void CountK_OK_2(){
+    void CountK_OK_2() {
         // given
         int numbers = 6554;
 
@@ -27,8 +28,9 @@ public class Test_Task6 {
         // then
         assertThat(result).isEqualTo(4);
     }
+
     @Test
-    void CountK_OK_3(){
+    void CountK_OK_3() {
         // given
         int numbers = 6621;
 
@@ -36,7 +38,7 @@ public class Test_Task6 {
         int result = countK(numbers);
 
         // then
-        assertThat(result).isEqualTo(5 );
+        assertThat(result).isEqualTo(5);
     }
 
 }

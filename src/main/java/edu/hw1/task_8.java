@@ -1,7 +1,7 @@
 package edu.hw1;
 
 public class task_8 {
-    public static boolean knightBoardCapture(int[][] array){
+    public static boolean knightBoardCapture(int[][] array) {
         int[][] moves = {
             {-2, -1}, {-2, 1},
             {2, -1}, {2, 1},
@@ -9,10 +9,10 @@ public class task_8 {
             {1, -2}, {1, 2}
         };
 
-        for(int x = 0; x < 8; x ++){
-            for(int y = 0; y < 8; y++){
-                if(array[x][y] == 1){
-                    for(int[] move : moves){
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (array[x][y] == 1) {
+                    for (int[] move : moves) {
                         int x_temp = x + move[0];
                         int y_temp = y + move[1];
 
@@ -27,7 +27,7 @@ public class task_8 {
     }
 
     public static void main(String[] args) {
-        System.out.println(knightBoardCapture(new int[][]{
+        System.out.println(knightBoardCapture(new int[][] {
             {0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 0, 0, 0, 1, 0, 0},
@@ -37,7 +37,7 @@ public class task_8 {
             {0, 1, 0, 0, 0, 0, 0, 1},
             {0, 0, 0, 0, 1, 0, 0, 0}
         }));
-        System.out.println(knightBoardCapture(new int[][]{
+        System.out.println(knightBoardCapture(new int[][] {
             {1, 0, 1, 0, 1, 0, 1, 0},
             {0, 1, 0, 1, 0, 1, 0, 1},
             {0, 0, 0, 0, 1, 0, 1, 0},
@@ -47,7 +47,7 @@ public class task_8 {
             {1, 0, 0, 0, 1, 0, 1, 0},
             {0, 0, 0, 1, 0, 1, 0, 1}
         }));
-        System.out.println(knightBoardCapture(new int[][]{
+        System.out.println(knightBoardCapture(new int[][] {
             {0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 1, 0, 0},
             {0, 0, 0, 1, 0, 0, 0, 0},

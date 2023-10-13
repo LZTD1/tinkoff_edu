@@ -19,6 +19,7 @@ public class Test_Task1 {
         // then
         assertThat(converted).isEqualTo(732);
     }
+
     @Test
     void sucessfullConvertTest_2() throws InvalidSecondFormatException, InvalidFormatTimeException {
         // given
@@ -30,6 +31,7 @@ public class Test_Task1 {
         // then
         assertThat(converted).isEqualTo(600);
     }
+
     @Test
     void InvalidFormatTimeTest() throws InvalidSecondFormatException, InvalidFormatTimeException {
         // given
@@ -40,6 +42,7 @@ public class Test_Task1 {
             int converted = minutesToSeconds(str);
         });
     }
+
     @Test
     void InvalidFormatTimeTest_2() throws InvalidSecondFormatException, InvalidFormatTimeException {
         // given
@@ -50,6 +53,7 @@ public class Test_Task1 {
             int converted = minutesToSeconds(str);
         });
     }
+
     @Test
     void InvalidSecondFormatTest() throws InvalidSecondFormatException, InvalidFormatTimeException {
         // given
@@ -60,6 +64,7 @@ public class Test_Task1 {
             int converted = minutesToSeconds(str);
         });
     }
+
     @Test
     void NumberFormatExceptionTest() throws InvalidSecondFormatException, InvalidFormatTimeException {
         // given

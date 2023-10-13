@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Test_Task4 {
     @Test
-    void swappingTest(){
+    void swappingTest() {
         // given
         String stringToSwap = "123456";
 
@@ -16,8 +16,9 @@ public class Test_Task4 {
         // then
         assertThat(converted).isEqualTo("214365");
     }
+
     @Test
-    void swappingTest_2(){
+    void swappingTest_2() {
         // given
         String stringToSwap = "hTsii  s aimex dpus rtni.g";
 
@@ -27,8 +28,9 @@ public class Test_Task4 {
         // then
         assertThat(converted).isEqualTo("This is a mixed up string.");
     }
+
     @Test
-    void swappingTest_3(){
+    void swappingTest_3() {
         // given
         String stringToSwap = "badce";
 

@@ -1,40 +1,43 @@
 package edu.hw1;
 
 public class task_5 {
-    public static int reduceArray(int numbersDecimal){
+    public static int reduceArray(int numbersDecimal) {
         char[] numbers = Integer.toString(numbersDecimal).toCharArray();
 
         StringBuilder result = new StringBuilder(numbers.length / 2);
-        for(int i = 0; i < numbers.length; i += 2){
+        for (int i = 0; i < numbers.length; i += 2) {
             int sum = Character.getNumericValue(numbers[i]) +
-                        Character.getNumericValue(numbers[i+1]);
+                Character.getNumericValue(numbers[i + 1]);
             result.append(sum);
         }
         return Integer.parseInt(result.toString());
     }
-    public static boolean isPalindromeDescendant(int decimal){
+
+    public static boolean isPalindromeDescendant(int decimal) {
 
         boolean isPalindrome = false;
         char[] numberStr = Integer.toString(decimal).toCharArray();
 
-        if(numberStr.length % 2 != 0) return false;
-        for(int i = 0; i != numberStr.length / 2; i++){
-            if(numberStr[i] == numberStr[numberStr.length - i - 1]){
+        if (numberStr.length % 2 != 0) {
+            return false;
+        }
+        for (int i = 0; i != numberStr.length / 2; i++) {
+            if (numberStr[i] == numberStr[numberStr.length - i - 1]) {
                 isPalindrome = true;
-            }else{
+            } else {
                 isPalindrome = false;
                 break;
             }
         }
-        if(!isPalindrome && numberStr.length > 1) {
+        if (!isPalindrome && numberStr.length > 1) {
             int toSendIntoReduce = Integer.parseInt(new String(numberStr));
 
-            return isPalindromeDescendant( reduceArray(toSendIntoReduce) );
+            return isPalindromeDescendant(reduceArray(toSendIntoReduce));
         }
         return isPalindrome;
     }
 
     public static void main(String[] args) {
-        System.out.println(isPalindromeDescendant(11211231 ));
+        System.out.println(isPalindromeDescendant(11211231));
     }
 }
