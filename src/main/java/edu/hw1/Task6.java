@@ -4,6 +4,13 @@ import edu.hw1.Exceptions.InvalidDecimalInFunction;
 import java.util.Arrays;
 
 public class Task6 {
+    public Task6() {
+    }
+
+    private static final int LOWERDECIMAL = 1000;
+    private static final int UPPERDECIMAL = 9999;
+    private static final int KDECIMAL = 6174;
+
     public static int sortingCharArray(char[] arr) {
         Arrays.sort(arr);
 
@@ -24,8 +31,9 @@ public class Task6 {
         return countK(decimal, 1);
     }
 
-    public static int countK(int decimal, int counter) {
-        if (decimal <= 1000 || decimal > 9999) {
+    public static int countK(int decimal, int callsCount) {
+
+        if (decimal <= LOWERDECIMAL || decimal > UPPERDECIMAL) {
             throw new InvalidDecimalInFunction("Введите число в рамках (1000;9999] !");
         }
         char[] numberStr = Integer.toString(decimal).toCharArray();
@@ -38,14 +46,11 @@ public class Task6 {
         } else {
             total = reverseInt - sortedInt;
         }
-        if (total == 6174) {
-            return counter;
+        if (total == KDECIMAL) {
+            return callsCount;
         } else {
-            counter++;
+            callsCount++;
         }
-        return countK(total, counter);
-    }
-
-    public static void main(String[] args) {
+        return countK(total, callsCount);
     }
 }

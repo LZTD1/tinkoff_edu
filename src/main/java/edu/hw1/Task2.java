@@ -1,6 +1,9 @@
 package edu.hw1;
 
 public class Task2 {
+    public Task2() {
+    }
+
     public static int countDigits(int decimal) {
         int digitsCount = 0;
 
@@ -11,7 +14,4 @@ public class Task2 {
         return digitsCount;
     }
 
-    public static void main(String[] args) {
-
-    }
 }

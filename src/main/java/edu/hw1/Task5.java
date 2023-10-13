@@ -1,6 +1,9 @@
 package edu.hw1;
 
 public class Task5 {
+    public Task5() {
+    }
+
     public static int reduceArray(int numbersDecimal) {
         char[] numbers = Integer.toString(numbersDecimal).toCharArray();
 
@@ -35,9 +38,5 @@ public class Task5 {
             return isPalindromeDescendant(reduceArray(toSendIntoReduce));
         }
         return isPalindrome;
-    }
-
-    public static void main(String[] args) {
-
     }
 }

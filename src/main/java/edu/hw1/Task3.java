@@ -1,6 +1,9 @@
 package edu.hw1;
 
 public class Task3 {
+    public Task3() {
+    }
+
     public static int findMin(int[] a) {
         int min = a[0];
         for (int decimal : a) {
@@ -23,10 +26,6 @@ public class Task3 {
 
     public static boolean isNestable(int[] a1, int[] a2) {
         return findMin(a1) > findMin(a2) || findMax(a1) < findMax(a2);
-    }
-
-    public static void main(String[] args) {
-
     }
 }
 

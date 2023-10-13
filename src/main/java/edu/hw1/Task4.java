@@ -1,6 +1,9 @@
 package edu.hw1;
 
 public class Task4 {
+    public Task4() {
+    }
+
     public static String fixString(String string) {
         char[] chars = string.toCharArray();
         for (int i = 0; i < chars.length - 1; i++) {
@@ -12,8 +15,5 @@ public class Task4 {
             }
         }
         return new String(chars);
-    }
-
-    public static void main(String[] args) {
     }
 }
