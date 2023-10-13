@@ -1,10 +1,10 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
-import static edu.hw1.task_2.countDigits;
+import static edu.hw1.Task2.countDigits;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class Test_Task2 {
+public class TestTask2 {
     @Test
     void sucessfullLenTest() {
         // given

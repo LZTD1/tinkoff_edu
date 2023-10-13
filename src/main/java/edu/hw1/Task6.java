@@ -3,7 +3,7 @@ package edu.hw1;
 import edu.hw1.Exceptions.InvalidDecimalInFunction;
 import java.util.Arrays;
 
-public class task_6 {
+public class Task6 {
     public static int sortingCharArray(char[] arr) {
         char[] object = arr;
         Arrays.sort(object);

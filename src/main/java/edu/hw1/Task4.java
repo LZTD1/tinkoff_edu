@@ -1,8 +1,6 @@
 package edu.hw1;
 
-import java.util.Arrays;
-
-public class task_4 {
+public class Task4 {
     public static String fixString(String string) {
         char[] chars = string.toCharArray();
         for (int i = 0; i < chars.length - 1; i++) {

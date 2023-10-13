@@ -1,8 +1,6 @@
 package edu.hw1;
 
-import javax.sound.midi.SysexMessage;
-
-public class task_3 {
+public class Task3 {
     public static int findMin(int[] a) {
         int min = a[0];
         for (int decimal : a) {

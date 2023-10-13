@@ -1,6 +1,6 @@
 package edu.hw1;
 
-public class task_2 {
+public class Task2 {
     public static int countDigits(int decimal) {
         int digitsCount = 0;
 

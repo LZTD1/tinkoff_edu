@@ -1,11 +1,10 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
-import static edu.hw1.task_4.fixString;
-import static edu.hw1.task_8.knightBoardCapture;
+import static edu.hw1.Task8.knightBoardCapture;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class Test_Task8 {
+public class TestTask8 {
     @Test
     void boardTest() {
         // given

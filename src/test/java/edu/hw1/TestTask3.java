@@ -1,10 +1,10 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
-import static edu.hw1.task_3.isNestable;
+import static edu.hw1.Task3.isNestable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class Test_Task3 {
+public class TestTask3 {
     @Test
     void sucessfullTest() {
         // given

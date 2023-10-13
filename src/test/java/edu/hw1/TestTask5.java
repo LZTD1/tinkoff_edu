@@ -1,11 +1,11 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
-import static edu.hw1.task_5.isPalindromeDescendant;
-import static edu.hw1.task_5.reduceArray;
+import static edu.hw1.Task5.isPalindromeDescendant;
+import static edu.hw1.Task5.reduceArray;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class Test_Task5 {
+public class TestTask5 {
     @Test
     void isPalindromeOK() {
         // given

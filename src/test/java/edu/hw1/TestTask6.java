@@ -1,10 +1,10 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
-import static edu.hw1.task_6.countK;
+import static edu.hw1.Task6.countK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class Test_Task6 {
+public class TestTask6 {
     @Test
     void CountK_OK() {
         // given

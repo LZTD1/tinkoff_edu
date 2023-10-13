@@ -3,11 +3,11 @@ package edu.hw1;
 import edu.hw1.Exceptions.InvalidFormatTimeException;
 import edu.hw1.Exceptions.InvalidSecondFormatException;
 import org.junit.jupiter.api.Test;
-import static edu.hw1.task_1.minutesToSeconds;
+import static edu.hw1.Task1.minutesToSeconds;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class Test_Task1 {
+public class TestTask1 {
     @Test
     void sucessfullConvertTest() throws InvalidSecondFormatException, InvalidFormatTimeException {
         // given

@@ -1,6 +1,6 @@
 package edu.hw1;
 
-public class task_8 {
+public class Task8 {
     public static boolean knightBoardCapture(int[][] array) {
         int[][] moves = {
             {-2, -1}, {-2, 1},

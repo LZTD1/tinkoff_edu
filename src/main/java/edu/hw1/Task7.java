@@ -1,6 +1,6 @@
 package edu.hw1;
 
-public class task_7 {
+public class Task7 {
 
     public static int rotateLeft(int n, int shift) {
         int bits = Integer.toBinaryString(n).length();

@@ -1,6 +1,6 @@
 package edu.hw1;
 
-public class task_5 {
+public class Task5 {
     public static int reduceArray(int numbersDecimal) {
         char[] numbers = Integer.toString(numbersDecimal).toCharArray();
 

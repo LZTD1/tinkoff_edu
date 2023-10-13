@@ -3,7 +3,7 @@ package edu.hw1;
 import edu.hw1.Exceptions.InvalidFormatTimeException;
 import edu.hw1.Exceptions.InvalidSecondFormatException;
 
-public class task_1 {
+public class Task1 {
     public static int minutesToSeconds(String time) throws InvalidFormatTimeException, InvalidSecondFormatException {
         String[] times = time.split(":");
         if (times.length != 2) {

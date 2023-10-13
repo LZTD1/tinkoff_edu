@@ -1,11 +1,11 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
-import static edu.hw1.task_7.rotateLeft;
-import static edu.hw1.task_7.rotateRight;
+import static edu.hw1.Task7.rotateLeft;
+import static edu.hw1.Task7.rotateRight;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class Test_Task7 {
+public class TestTask7 {
     @Test
     void rotateRight_OK() {
         // given

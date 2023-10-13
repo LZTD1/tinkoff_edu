@@ -1,10 +1,10 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.Test;
-import static edu.hw1.task_4.fixString;
+import static edu.hw1.Task4.fixString;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class Test_Task4 {
+public class TestTask4 {
     @Test
     void swappingTest() {
         // given
