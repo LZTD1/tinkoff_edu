@@ -7,19 +7,19 @@ public class Task8 {
         {-1, -2}, {-1, 2},
         {1, -2}, {1, 2}
     };
-
-    public Task8() {
+    private static final int SIZE = 8;
+    private Task8() {
     }
 
     public static boolean knightBoardCapture(int[][] array) {
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
                 if (array[x][y] == 1) {
                     for (int[] move : MOVES) {
-                        int x_temp = x + move[0];
-                        int y_temp = y + move[1];
+                        int xTemp = x + move[0];
+                        int yTemp = y + move[1];
 
-                        if (x_temp >= 0 && x_temp < 8 && y_temp >= 0 && y_temp < 8 && array[x_temp][y_temp] == 1) {
+                        if (xTemp >= 0 && xTemp < 8 && yTemp >= 0 && yTemp < 8 && array[xTemp][yTemp] == 1) {
                             return false;
                         }
                     }

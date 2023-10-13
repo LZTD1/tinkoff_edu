@@ -4,7 +4,8 @@ import edu.hw1.Exceptions.InvalidFormatTimeException;
 import edu.hw1.Exceptions.InvalidSecondFormatException;
 
 public class Task1 {
-    public Task1() {
+    private static final int SECONDSPERMINUTE = 60;
+    private Task1() {
     }
 
     public static int minutesToSeconds(String time) throws InvalidFormatTimeException, InvalidSecondFormatException {
@@ -16,10 +17,10 @@ public class Task1 {
             int minutes = Integer.parseInt(times[0]);
             int seconds = Integer.parseInt(times[1]);
 
-            if (seconds > 59) {
+            if (seconds > SECONDSPERMINUTE - 1) {
                 throw new InvalidSecondFormatException("Диапазон секунд [0:59]!");
             }
-            return minutes * 60 + seconds;
+            return minutes * SECONDSPERMINUTE + seconds;
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Не удалось сконвертировать ваши данные в числа :(");
         }

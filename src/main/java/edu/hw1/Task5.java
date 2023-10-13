@@ -1,7 +1,7 @@
 package edu.hw1;
 
 public class Task5 {
-    public Task5() {
+    private Task5() {
     }
 
     public static int reduceArray(int numbersDecimal) {
@@ -9,8 +9,7 @@ public class Task5 {
 
         StringBuilder result = new StringBuilder(numbers.length / 2);
         for (int i = 0; i < numbers.length; i += 2) {
-            int sum = Character.getNumericValue(numbers[i]) +
-                Character.getNumericValue(numbers[i + 1]);
+            int sum = Character.getNumericValue(numbers[i]) + Character.getNumericValue(numbers[i + 1]);
             result.append(sum);
         }
         return Integer.parseInt(result.toString());

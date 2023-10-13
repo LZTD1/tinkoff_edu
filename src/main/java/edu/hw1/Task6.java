@@ -4,7 +4,7 @@ import edu.hw1.Exceptions.InvalidDecimalInFunction;
 import java.util.Arrays;
 
 public class Task6 {
-    public Task6() {
+    private Task6() {
     }
 
     private static final int LOWERDECIMAL = 1000;

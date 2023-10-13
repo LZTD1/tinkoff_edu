@@ -1,7 +1,7 @@
 package edu.hw1;
 
 public class Task3 {
-    public Task3() {
+    private Task3() {
     }
 
     public static int findMin(int[] a) {
