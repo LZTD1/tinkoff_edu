@@ -6,6 +6,8 @@ public class Task2 {
         protected int height;
 
         public Rectangle() {
+            this.width = 0;
+            this.height = 0;
         }
 
         public Rectangle(int width, int height) {
@@ -26,15 +28,17 @@ public class Task2 {
         }
     }
 
-
     public static class Square extends Rectangle {
-        public Square(){
-            super();
+        public Square() {
+            this.width = 0;
+            this.height = 0;
         }
-        public Square(int side){
+
+        public Square(int side) {
             super(side, side);
         }
-        public Square setSide(int side){
+
+        public Square setSide(int side) {
             return new Square(side);
         }
     }
