@@ -32,12 +32,13 @@ public class ManagersTest {
         } catch (ConnectionExistsErrorException e) {
         }
     }
+
     @Test
     public void testFaultyConnectionManager() {
         ConnectionManagers.FaultyConnectionManager faultyManager = new ConnectionManagers.FaultyConnectionManager();
 
         int count = 0;
-        while(true){
+        while (true) {
 
             try {
                 Connection connection = faultyManager.getConnection();
@@ -46,13 +47,14 @@ public class ManagersTest {
                 break;
             } catch (ConnectionException e) {
                 // Good too
-            }catch (Exception e) {
+            } catch (Exception e) {
                 fail("Unexpected exception: " + e.getMessage());
             }
 
             count += 1;
-            if(count > 1000)
+            if (count > 1000) {
                 fail("Persistent session creation error");
+            }
         }
 
         try {
@@ -71,12 +73,13 @@ public class ManagersTest {
         } catch (ConnectionExistsErrorException e) {
         }
     }
+
     @Test
     public void testDefaultConnectionManager() {
         ConnectionManagers.DefaultConnectionManager defaultManager = new ConnectionManagers.DefaultConnectionManager();
 
         int count = 0;
-        while(true){
+        while (true) {
 
             try {
                 Connection connection = defaultManager.getConnection();
@@ -85,13 +88,14 @@ public class ManagersTest {
                 break;
             } catch (ConnectionException e) {
                 // Good too
-            }catch (Exception e) {
+            } catch (Exception e) {
                 fail("Unexpected exception: " + e.getMessage());
             }
 
             count += 1;
-            if(count > 1000)
+            if (count > 1000) {
                 fail("Persistent session creation error");
+            }
         }
 
         try {

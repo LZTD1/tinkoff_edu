@@ -1,6 +1,11 @@
 package edu.hw2;
 
-import edu.hw2.Task1.*;
+import edu.hw2.Task1.Addition;
+import edu.hw2.Task1.Constant;
+import edu.hw2.Task1.Exponent;
+import edu.hw2.Task1.Expr;
+import edu.hw2.Task1.Multiplication;
+import edu.hw2.Task1.Negate;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -20,6 +25,7 @@ public class TestTask1 {
 
         assertThat(object.evaluate()).isEqualTo(-4);
     }
+
     @Test
     void AdditionTest() {
         var two = new Constant(2);
@@ -29,6 +35,7 @@ public class TestTask1 {
 
         assertThat(object.evaluate()).isEqualTo(6);
     }
+
     @Test
     void MultiplicationTest() {
         var two = new Constant(2);
@@ -38,6 +45,7 @@ public class TestTask1 {
 
         assertThat(object.evaluate()).isEqualTo(8);
     }
+
     @Test
     void ExponentTest_ObjectToDouble() {
         var two = new Constant(2);
@@ -46,6 +54,7 @@ public class TestTask1 {
 
         assertThat(object.evaluate()).isEqualTo(16);
     }
+
     @Test
     void ExponentTest_ObjectToObject() {
         var two = new Constant(2);

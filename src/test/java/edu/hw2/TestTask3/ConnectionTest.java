@@ -16,37 +16,38 @@ public class ConnectionTest {
         Connection con = new Connection();
         assertNotNull(con);
 
-        try{
+        try {
             con.execute("cmd");
-        }catch (FaultyCommandExecute e){
+        } catch (FaultyCommandExecute e) {
             fail("Execute command in Connection Core was failed");
         }
-        try{
+        try {
             con.close();
-        }catch (ConnectionExistsErrorException e){
+        } catch (ConnectionExistsErrorException e) {
             fail("Close command in Connection Core was failed");
         }
     }
+
     @Test
     public void testFaultyConnection() {
         FaultyConnection fCon = new FaultyConnection();
 
         int susessfull = 0;
         int failed = 0;
-        while(true){
+        while (true) {
 
             try {
                 Connection connection = fCon.getConnection();
                 assertNotNull(connection);
 
-                try{
+                try {
                     connection.execute("cmd");
-                }catch (FaultyCommandExecute e){
+                } catch (FaultyCommandExecute e) {
                     fail("Execute command in FaultyConnection was failed");
                 }
-                try{
+                try {
                     connection.close();
-                }catch (ConnectionExistsErrorException e){
+                } catch (ConnectionExistsErrorException e) {
                     fail("Close command in FaultyConnection was failed");
                 }
 
@@ -54,14 +55,14 @@ public class ConnectionTest {
             } catch (ConnectionException e) {
                 // Good too
                 failed += 1;
-            }catch (Exception e) {
+            } catch (Exception e) {
                 fail("Unexpected exception: " + e.getMessage());
             }
 
-            if(failed + susessfull > 1200){
-                if(failed > susessfull * 2){
+            if (failed + susessfull > 1200) {
+                if (failed > susessfull * 2) {
                     fail("Connection error occurs too often!");
-                }else{
+                } else {
                     break;
                 }
             }
@@ -76,18 +77,18 @@ public class ConnectionTest {
             Connection connection = sCon.getConnection();
             assertNotNull(connection);
 
-            try{
+            try {
                 connection.execute("cmd");
-            }catch (FaultyCommandExecute e){
+            } catch (FaultyCommandExecute e) {
                 fail("Execute command in FaultyConnection was failed");
             }
-            try{
+            try {
                 connection.close();
-            }catch (ConnectionExistsErrorException e){
+            } catch (ConnectionExistsErrorException e) {
                 fail("Close command in FaultyConnection was failed");
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             fail("Unexpected exception: " + e.getMessage());
         }
     }
