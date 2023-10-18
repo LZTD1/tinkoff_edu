@@ -116,4 +116,9 @@ public class Dictionary implements IDictionary {
         this.dictObject.words = filteredWords;
 
     }
+
+    @Override
+    public int getCountWords() {
+        return this.dictObject.words.length;
+    }
 }

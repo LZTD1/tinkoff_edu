@@ -8,4 +8,5 @@ public interface IDictionary {
     boolean addOwnWord(String newWord);
 
     void deleteWord(String toDeleteWord);
+    int getCountWords();
 }
