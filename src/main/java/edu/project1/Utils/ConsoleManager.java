@@ -46,8 +46,8 @@ public class ConsoleManager {
         boolean flag = true;
         try {
             this.print(hint);
-            int var = reader.nextInt();
-            return var;
+            int myInteger = reader.nextInt();
+            return myInteger;
         } catch (InputMismatchException e) {
             this.print("Давай договоримся, здесь вводить можно только цифры :)");
             reader.nextLine();
