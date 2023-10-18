@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class CallingUtil {
 
     private final static Logger LOGGER = LogManager.getLogger();
+    private final static String EMPTY_STACK_ERROR_MESSAGE = "Empty stack!";
     protected CallingInfo callingInfo;
 
     public CallingUtil() {
@@ -17,7 +18,7 @@ public class CallingUtil {
                 throwableStack[1].getMethodName()
             );
         } else {
-            throw new ThrowableStackError("Empty stack!");
+            throw new ThrowableStackError(EMPTY_STACK_ERROR_MESSAGE);
         }
     }
 
@@ -29,7 +30,7 @@ public class CallingUtil {
                 throwableStack[offset].getMethodName()
             );
         } else {
-            throw new ThrowableStackError("Empty stack!");
+            throw new ThrowableStackError(EMPTY_STACK_ERROR_MESSAGE);
         }
     }
 

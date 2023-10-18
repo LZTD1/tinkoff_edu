@@ -15,7 +15,7 @@ public class FaultyConnection implements IConnectionManager {
     @Override
     public Connection getConnection() {
         int randomNum = ThreadLocalRandom.current().nextInt(1, RANDOM_ERROR_OCCURRENCE_BOUND);
-        if (randomNum == 3) {
+        if (randomNum == CHANCE_OF_ERROR_OCCURRENCE) {
             throw new ConnectionException("Faulty connection!");
         } else {
             return new Connection();
