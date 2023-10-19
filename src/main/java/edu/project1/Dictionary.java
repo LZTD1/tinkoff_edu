@@ -58,12 +58,6 @@ public class Dictionary implements IDictionary {
         return filteredList.toArray(new String[0]);
     }
 
-//    public static void main(String[] args) {
-//        var d = new Dictionary();
-//        System.out.println(d.getRandomWord());
-//        System.out.println(d.addOwnWord("Птица"));
-//    }
-
     public WordsObjectModel getDictionaryObject() {
         return this.dictObject;
     }

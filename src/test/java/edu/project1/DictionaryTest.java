@@ -1,19 +1,19 @@
 package edu.project1;
 
-import edu.project1.Dictionary;
 import edu.project1.Exceptions.ErrorPersionJsonString;
 import edu.project1.Exceptions.ReadFileWrongException;
 import edu.project1.Model.WordsObjectModel;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class DictionaryTest {
-    @AfterAll
+    @BeforeAll
     static void cleanUp() {
         var dictObj = new Dictionary("src/test/resources/dict.json");
+
         dictObj.deleteWord("tested");
     }
 
@@ -64,6 +64,7 @@ public class DictionaryTest {
         assertThat(result).isTrue();
     }
 
+    @Test
     void addWordTest_AlreadyExists() {
         var dictObj = new Dictionary("src/test/resources/dict.json");
 
@@ -72,6 +73,7 @@ public class DictionaryTest {
         assertThat(result).isFalse();
     }
 
+    @Test
     void deleteWordTest_OK() {
         var dictObj = new Dictionary("src/test/resources/dict.json");
 
@@ -79,5 +81,16 @@ public class DictionaryTest {
         boolean result = dictObj.addOwnWord("tested");
 
         assertThat(result).isTrue();
+        dictObj.deleteWord("tested");
     }
+
+    @Test
+    void getCountWords() {
+        var dictObj = new Dictionary("src/test/resources/dict.json");
+
+        int result = dictObj.getCountWords();
+
+        assertThat(result).isEqualTo(5);
+    }
+
 }

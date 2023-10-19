@@ -9,14 +9,31 @@ import static edu.project1.Utils.ConcatenateArrayWithQuestionMarks.concatenateAr
 class ConsoleHangman {
     private static final int ACTION_THREE = 3;
     private static final int GOOD_EXIT_CODE = 200;
-//    public static void main(String[] args) {
-//        ConsoleHangman ch = new ConsoleHangman();
-//        ch.run();
-//    }
+    private static Session myOwnSession;
+
+    protected static IGuessResult tryGuess(Session session, String input, ConsoleManager cm) {
+        if (input != null) {
+            char[] charArray = input.toCharArray();
+            if (charArray.length > 1) {
+                if (input.equals("пас")) {
+                    session.changeUserState(Session.UserState.USER_IN_MENU);
+
+                    IGuessResult giveUp = session.giveUp();
+                    session.regenerateAnswer();
+                    return giveUp;
+                }
+                return null;
+            }
+            return session.guess(charArray[0]);
+        } else {
+            session.changeUserState(Session.UserState.USER_IN_MENU);
+            return null;
+        }
+    }
 
     public void run() {
         var cm = new ConsoleManager();
-        Session myOwnSession = new Session();
+        myOwnSession = new Session();
 
         do {
             if (myOwnSession.getUserState() == Session.UserState.USER_IN_MENU) {
@@ -110,29 +127,10 @@ class ConsoleHangman {
         }
     }
 
-    private IGuessResult tryGuess(Session session, String input, ConsoleManager cm) {
-        if (input != null) {
-            char[] charArray = input.toCharArray();
-            if (charArray.length > 1) {
-                if (input.equals("пас")) {
-                    session.changeUserState(Session.UserState.USER_IN_MENU);
-
-                    IGuessResult giveUp = session.giveUp();
-                    session.regenerateAnswer();
-                    return giveUp;
-                }
-                return null;
-            }
-            return session.guess(charArray[0]);
-        } else {
-            session.changeUserState(Session.UserState.USER_IN_MENU);
-            return null;
-        }
-    }
-
     private void printState(IGuessResult guess, ConsoleManager cm) {
         cm.print(guess.message());
         cm.print("Попыток: " + guess.attempt() + " из " + guess.maxAttempts());
         cm.print(concatenateArrayWithQuestionMarks(guess.state()));
     }
+
 }

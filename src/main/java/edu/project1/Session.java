@@ -43,6 +43,24 @@ class Session {
         this.currentUserState = UserState.USER_IN_MENU;
     }
 
+    Session(String pathToDictionary, int maxAttempts) {
+        this.dictionary = new Dictionary(pathToDictionary);
+        this.answer = this.dictionary.getRandomWord().toCharArray();
+        this.hiddenAnswer = "*".repeat(this.answer.length).toCharArray();
+        this.maxAttempts = maxAttempts;
+        this.attempts = 0;
+        this.currentUserState = UserState.USER_IN_MENU;
+    }
+
+    Session(String pathToDictionary) {
+        this.dictionary = new Dictionary(pathToDictionary);
+        this.answer = this.dictionary.getRandomWord().toCharArray();
+        this.hiddenAnswer = "*".repeat(this.answer.length).toCharArray();
+        this.maxAttempts = maxAttempts;
+        this.attempts = 0;
+        this.currentUserState = UserState.USER_IN_MENU;
+    }
+
     UserState getUserState() {
         return this.currentUserState;
     }
@@ -123,6 +141,11 @@ class Session {
 
     public int getCountWordsInDict() {
         return this.dictionary.getCountWords();
+    }
+
+    public void setAnswer(String ans) { // Иначе не могу придумать, как тестировать
+        this.answer = this.dictionary.getRandomWord().toCharArray();
+        this.hiddenAnswer = "*".repeat(this.answer.length).toCharArray();
     }
 
     public IGuessResult getStarted() {

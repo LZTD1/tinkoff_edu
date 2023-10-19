@@ -3,6 +3,7 @@ package edu.project1;
 import edu.project1.Exceptions.PutFileWrongException;
 import edu.project1.Exceptions.ReadFileWrongException;
 import org.junit.jupiter.api.Test;
+import static edu.project1.Utils.ConcatenateArrayWithQuestionMarks.concatenateArrayWithQuestionMarks;
 import static edu.project1.Utils.GetTextFromFile.getTextFromFile;
 import static edu.project1.Utils.PutTextToFile.putTextToFile;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -33,5 +34,24 @@ public class UtilTest {
         String json = getTextFromFile("src/test/resources/dict.json");
 
         putTextToFile(json, "src/test/resources/dict.json");
+    }
+
+    @Test
+    void concatenateArrayWithQuestionMarks_WithDelimiter_Test() {
+        char[] array = new char[] {'a', 'b', 'o', 'b', 'a'};
+        String delimiter = "-";
+
+        String result = concatenateArrayWithQuestionMarks(array, delimiter);
+
+        assertThat(result).isEqualTo("a-b-o-b-a");
+    }
+
+    @Test
+    void concatenateArrayWithQuestionMarks_Test() {
+        char[] array = new char[] {'a', 'b', 'o', 'b', 'a'};
+
+        String result = concatenateArrayWithQuestionMarks(array);
+
+        assertThat(result).isEqualTo("aboba");
     }
 }

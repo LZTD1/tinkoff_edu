@@ -19,7 +19,7 @@ public class ConsoleManager {
     public String input(String hint) {
         try {
             this.print(hint);
-            return reader.next().toLowerCase();
+            return reader.nextLine().toLowerCase();
         } catch (NoSuchElementException e) {
             return null;
         }
@@ -28,7 +28,7 @@ public class ConsoleManager {
     public String input(Callback callback) {
         try {
             callback.execute();
-            return reader.next().toLowerCase();
+            return reader.nextLine().toLowerCase();
         } catch (NoSuchElementException e) {
             return null;
         }
@@ -36,25 +36,23 @@ public class ConsoleManager {
 
     public String input() {
         try {
-            return reader.next().toLowerCase();
+            return reader.nextLine().toLowerCase();
         } catch (NoSuchElementException e) {
             return null;
         }
     }
 
     public int inputInt(String hint) {
-        boolean flag = true;
         try {
             this.print(hint);
-            int myInteger = reader.nextInt();
-            return myInteger;
-        } catch (InputMismatchException e) {
+            return Integer.parseInt(reader.nextLine());
+        } catch (InputMismatchException | NumberFormatException e) {
             this.print("Давай договоримся, здесь вводить можно только цифры :)");
-            reader.nextLine();
+            return -1;
         } catch (NoSuchElementException e) {
             this.print("Спасибо за игру!");
+            return 0;
         }
-        return 0;
     }
 
     public void print(String message) {
