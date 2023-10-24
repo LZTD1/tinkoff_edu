@@ -4,7 +4,8 @@ public class Task1 {
 
     private static final String ENGLISH_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
-    private Task1() {}
+    private Task1() {
+    }
 
     public static String atbash(String input) {
         StringBuilder newStr = new StringBuilder();
