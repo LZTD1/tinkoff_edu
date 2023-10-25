@@ -1,5 +1,7 @@
 package edu;
 
+import edu.hw3.Task5.Exceptions.UnexpectedSortingType;
+import edu.hw3.Task5.Exceptions.UnexpectedString;
 import edu.hw3.Task5.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import static edu.hw3.Task5.ParseContacts.parseContacts;
 import static edu.hw3.Task5.Person.getAllPersons;
 import static edu.hw3.Task5.Person.removeAllPersonsFromList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestTask5 {
 
@@ -49,5 +52,16 @@ public class TestTask5 {
             add(p3);
             add(p1);
         }});
+    }
+    @Test
+    void testSortingFailed(){
+        Person p1 = new Person("John Locke"); //
+        ArrayList<Person> allP = getAllPersons();
+
+        assertThrows(UnexpectedSortingType.class, () -> parseContacts(allP, "D"));
+    }
+    @Test
+    void testPersonFailed(){
+        assertThrows(UnexpectedString.class, () -> new Person("John Locke Bocke"));
     }
 }
