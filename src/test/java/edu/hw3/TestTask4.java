@@ -1,4 +1,4 @@
-package edu;
+package edu.hw3;
 
 import org.junit.jupiter.api.Test;
 import static edu.hw3.Task4.convertToRoman;

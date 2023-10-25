@@ -1,4 +1,4 @@
-package edu;
+package edu.hw3;
 
 import edu.hw3.Task6.Abstract.Stock;
 import edu.hw3.Task6.Binance.BinanceMarket;

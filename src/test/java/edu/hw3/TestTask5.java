@@ -1,4 +1,4 @@
-package edu;
+package edu.hw3;
 
 import edu.hw3.Task5.Exceptions.UnexpectedSortingType;
 import edu.hw3.Task5.Exceptions.UnexpectedString;
