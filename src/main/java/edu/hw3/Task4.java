@@ -1,4 +1,4 @@
-package edu;
+package edu.hw3;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package edu;
 
 import org.junit.jupiter.api.Test;
-import static edu.Task4.convertToRoman;
+import static edu.hw3.Task4.convertToRoman;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask4 {
