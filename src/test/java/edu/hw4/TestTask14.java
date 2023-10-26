@@ -1,7 +1,7 @@
 package edu.hw4;
 
-import org.junit.jupiter.api.Test;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask14 {
@@ -27,7 +27,6 @@ public class TestTask14 {
         var result = myZoo.stream()
             .anyMatch(animal -> animal.height() > n);
 
-
         assertThat(result).isEqualTo(
             true
         );
@@ -36,7 +35,6 @@ public class TestTask14 {
 
         var result2 = myZoo.stream()
             .anyMatch(animal -> animal.height() > n);
-
 
         assertThat(result2).isEqualTo(
             true

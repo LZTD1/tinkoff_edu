@@ -6,6 +6,8 @@ import java.util.Random;
 
 public class Zoo {
 
+    private final static int MAX_BOUND_RANDOM = 10;
+
     private final List<Animal.Type> typeAnimals = new ArrayList<>() {{
         add(Animal.Type.CAT);
         add(Animal.Type.DOG);
@@ -35,9 +37,9 @@ public class Zoo {
             String name = namesAnimals.get(randomizer.nextInt(namesAnimals.size()));
             Animal.Sex sex = sexAnimals.get(randomizer.nextInt(sexAnimals.size()));
             Animal.Type type = typeAnimals.get(randomizer.nextInt(typeAnimals.size()));
-            int age = randomizer.nextInt(1, 10);
-            int height = randomizer.nextInt(10, 50);
-            int weight = randomizer.nextInt(1, 5);
+            int age = randomizer.nextInt(1, MAX_BOUND_RANDOM);
+            int height = randomizer.nextInt(1, MAX_BOUND_RANDOM);
+            int weight = randomizer.nextInt(1, MAX_BOUND_RANDOM);
             boolean bites = type != Animal.Type.BIRD && type != Animal.Type.FISH;
 
             zoo.add(

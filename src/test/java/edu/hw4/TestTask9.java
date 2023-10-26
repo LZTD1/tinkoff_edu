@@ -1,8 +1,7 @@
 package edu.hw4;
 
-import org.junit.jupiter.api.Test;
-import java.util.Comparator;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask9 {
@@ -21,7 +20,6 @@ public class TestTask9 {
 
         var result = myZoo.stream()
             .reduce(0, (accumulator, element) -> accumulator + element.paws(), Integer::sum);
-
 
         assertThat(result).isEqualTo(
             12

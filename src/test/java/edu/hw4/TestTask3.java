@@ -1,10 +1,9 @@
 package edu.hw4;
 
-import org.junit.jupiter.api.Test;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask3 {
@@ -24,7 +23,7 @@ public class TestTask3 {
         );
 
         var result = myZoo.stream()
-                .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
+            .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
 
         assertThat(result).isEqualTo( // Почему-то Collectors.counting() возвращается в лонге
             Map.of(

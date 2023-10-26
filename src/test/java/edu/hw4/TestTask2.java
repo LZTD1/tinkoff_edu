@@ -1,8 +1,8 @@
 package edu.hw4;
 
-import org.junit.jupiter.api.Test;
 import java.util.Comparator;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask2 {

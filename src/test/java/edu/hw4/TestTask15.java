@@ -1,10 +1,9 @@
 package edu.hw4;
 
-import org.junit.jupiter.api.Test;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask15 {
@@ -33,11 +32,11 @@ public class TestTask15 {
         var result = myZoo.stream()
             .filter(a -> a.age() > k && a.age() < i)
             .collect(
-                Collectors.groupingBy(Animal::type,
+                Collectors.groupingBy(
+                    Animal::type,
                     Collectors.summingInt(Animal::weight)
                 )
             );
-
 
         assertThat(result).isEqualTo(
             Map.of(
