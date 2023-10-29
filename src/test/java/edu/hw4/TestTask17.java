@@ -27,11 +27,15 @@ public class TestTask17 {
 
         var bitesSpiders = myZoo.stream()
             .filter(animal -> animal.bites() && animal.type() == Animal.Type.SPIDER).count();
+        var allSpiders = myZoo.stream()
+            .filter(animal -> animal.type() == Animal.Type.SPIDER).count();
 
         var bitesDogs = myZoo.stream()
             .filter(animal -> animal.bites() && animal.type() == Animal.Type.DOG).count();
+        var allDogs = myZoo.stream()
+            .filter(animal ->animal.type() == Animal.Type.DOG).count();
 
-        boolean result = bitesSpiders > bitesDogs; // Если данных не достаточно (равное кол-во) вернет false
+        boolean result = (double) bitesSpiders/allSpiders > (double) bitesDogs/allDogs; // Если данных не достаточно (равное кол-во) вернет false
 
         assertThat(result).isEqualTo(
             true
