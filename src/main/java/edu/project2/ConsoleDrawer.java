@@ -15,6 +15,8 @@ public class ConsoleDrawer {
                     System.out.print("■");
                 } else if (myMaze[i][j] == Maze.MazeValues.TANK) {
                     System.out.print("@");
+                }else if (myMaze[i][j] == Maze.MazeValues.EXPLORER) {
+                    System.out.print("?");
                 } else {
                     System.out.print(" ");
                 }

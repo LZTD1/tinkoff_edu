@@ -1,4 +1,4 @@
-package edu.project2.Interfaces.SimplifyGenerator;
+package edu.project2.SimplifyGenerator;
 
 import edu.project2.Maze;
 import java.util.ArrayList;
