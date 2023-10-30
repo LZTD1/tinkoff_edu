@@ -1,37 +1,34 @@
-package edu.project2.Interfaces;
+package edu.project2.Interfaces.SimplifyGenerator;
 
 import edu.project2.Interfaces.MazeGenerator;
 import edu.project2.Maze;
-import edu.project2.Tank;
 import java.util.Arrays;
 import java.util.List;
-import static edu.project2.ConsoleDrawer.drawMaze;
 
-public class SimplifyMazeGenerator implements MazeGenerator {
+public class SimplifyMazeGeneratorWithStack implements MazeGenerator {
+
+    public SimplifyMazeGeneratorWithStack() {
+    }
 
     @Override
     public Maze generateMaze(Maze maze) {
         Maze newMaze = getNewObjectMaze(maze);
 
-        var tank = new Tank(
+        Tank tank = new Tank(
             newMaze,
             List.of(
                 newMaze.getWidth() / 2,
                 newMaze.getHeight() / 2
             )
-
         );
 
         List<Integer> cr = tank.getCurrentPosition();
-        System.out.println(cr);
         newMaze.setTank(
             cr.get(0),
             cr.get(1)
         );
 
-        int numSteps = 1000;
-
-        for (int i = 0; i < numSteps; i++) {
+        while (!isMazeValid(newMaze)) {
             newMaze.setEmpty(
                 cr.get(0),
                 cr.get(1)
@@ -45,21 +42,22 @@ public class SimplifyMazeGenerator implements MazeGenerator {
             );
             newMaze.setEmpty(
                 cr.get(0) - lastMovment.get(0) / 2,
-                cr.get(1)  - lastMovment.get(1) / 2
+                cr.get(1) - lastMovment.get(1) / 2
             );
-
-            drawMaze(newMaze);
-            System.out.println();
         }
-
+        newMaze.setEmpty(
+            cr.get(0),
+            cr.get(1)
+        );
         return newMaze;
     }
 
+    @Override
     public Maze fillMaze(Maze originalMaze) {
         Maze newMaze = getNewObjectMaze(originalMaze);
 
-        for (int[] ints : newMaze.getMaze()) {
-            Arrays.fill(ints, 1);
+        for (Maze.MazeValues[] rows : newMaze.getMaze()) {
+            Arrays.fill(rows, Maze.MazeValues.WALL);
         }
 
         return newMaze;
@@ -70,8 +68,8 @@ public class SimplifyMazeGenerator implements MazeGenerator {
         int height = originalMaze.getHeight();
         int width = originalMaze.getWidth();
 
-        int[][] oMaze = originalMaze.getMaze();
-        int[][] newMaze = new int[height][width];
+        Maze.MazeValues[][] oMaze = originalMaze.getMaze();
+        Maze.MazeValues[][] newMaze = new Maze.MazeValues[height][width];
 
         for (int i = 0; i < height; i++) {
             System.arraycopy(oMaze[i], 0, newMaze[i], 0, width);
@@ -81,4 +79,19 @@ public class SimplifyMazeGenerator implements MazeGenerator {
             newMaze
         );
     }
+
+    @Override
+    public boolean isMazeValid(Maze maze) {
+        Maze.MazeValues[][] myMaze = maze.getMaze();
+        for (int i = 1; i < myMaze.length - 1; i += 2) {
+            for (int j = 1; j < myMaze[i].length - 1; j += 2) {
+                if (myMaze[i][j] == Maze.MazeValues.WALL) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 }

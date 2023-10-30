@@ -6,32 +6,35 @@ public class Maze {
 
     private int width;
     private int height;
-    private int[][] maze;
+    private MazeValues[][] maze;
 
     public Maze(int size) {
         mazeFabricSize(size);
     }
+
     public Maze(int height, int width) {
         mazeFabricSize(height, width);
     }
-    public Maze(int[][] maze) {
+
+    public Maze(MazeValues[][] maze) {
         mazeFabricSize(maze);
     }
 
-    private void mazeFabricSize(int size){
+    private void mazeFabricSize(int size) {
         this.height = size;
         this.width = size;
-        if(size % 2 == 0){
-            this.height +=  1;
+        if (size % 2 == 0) {
+            this.height += 1;
             this.width += 1;
         }
-        this.maze = new int[this.height][this.width];
+        this.maze = new MazeValues[this.height][this.width];
     }
-    private void mazeFabricSize(int[][] maze){
-        if(maze.length == 0 || maze[0].length == 0){
+
+    private void mazeFabricSize(MazeValues[][] maze) {
+        if (maze.length == 0 || maze[0].length == 0) {
             throw new InvalidMazeConstructor("Maze is invalid! Because length or width uncorrect!");
         }
-        if(maze.length % 2 == 0 || maze[0].length % 2 == 0){
+        if (maze.length % 2 == 0 || maze[0].length % 2 == 0) {
             throw new InvalidMazeConstructor("Maze is invalid! Because the maze must be even");
         }
 
@@ -39,33 +42,42 @@ public class Maze {
         this.width = maze[0].length;
         this.maze = maze;
     }
-    private void mazeFabricSize(int height, int width){
+
+    private void mazeFabricSize(int height, int width) {
         this.height = height;
         this.width = width;
-        if(height % 2 == 0){
-            this.height +=  1;
+        if (height % 2 == 0) {
+            this.height += 1;
         }
-        if(width % 2 == 0){
-            this.width +=  1;
+        if (width % 2 == 0) {
+            this.width += 1;
         }
-        this.maze = new int[this.height][this.width];
+        this.maze = new MazeValues[this.height][this.width];
     }
-    public int[][] getMaze() {
+
+    public MazeValues[][] getMaze() {
         return maze;
     }
-    public void setEmpty(int x, int y){
-        this.maze[y][x] = 0;
+
+    public void setEmpty(int x, int y) {
+        this.maze[y][x] = MazeValues.EMPTY;
     }
-    public void setTank(int x, int y){
-        this.maze[y][x] = 2;
+
+    public void setTank(int x, int y) {
+        this.maze[y][x] = MazeValues.TANK;
     }
-    public int getValueOfPosition(int x, int y){
+
+    public MazeValues getValueOfPosition(int x, int y) {
         return this.maze[y][x];
     }
 
-    private boolean equalsMaze(int[][] o) {
-        if (o == this.maze) return true;
-        if (o == null) return false;
+    private boolean equalsMaze(MazeValues[][] o) {
+        if (o == this.maze) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
 
         return o.length == maze.length && maze[0].length == o[0].length;
     }
@@ -76,5 +88,11 @@ public class Maze {
 
     public int getHeight() {
         return height;
+    }
+
+    public enum MazeValues {
+        EMPTY,
+        WALL,
+        TANK
     }
 }
