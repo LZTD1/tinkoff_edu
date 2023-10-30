@@ -1,22 +1,80 @@
 package edu.project2;
 
-import java.util.ArrayList;
+import edu.project2.Exceptions.InvalidMazeConstructor;
 
 public class Maze {
 
-    private int size;
+    private int width;
+    private int height;
     private int[][] maze;
 
     public Maze(int size) {
-        this.size = size;
-        this.maze = new int[size][size];
+        mazeFabricSize(size);
+    }
+    public Maze(int height, int width) {
+        mazeFabricSize(height, width);
     }
     public Maze(int[][] maze) {
-        this.size = maze.length;
-        this.maze = maze;
+        mazeFabricSize(maze);
     }
 
+    private void mazeFabricSize(int size){
+        this.height = size;
+        this.width = size;
+        if(size % 2 == 0){
+            this.height +=  1;
+            this.width += 1;
+        }
+        this.maze = new int[this.height][this.width];
+    }
+    private void mazeFabricSize(int[][] maze){
+        if(maze.length == 0 || maze[0].length == 0){
+            throw new InvalidMazeConstructor("Maze is invalid! Because length or width uncorrect!");
+        }
+        if(maze.length % 2 == 0 || maze[0].length % 2 == 0){
+            throw new InvalidMazeConstructor("Maze is invalid! Because the maze must be even");
+        }
+
+        this.height = maze.length;
+        this.width = maze[0].length;
+        this.maze = maze;
+    }
+    private void mazeFabricSize(int height, int width){
+        this.height = height;
+        this.width = width;
+        if(height % 2 == 0){
+            this.height +=  1;
+        }
+        if(width % 2 == 0){
+            this.width +=  1;
+        }
+        this.maze = new int[this.height][this.width];
+    }
     public int[][] getMaze() {
         return maze;
+    }
+    public void setEmpty(int x, int y){
+        this.maze[y][x] = 0;
+    }
+    public void setTank(int x, int y){
+        this.maze[y][x] = 2;
+    }
+    public int getValueOfPosition(int x, int y){
+        return this.maze[y][x];
+    }
+
+    private boolean equalsMaze(int[][] o) {
+        if (o == this.maze) return true;
+        if (o == null) return false;
+
+        return o.length == maze.length && maze[0].length == o[0].length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
