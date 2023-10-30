@@ -14,14 +14,7 @@ public class Task3 {
         Map<Object, Integer> counter = new HashMap<>();
 
         for (T object : objects) {
-            if (counter.containsKey(object)) {
-                counter.replace(
-                    object,
-                    counter.get(object) + 1
-                );
-            } else {
-                counter.put(object, 1);
-            }
+            counter.put(object, counter.getOrDefault(object, 0) + 1);
         }
         return counter;
     }
