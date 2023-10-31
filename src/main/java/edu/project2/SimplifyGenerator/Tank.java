@@ -7,14 +7,14 @@ import java.util.Random;
 import java.util.Stack;
 
 public class Tank {
+    private static final int GOTO_BACK = -2;
+    private static final int GOTO_FRONT = 2;
     private final int mazeWidth;
     private final int mazeHeight;
     private final Random rand = new Random();
     private final Stack<List<Integer>> movment = new Stack<>();
-    private List<Integer> currentPosition = new ArrayList<Integer>();
     private final Maze maze;
-    private static final int GOTO_BACK = -2;
-    private static final int GOTO_FRONT = 2;
+    private List<Integer> currentPosition = new ArrayList<Integer>();
 
     public Tank(Maze maze, List<Integer> currentPosition) {
         this.maze = maze;

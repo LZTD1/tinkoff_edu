@@ -66,8 +66,13 @@ public class Maze {
     public void setTank(int x, int y) {
         this.maze[y][x] = MazeValues.TANK;
     }
+
     public void setExplorer(int x, int y) {
         this.maze[y][x] = MazeValues.EXPLORER;
+    }
+
+    public void setFinish(int x, int y) {
+        this.maze[y][x] = MazeValues.FINISH;
     }
 
     public MazeValues getValueOfPosition(int x, int y) {
@@ -97,6 +102,6 @@ public class Maze {
         EMPTY,
         WALL,
         EXPLORER,
-        TANK
+        FINISH, TANK
     }
 }

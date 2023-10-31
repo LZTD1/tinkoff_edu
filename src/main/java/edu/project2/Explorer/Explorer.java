@@ -1,25 +1,25 @@
 package edu.project2.Explorer;
 
 import edu.project2.Exceptions.IncorrectRoutePoints;
+import edu.project2.Exceptions.RouteCalculationError;
 import edu.project2.Maze;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
-import static edu.project2.ConsoleDrawer.drawMaze;
 
 public class Explorer {
 
     private final Random rand = new Random();
     private final Maze maze;
+    private final Stack<List<Integer>> movmentExplorer = new Stack<>();
     private List<Integer> currentPosition;
-    private Stack<List<Integer>> movmentExplorer = new Stack<>();
 
     public Explorer(Maze maze) {
         this.maze = maze;
     }
 
-    public Maze getRoute(List<List<Integer>> routePoints) {
+    public Stack<List<Integer>> getRoute(List<List<Integer>> routePoints) {
         List<List<Integer>> visitedPoints = new ArrayList<>();
         this.currentPosition = new ArrayList<>();
         var myMaze = this.maze.getMaze();
@@ -35,45 +35,71 @@ public class Explorer {
 
         this.currentPosition.add(0, fromX);
         this.currentPosition.add(1, fromY);
-        // // // // //
-        maze.setExplorer(this.currentPosition.get(0), this.currentPosition.get(1));
-        drawMaze(this.maze);
-        System.out.println();
-        // // // //
+
         while (this.currentPosition.get(0) != toX || this.currentPosition.get(1) != toY) {
+            List<List<Integer>> directions = possibleRoutes(visitedPoints);
+            var direction = getRandomDirection(directions);
 
-            List<Integer> direction = whereToGo(visitedPoints);
-            if(this.maze.getValueOfPosition(this.currentPosition.get(0), this.currentPosition.get(1))
-                == Maze.MazeValues.EXPLORER){
-                maze.setEmpty(this.currentPosition.get(0), this.currentPosition.get(1));
-            }else{
-                maze.setExplorer(this.currentPosition.get(0), this.currentPosition.get(1));
+            if (direction == null) {
+                moveExplorerBack();
+            } else {
+                moveExplorer(direction, visitedPoints);
             }
-
-
-            System.out.println(direction);
-
-            drawMaze(this.maze);
         }
 
-        return null;
+        return this.movmentExplorer;
     }
 
-    private List<Integer> whereToGo(List<List<Integer>> visitedPoints) {
+    private void moveExplorer(List<Integer> direction, List<List<Integer>> visitedPoints) {
+        this.currentPosition = List.of(
+            this.currentPosition.get(0) + direction.get(0),
+            this.currentPosition.get(1) + direction.get(1)
+        );
+        visitedPoints.add(
+            this.currentPosition
+        );
+        this.movmentExplorer.push(direction);
+    }
+
+    private void moveExplorerBack() {
+        if (!this.movmentExplorer.isEmpty()) {
+
+            List<Integer> myElem = this.movmentExplorer.pop();
+
+            this.currentPosition = List.of(
+                this.currentPosition.get(0) - myElem.get(0),
+                this.currentPosition.get(1) - myElem.get(1)
+            );
+
+        } else {
+            throw new RouteCalculationError(
+                "It is not possible to determine the route, perhaps there is no route to the final point!");
+        }
+    }
+
+    private List<Integer> getRandomDirection(List<List<Integer>> directions) {
+        if (!directions.isEmpty()) {
+            return directions.get(rand.nextInt(directions.size()));
+        } else {
+            return null;
+        }
+    }
+
+    private List<List<Integer>> possibleRoutes(List<List<Integer>> visitedPoints) {
         List<List<Integer>> directions = new ArrayList<>();
 
         if (this.maze.getValueOfPosition(this.currentPosition.get(0) + 1, this.currentPosition.get(1))
-            != Maze.MazeValues.WALL ) {
+            != Maze.MazeValues.WALL) {
             // Значит можно идти в право
             if (!visitedPoints.contains(List.of(this.currentPosition.get(0) + 1, this.currentPosition.get(1)))) {
-                directions.add(List.of( 1, 0 ));
+                directions.add(List.of(1, 0));
             }
         }
         if (this.maze.getValueOfPosition(this.currentPosition.get(0) - 1, this.currentPosition.get(1))
             != Maze.MazeValues.WALL) {
             // Значит можно идти в влево
             if (!visitedPoints.contains(List.of(this.currentPosition.get(0) - 1, this.currentPosition.get(1)))) {
-                directions.add(List.of( - 1, 0));
+                directions.add(List.of(-1, 0));
             }
         }
         if (this.maze.getValueOfPosition(this.currentPosition.get(0), this.currentPosition.get(1) + 1)
@@ -90,31 +116,8 @@ public class Explorer {
                 directions.add(List.of(0, -1));
             }
         }
-        if(!directions.isEmpty()) {
-            System.out.println("NotEmpty");
-            var direction = directions.get(rand.nextInt(directions.size()));
 
-            this.currentPosition = List.of(
-                this.currentPosition.get(0) + direction.get(0),
-                this.currentPosition.get(1) + direction.get(1)
-            );
-            visitedPoints.add(
-                this.currentPosition
-            );
-            this.movmentExplorer.push(direction);
-
-            return direction;
-        }else{
-            System.out.println("Empty");
-            List<Integer> myElem = this.movmentExplorer.pop();
-
-            this.currentPosition = List.of(
-                this.currentPosition.get(0) - myElem.get(0),
-                this.currentPosition.get(1) - myElem.get(1)
-            );
-
-            return myElem;
-        }
+        return directions;
     }
 
     private void checkPointsAboveBorders(int fromX, int fromY, int toX, int toY) {
@@ -125,7 +128,7 @@ public class Explorer {
             && toX > 0 && toX < mazeWidth
             && fromY > 0 && fromY < mazeHeight
             && toY > 0 && toY < mazeHeight) {
-
+            return;
         } else {
             throw new IncorrectRoutePoints("You have entered incorrect route points, they do not exist in matrix!");
         }
@@ -137,5 +140,9 @@ public class Explorer {
 
             throw new IncorrectRoutePoints("You have entered incorrect route points, there are walls!");
         }
+    }
+
+    public List<Integer> getCurrentPosition() {
+        return currentPosition;
     }
 }
