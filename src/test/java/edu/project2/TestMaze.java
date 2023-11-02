@@ -5,6 +5,7 @@ import edu.project2.Exceptions.InvalidMazeConstructor;
 import edu.project2.Exceptions.RouteCalculationError;
 import edu.project2.Explorer.Explorer;
 import edu.project2.Interfaces.MazeGenerator;
+import edu.project2.RecursionMazeGenerator.RecursionMazeGenerator;
 import edu.project2.SimplifyGenerator.SimplifyMazeGeneratorWithStack;
 import org.junit.jupiter.api.Test;
 
@@ -204,5 +205,20 @@ public class TestMaze {
         Maze myMaze = new Maze(mazeArray);
 
         assertThat(myMaze.getMaze()).isEqualTo(mazeArray);
+    }
+
+    @Test
+    void getRecursionMaze(){
+        Maze myMaze = new Maze(20);
+        MazeGenerator mazeGen = new RecursionMazeGenerator();
+
+        var filledMaze = mazeGen.fillMaze(myMaze);
+        var genMaze = mazeGen.generateMaze(filledMaze);
+
+        var isGeneratedOk = mazeGen.isMazeValid(genMaze);
+        var isGeneratedFalse = mazeGen.isMazeValid(filledMaze);
+
+        assertThat(isGeneratedOk).isTrue();
+        assertThat(isGeneratedFalse).isFalse();
     }
 }

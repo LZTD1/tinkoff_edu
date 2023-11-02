@@ -67,7 +67,7 @@ public class Tank {
             );
             this.movment.push(toMovment);
         } else {
-            if (!isStackMovmentEmpty()) { // Проверяем, что стек не пуст
+            if (!isStackMovmentEmpty()) {
                 var myElem = this.movment.pop();
                 this.currentPosition = List.of(
                     currentPosition.get(0) - myElem.get(0),
