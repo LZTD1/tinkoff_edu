@@ -12,4 +12,4 @@
 
 ## Прицнип работы:
 
-
+[2023-11-02-19-27-56 (1).webm](https://github.com/LZTD1/tinkoff_edu/assets/46750499/206cd895-9d3c-4f9f-a71b-7fd9fe1c574c)
