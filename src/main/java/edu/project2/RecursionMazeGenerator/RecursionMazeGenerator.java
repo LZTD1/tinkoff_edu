@@ -3,10 +3,7 @@ package edu.project2.RecursionMazeGenerator;
 import edu.project2.Interfaces.MazeGenerator;
 import edu.project2.Maze;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import static edu.project2.ConsoleDrawer.drawMaze;
 
 public class RecursionMazeGenerator implements MazeGenerator {
 
@@ -15,23 +12,22 @@ public class RecursionMazeGenerator implements MazeGenerator {
 
     @Override
     public Maze generateMaze(Maze maze) {
-        Maze newMaze = getNewObjectMaze(maze);
-        this.maze = newMaze;
+        this.maze = getNewObjectMaze(maze);
 
-        RecursionTank tank = new RecursionTank(
-            newMaze,
+        this.tank = new RecursionTank(
+            this.maze,
             List.of(
-                newMaze.getWidth() / 2,
-                newMaze.getHeight() / 2
+                this.maze.getWidth() / 2,
+                this.maze.getHeight() / 2
             )
         );
-        this.tank = tank;
 
         List<Integer> cr = this.tank.getCurrentPosition();
-        tank.move(cr, newMaze);
+        tank.move(cr, this.maze);
 
-        return newMaze;
+        return this.maze;
     }
+
     @Override
     public Maze fillMaze(Maze originalMaze) {
         Maze newMaze = getNewObjectMaze(originalMaze);

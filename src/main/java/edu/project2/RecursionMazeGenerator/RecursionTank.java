@@ -2,11 +2,9 @@ package edu.project2.RecursionMazeGenerator;
 
 import edu.project2.Maze;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import static edu.project2.ConsoleDrawer.drawMaze;
 
 public class RecursionTank {
     private static final int GOTO_BACK = -2;
@@ -49,13 +47,16 @@ public class RecursionTank {
 
         for (List<Integer> variablesMovment : variablesMovments) {
 
-            int newX = currentPosition.get(0)+variablesMovment.get(0);
-            int newY = currentPosition.get(1)+variablesMovment.get(1);
+            int newX = currentPosition.get(0) + variablesMovment.get(0);
+            int newY = currentPosition.get(1) + variablesMovment.get(1);
 
-            if(isValid(newX, newY)){
-                if(maze.getValueOfPosition(newX, newY) == Maze.MazeValues.WALL){
+            if (isValid(newX, newY)) {
+                if (maze.getValueOfPosition(newX, newY) == Maze.MazeValues.WALL) {
                     maze.setEmpty(newX, newY);
-                    maze.setEmpty(currentPosition.get(0)+variablesMovment.get(0)/2, currentPosition.get(1)+variablesMovment.get(1)/2);
+                    maze.setEmpty(
+                        currentPosition.get(0) + variablesMovment.get(0) / 2,
+                        currentPosition.get(1) + variablesMovment.get(1) / 2
+                    );
                     move(List.of(newX, newY), maze);
                 }
 

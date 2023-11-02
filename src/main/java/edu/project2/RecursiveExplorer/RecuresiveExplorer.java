@@ -4,7 +4,6 @@ import edu.project2.Exceptions.IncorrectRoutePoints;
 import edu.project2.Exceptions.RouteCalculationError;
 import edu.project2.Maze;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
@@ -12,8 +11,11 @@ import java.util.Stack;
 public class RecuresiveExplorer {
     private final Random rand = new Random();
     private final Maze maze;
-    private final Stack<List<Integer>> movmentExplorer = new Stack<>();
     private List<Integer> currentPosition;
+    private Integer toX;
+    private Integer toY;
+    private boolean isCome;
+    private List<List<Integer>> visitPoints;
 
     public RecuresiveExplorer(Maze maze) {
         this.maze = maze;
@@ -27,8 +29,10 @@ public class RecuresiveExplorer {
         int fromX = routePoints.get(0).get(0);
         int fromY = routePoints.get(0).get(1);
 
-        int toX = routePoints.get(1).get(0);
-        int toY = routePoints.get(1).get(1);
+        this.toX = routePoints.get(1).get(0);
+        this.toY = routePoints.get(1).get(1);
+        this.visitPoints = new ArrayList<>();
+        this.isCome = false;
 
         checkPointsAboveBorders(fromX, fromY, toX, toY);
         checkCorrectRoutedPoints(fromX, fromY, toX, toY);
@@ -36,21 +40,19 @@ public class RecuresiveExplorer {
         this.currentPosition.add(0, fromX);
         this.currentPosition.add(1, fromY);
 
-        while (this.currentPosition.get(0) != toX || this.currentPosition.get(1) != toY) {
-            List<List<Integer>> directions = possibleRoutes(visitedPoints);
-            var direction = getRandomDirection(directions);
+        Stack<List<Integer>> movmentExplorer = new Stack<>();
+        Stack<List<Integer>> route = moveExplorer(this.currentPosition, movmentExplorer);
 
-            if (direction == null) {
-                moveExplorerBack();
-            } else {
-                moveExplorer(direction, visitedPoints);
-            }
+        maze.setEmpty(this.toX, this.toY);
+
+        if (route == null) {
+            throw new RouteCalculationError(
+                "It is not possible to determine the route, perhaps there is no route to the final point!");
         }
-
-        return this.movmentExplorer;
+        return route;
     }
 
-    private void moveExplorer(List<Integer> direction, List<List<Integer>> visitedPoints) {
+    private Stack<List<Integer>> moveExplorer(List<Integer> currentPosition, Stack<List<Integer>> movment) {
         List<List<Integer>> variablesMovments = new ArrayList<>();
 
         variablesMovments.add(List.of(1, 0));
@@ -58,28 +60,42 @@ public class RecuresiveExplorer {
         variablesMovments.add(List.of(-1, 0));
         variablesMovments.add(List.of(0, -1));
 
-        Collections.shuffle(variablesMovments);
-
         for (List<Integer> variablesMovment : variablesMovments) {
+            if (!this.isCome) {
+                int oldX = currentPosition.get(0);
+                int oldY = currentPosition.get(1);
 
-            int newX = currentPosition.get(0)+variablesMovment.get(0);
-            int newY = currentPosition.get(1)+variablesMovment.get(1);
+                int newX = oldX + variablesMovment.get(0);
+                int newY = oldY + variablesMovment.get(1);
 
-            if(isValidPosition(newX, newY)){
-                if(maze.getValueOfPosition(newX, newY) == Maze.MazeValues.WALL){
-                    moveExplorer(List.of(newX, newY), maze);
+                if (isValidPosition(newX, newY)) {
+                    if (maze.getValueOfPosition(newX, newY) != Maze.MazeValues.WALL
+                        && !visitPoints.contains(List.of(newX, newY))
+                    ) {
+                        this.currentPosition = List.of(
+                            newX,
+                            newY
+                        );
+                        movment.push(List.of(
+                            variablesMovment.get(0),
+                            variablesMovment.get(1)
+                        ));
+                        if (newX == this.toX && newY == this.toY) {
+                            this.isCome = true;
+                            return movment;
+                        }
+                        visitPoints.add(List.of(newX, newY));
+
+                        Stack<List<Integer>> result = moveExplorer(List.of(newX, newY), movment);
+                        if (result != null) {
+                            return result;
+                        }
+                        movment.pop();
+                    }
                 }
-                // TODO давать стек !копию! эесплореру
             }
         }
-    }
-
-    private List<Integer> getRandomDirection(List<List<Integer>> directions) {
-        if (!directions.isEmpty()) {
-            return directions.get(rand.nextInt(directions.size()));
-        } else {
-            return null;
-        }
+        return null;
     }
 
     private boolean isValidPosition(int x, int y) {
@@ -109,6 +125,7 @@ public class RecuresiveExplorer {
     }
 
     public List<Integer> getCurrentPosition() {
+
         return currentPosition;
     }
 }
