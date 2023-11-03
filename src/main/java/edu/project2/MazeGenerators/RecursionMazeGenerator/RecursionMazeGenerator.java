@@ -1,4 +1,4 @@
-package edu.project2.RecursionMazeGenerator;
+package edu.project2.MazeGenerators.RecursionMazeGenerator;
 
 import edu.project2.Interfaces.MazeGenerator;
 import edu.project2.Maze;

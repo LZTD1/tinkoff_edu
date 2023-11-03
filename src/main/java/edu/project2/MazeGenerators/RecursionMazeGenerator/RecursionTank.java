@@ -1,4 +1,4 @@
-package edu.project2.RecursionMazeGenerator;
+package edu.project2.MazeGenerators.RecursionMazeGenerator;
 
 import edu.project2.Maze;
 import java.util.ArrayList;

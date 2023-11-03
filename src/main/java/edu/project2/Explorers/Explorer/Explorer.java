@@ -1,4 +1,4 @@
-package edu.project2.Explorer;
+package edu.project2.Explorers.Explorer;
 
 import edu.project2.Exceptions.IncorrectRoutePoints;
 import edu.project2.Exceptions.RouteCalculationError;
