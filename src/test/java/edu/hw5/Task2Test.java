@@ -21,6 +21,7 @@ class Task2Test {
             )
         );
     }
+
     @Test
     void getAllScaryFridayOnTheYearTest_2() {
         int year = 2024;
@@ -34,6 +35,7 @@ class Task2Test {
             )
         );
     }
+
     @Test
     void getAllScaryFridayOnTheYearTest_Failed() {
         int year = 1925;

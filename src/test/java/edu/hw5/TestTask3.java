@@ -7,13 +7,10 @@ import edu.hw5.Task3.DateFormats.DateFormat4;
 import edu.hw5.Task3.DateFormats.DateFormat5;
 import edu.hw5.Task3.DateFormats.DateFormat6;
 import edu.hw5.Task3.FormatDate;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.Optional;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask3 {
@@ -39,6 +36,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_2() {
         assertThat(formatDates.getDateFromString("2020-12-2")).isEqualTo(
@@ -47,6 +45,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_3() {
         assertThat(formatDates.getDateFromString("1/3/1976")).isEqualTo(
@@ -55,6 +54,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_4() {
         assertThat(formatDates.getDateFromString("1/3/20")).isEqualTo(
@@ -63,6 +63,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_5() {
         assertThat(formatDates.getDateFromString("tomorrow")).isEqualTo(
@@ -71,6 +72,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_6() {
         assertThat(formatDates.getDateFromString("today")).isEqualTo(
@@ -79,6 +81,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_7() {
         assertThat(formatDates.getDateFromString("yesterday")).isEqualTo(
@@ -87,6 +90,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_8() {
         assertThat(formatDates.getDateFromString("1 day ago\n")).isEqualTo(
@@ -95,6 +99,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_9() {
         assertThat(formatDates.getDateFromString("10 day ago\n")).isEqualTo(
@@ -103,6 +108,7 @@ public class TestTask3 {
             )
         );
     }
+
     @Test
     void testConvert_10() {
         assertThat(formatDates.getDateFromString("10 day before\n")).isEqualTo(
