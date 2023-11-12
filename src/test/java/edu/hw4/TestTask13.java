@@ -22,11 +22,7 @@ public class TestTask13 {
             CAT
         );
 
-        var result = myZoo.stream()
-            .filter(animal -> {
-                return animal.name().split(" ").length > 2;
-            })
-            .toList();
+        List<Animal> result = getAnimalsNameOver2Words(myZoo);
 
         assertThat(result).isEqualTo(
             List.of(
@@ -34,5 +30,23 @@ public class TestTask13 {
                 SPIDER2
             )
         );
+    }
+
+    @Test
+    void animalsNameOver2Words_NoOne() {
+
+        List<Animal> myZoo = List.of(
+            new Animal("Gosha", Animal.Type.FISH, Animal.Sex.M, 0, 100, 1, false)
+        );
+
+        List<Animal> result = getAnimalsNameOver2Words(myZoo);
+
+        assertThat(result).isEmpty();
+    }
+
+    private List<Animal> getAnimalsNameOver2Words(List<Animal> myZoo) {
+        return myZoo.stream()
+            .filter(animal -> animal.name().split(" ").length > 2)
+            .toList();
     }
 }

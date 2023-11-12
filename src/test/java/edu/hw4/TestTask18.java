@@ -30,15 +30,48 @@ public class TestTask18 {
             )
         );
 
-        var mostHeavyFish = myZoo.stream()
-            .flatMap(List::stream)
-            .filter(animal -> animal.type() == Animal.Type.FISH)
-            .max(Comparator.comparing(Animal::weight))
-            .orElse(null);
+        Animal mostHeavyFish = getMostHeavyFish(myZoo);
 
         assertThat(mostHeavyFish).isEqualTo(
             FISH6
         );
 
+    }
+
+    @Test
+    void veryHeavyFishIn2AndOtherLists_NoOne() {
+        Animal DOG = new Animal("a", Animal.Type.DOG, Animal.Sex.M, 0, 100, 2, false);
+        Animal DOG2 = new Animal("c", Animal.Type.DOG, Animal.Sex.F, 0, 100, 11, true);
+        Animal DOG3 = new Animal("b", Animal.Type.DOG, Animal.Sex.F, 0, 100, 1, true);
+
+        Animal DOG4 = new Animal("a", Animal.Type.DOG, Animal.Sex.M, 0, 100, 5, false);
+        Animal DOG5 = new Animal("c", Animal.Type.DOG, Animal.Sex.M, 0, 100, 2, true);
+        Animal DOG6 = new Animal("b", Animal.Type.DOG, Animal.Sex.F, 0, 100, 32, false);
+
+        List<List<Animal>> myZoo = List.of(
+            List.of(
+                DOG,
+                DOG2,
+                DOG3
+            ),
+            List.of(
+                DOG4,
+                DOG5,
+                DOG6
+            )
+        );
+
+        Animal mostHeavyFish = getMostHeavyFish(myZoo);
+
+        assertThat(mostHeavyFish).isNull();
+
+    }
+
+    private Animal getMostHeavyFish(List<List<Animal>> myZoo) {
+        return myZoo.stream()
+            .flatMap(List::stream)
+            .filter(animal -> animal.type() == Animal.Type.FISH)
+            .max(Comparator.comparing(Animal::weight))
+            .orElse(null);
     }
 }

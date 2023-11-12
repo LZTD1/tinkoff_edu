@@ -22,15 +22,19 @@ public class TestTask3 {
             brotherJack
         );
 
-        var result = myZoo.stream()
-            .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
+        Map<Animal.Type, Long> result = mapAnimalTypesCount(myZoo);
 
-        assertThat(result).isEqualTo( // Почему-то Collectors.counting() возвращается в лонге
+        assertThat(result).isEqualTo(
             Map.of(
                 Animal.Type.FISH, 1L,
                 Animal.Type.BIRD, 1L,
                 Animal.Type.SPIDER, 2L
             )
         );
+    }
+
+    private Map<Animal.Type, Long> mapAnimalTypesCount(List<Animal> animals) {
+        return animals.stream()
+            .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
     }
 }

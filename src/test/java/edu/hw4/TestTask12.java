@@ -22,13 +22,36 @@ public class TestTask12 {
             CAT
         );
 
-        var result = myZoo.stream()
-            .filter(animal -> {
-                return animal.weight() > animal.height();
-            }).count();
+        long result = getCountAnimalsWeightBiggerThanHeight(myZoo);
 
         assertThat(result).isEqualTo(
             2
         );
+    }
+
+    @Test
+    void countAnimalsWeightBiggerThanHeight_NoOne() {
+        Animal FISH = new Animal("Gosha", Animal.Type.FISH, Animal.Sex.M, 0, 100, 1, false);
+        Animal FISH2 = new Animal("Gosha", Animal.Type.FISH, Animal.Sex.M, 5, 100, 1, false);
+        Animal SPIDER = new Animal("Sister`s Jack", Animal.Type.SPIDER, Animal.Sex.F, 8, 100, 1, true);
+        Animal SPIDER2 = new Animal("Sister`s Jack", Animal.Type.SPIDER, Animal.Sex.F, 1, 100, 1, true);
+        Animal CAT = new Animal("Sister`s Jack", Animal.Type.CAT, Animal.Sex.F, 4, 100, 1, true);
+
+        List<Animal> myZoo = List.of(
+            FISH,
+            FISH2,
+            SPIDER,
+            SPIDER2,
+            CAT
+        );
+
+        long result = getCountAnimalsWeightBiggerThanHeight(myZoo);
+
+        assertThat(result).isZero();
+    }
+
+    private long getCountAnimalsWeightBiggerThanHeight(List<Animal> myZoo) {
+        return myZoo.stream()
+            .filter(animal -> animal.weight() > animal.height()).count();
     }
 }

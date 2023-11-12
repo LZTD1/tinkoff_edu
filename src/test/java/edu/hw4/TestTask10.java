@@ -1,6 +1,7 @@
 package edu.hw4;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,11 +23,7 @@ public class TestTask10 {
             CAT
         );
 
-        var result = myZoo.stream()
-            .filter(animal -> {
-                return animal.paws() != animal.age();
-            })
-            .toList();
+        List<Animal> result = ageNotEqualPawsAnimals(myZoo);
 
         assertThat(result).isEqualTo(
             List.of(
@@ -34,5 +31,11 @@ public class TestTask10 {
                 SPIDER2
             )
         );
+    }
+
+    private List<Animal> ageNotEqualPawsAnimals(List<Animal> animals) {
+        return animals.stream()
+            .filter(animal -> animal.paws() != animal.age())
+            .collect(Collectors.toList());
     }
 }

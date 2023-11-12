@@ -2,6 +2,7 @@ package edu.hw4;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,10 +20,7 @@ public class TestTask2 {
             jack
         );
 
-        List<Animal> result = myZoo.stream()
-            .sorted(Comparator.comparing(Animal::weight).reversed())
-            .limit(2)
-            .toList();
+        List<Animal> result = sortAnimalsByWeightWithLimit(myZoo, 2);
 
         assertThat(result).isEqualTo(
             List.of(
@@ -30,5 +28,23 @@ public class TestTask2 {
                 jack
             )
         );
+    }
+
+    @Test
+    void sortingByWeightAndLimitWithSmallList() {
+        Animal smallBird = new Animal("Small", Animal.Type.BIRD, Animal.Sex.M, 1, 20, 1, true);
+
+        List<Animal> smallZoo = List.of(smallBird);
+
+        List<Animal> result = sortAnimalsByWeightWithLimit(smallZoo, 2);
+
+        assertThat(result).containsExactly(smallBird);
+    }
+
+    private List<Animal> sortAnimalsByWeightWithLimit(List<Animal> animals, int limit) {
+        return animals.stream()
+            .sorted(Comparator.comparing(Animal::weight).reversed())
+            .limit(limit)
+            .collect(Collectors.toList());
     }
 }

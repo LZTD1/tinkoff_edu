@@ -8,11 +8,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import static edu.hw4.Validations.Validator.getValidate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask19 {
+
+    @NotNull private static Map<String, Set<ValidationError>> getErrorAnimals(List<Animal> myZoo) {
+        return myZoo.stream()
+            .filter(animal -> !getValidate(animal).isEmpty())
+            .collect(Collectors.toMap(
+                Animal::name,
+                Validator::getValidate
+            ));
+    }
 
     @Test
     void errorAnimals() {
@@ -26,12 +36,7 @@ public class TestTask19 {
             FISH3
         );
 
-        Map<String, Set<ValidationError>> errorAnimals = myZoo.stream()
-            .filter(animal -> !getValidate(animal).isEmpty())
-            .collect(Collectors.toMap(
-                Animal::name,
-                Validator::getValidate
-            ));
+        Map<String, Set<ValidationError>> errorAnimals = getErrorAnimals(myZoo);
 
         assertThat(errorAnimals).isEqualTo(
             Map.of(
@@ -43,6 +48,20 @@ public class TestTask19 {
                 )
             )
         );
+
+    }
+
+    @Test
+    void errorAnimals_NoOne() {
+        Animal FISH3 = new Animal("b", Animal.Type.FISH, Animal.Sex.F, 0, 100, 1, true);
+
+        List<Animal> myZoo = List.of(
+            FISH3
+        );
+
+        Map<String, Set<ValidationError>> errorAnimals = getErrorAnimals(myZoo);
+
+        assertThat(errorAnimals).isEmpty();
 
     }
 }

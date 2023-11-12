@@ -26,15 +26,37 @@ public class TestTask8 {
             CAT2
         );
 
-        int k = 110;
-
-        Optional<Animal> result = myZoo.stream()
-            .filter(animal -> animal.height() < k)
-            .max(Comparator.comparingInt(Animal::weight));
+        Optional<Animal> result = findVeryHeavyAnimalByHeight(myZoo);
 
         var expected = Optional.of(SPIDER);
         assertThat(result).isEqualTo(
             expected
         );
+    }
+
+    @Test
+    void emptyZooVeryHeavyAnimal_byHeight() {
+        List<Animal> emptyZoo = List.of(); // Create an empty zoo
+
+        Optional<Animal> result = findVeryHeavyAnimalByHeight(emptyZoo);
+
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void noVeryHeavyAnimal_byHeight() {
+        Animal lightSpider = new Animal("Light Spider", Animal.Type.SPIDER, Animal.Sex.M, 120, 150, 1, false);
+
+        List<Animal> myZoo = List.of(lightSpider);
+
+        Optional<Animal> result = findVeryHeavyAnimalByHeight(myZoo);
+
+        assertThat(result).isEmpty();
+    }
+
+    private Optional<Animal> findVeryHeavyAnimalByHeight(List<Animal> animals) {
+        return animals.stream()
+            .filter(animal -> animal.height() < 110)
+            .max(Comparator.comparingInt(Animal::weight));
     }
 }

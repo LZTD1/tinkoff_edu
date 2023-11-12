@@ -18,11 +18,25 @@ public class TestTask9 {
             CAT
         );
 
-        var result = myZoo.stream()
-            .reduce(0, (accumulator, element) -> accumulator + element.paws(), Integer::sum);
+        int result = totalPawsInZoo(myZoo);
 
         assertThat(result).isEqualTo(
             12
         );
+    }
+
+    @Test
+    void emptyZooPawsCount() {
+        List<Animal> emptyZoo = List.of(); // Create an empty zoo
+
+        int result = totalPawsInZoo(emptyZoo);
+
+        assertThat(result).isZero();
+    }
+
+    private int totalPawsInZoo(List<Animal> animals) {
+        return animals.stream()
+            .mapToInt(Animal::paws)
+            .sum();
     }
 }

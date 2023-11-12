@@ -2,28 +2,33 @@ package edu.hw4;
 
 import java.util.Comparator;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask7 {
+    static Animal FINDED_CAT = new Animal("Sister`s Jack", Animal.Type.CAT, Animal.Sex.F, 12, 42, 7, true);
+    static Animal FINDED_FISH = new Animal("Gosha", Animal.Type.FISH, Animal.Sex.M, 5, 44, 1, false);
+    private static List<Animal> myZoo;
 
-    @Test
-    void veryOldAnimal() {
-        Animal FISH = new Animal("Gosha", Animal.Type.FISH, Animal.Sex.M, 5, 44, 1, false);
+    @BeforeAll static void setUp() {
         Animal FISH2 = new Animal("Gosha2", Animal.Type.FISH, Animal.Sex.M, 3, 44, 7, false);
         Animal SPIDER = new Animal("Jack", Animal.Type.SPIDER, Animal.Sex.M, 7, 31, 7, false);
         Animal SPIDER2 = new Animal("Sister`s Jack", Animal.Type.SPIDER, Animal.Sex.F, 1, 1, 2, true);
         Animal CAT = new Animal("Sister`s Jack", Animal.Type.CAT, Animal.Sex.F, 1, 42, 1, true);
-        Animal CAT2 = new Animal("Sister`s Jack", Animal.Type.CAT, Animal.Sex.F, 12, 42, 7, true);
 
-        List<Animal> myZoo = List.of(
-            FISH,
+        myZoo = List.of(
+            FINDED_FISH,
             FISH2,
             SPIDER,
             SPIDER2,
             CAT,
-            CAT2
+            FINDED_CAT
         );
+    }
+
+    @Test
+    void veryOldAnimal() {
 
         // Не до конца понятна формулировка задания, если просто самое старое животное
         var result = myZoo.stream()
@@ -31,9 +36,12 @@ public class TestTask7 {
             .orElse(null);
 
         assertThat(result).isEqualTo(
-            CAT2
+            FINDED_CAT
         );
+    }
 
+    @Test
+    void veryOldByNumber() {
         // Если какое то по номеру старое
         int finded = 3;
 
@@ -44,7 +52,7 @@ public class TestTask7 {
             .orElse(null);
 
         assertThat(result2).isEqualTo(
-            FISH
+            FINDED_FISH
         );
     }
 }

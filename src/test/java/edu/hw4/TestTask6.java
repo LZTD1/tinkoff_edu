@@ -3,12 +3,12 @@ package edu.hw4;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask6 {
-
     @Test
     void heavyAnimalByType() {
         Animal FISH = new Animal("Gosha", Animal.Type.FISH, Animal.Sex.M, 1, 44, 1, false);
@@ -27,24 +27,7 @@ public class TestTask6 {
             CAT2
         );
 
-        var result = myZoo.stream()
-            .collect(
-                Collectors.groupingBy(
-                    Animal::type,
-                    Collectors.maxBy(
-                        Comparator.comparing(Animal::weight)
-                    )
-                )
-            )
-            // Необходимо для избавления от Optional
-            .entrySet()
-            .stream()
-            .collect(
-                Collectors.toMap(
-                    Map.Entry::getKey,
-                    entry -> entry.getValue().orElseThrow()
-                )
-            );
+        Map<Animal.Type, Animal> result = getHeavyAnimalByType(myZoo);
 
         assertThat(result).isEqualTo(
             Map.of(
@@ -53,5 +36,39 @@ public class TestTask6 {
                 Animal.Type.CAT, CAT2
             )
         );
+    }
+
+    @Test
+    void emptyZooHeavyAnimalByType() {
+        List<Animal> emptyZoo = List.of(); // Create an empty zoo
+
+        Map<Animal.Type, Animal> result = getHeavyAnimalByType(emptyZoo);
+
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void insufficientDataHeavyAnimalByType() {
+        Animal singleFish = new Animal("Lonely Fish", Animal.Type.FISH, Animal.Sex.F, 1, 20, 1, false);
+
+        List<Animal> myZoo = List.of(singleFish);
+
+        Map<Animal.Type, Animal> result = getHeavyAnimalByType(myZoo);
+
+        assertThat(result).containsExactly(Map.entry(Animal.Type.FISH, singleFish));
+    }
+
+    private Map<Animal.Type, Animal> getHeavyAnimalByType(List<Animal> myZoo) {
+        return myZoo.stream()
+            .collect(
+                Collectors.groupingBy(
+                    Animal::type,
+                    Collectors.collectingAndThen(
+                        Collectors.maxBy(
+                            Comparator.comparing(Animal::weight)),
+                        Optional::orElseThrow
+                    )
+                )
+            );
     }
 }
