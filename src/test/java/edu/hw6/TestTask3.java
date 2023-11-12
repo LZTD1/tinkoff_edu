@@ -7,7 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
-import static edu.hw6.Task3.AbstractFilter.moreThan;
+import static edu.hw6.Task3.AbstractFilter.globMatches;
+import static edu.hw6.Task3.AbstractFilter.largerThan;
 
 public class TestTask3 {
 
@@ -17,7 +18,7 @@ public class TestTask3 {
     @Test
     void test() {
         AbstractFilter filter = regularFile
-            .and(moreThan(4));
+            .and(globMatches("*.txt"));
 
         try (DirectoryStream<Path> entries = Files.newDirectoryStream(
             Paths.get("src/main/java/edu/hw6/Task3"),
