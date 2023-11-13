@@ -22,11 +22,11 @@ public class Task2 {
         String prefiks;
         File newFileName;
 
-        do  {
+        do {
             count += 1;
             prefiks = " - копия (" + count + ")";
             newFileName = new File(path.getParent().toString(), fileName + prefiks + extension);
-        }while(newFileName.exists());
+        } while (newFileName.exists());
 
         try {
             copyFileUsingNIO(path.toFile(), newFileName);

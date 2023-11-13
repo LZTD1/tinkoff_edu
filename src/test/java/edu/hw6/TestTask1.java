@@ -3,7 +3,6 @@ package edu.hw6;
 import edu.hw6.Task1.DiskMap;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
