@@ -14,7 +14,8 @@ public class TestTask4 {
 
     @Test
     void writeTest() {
-        String toWritten = String.valueOf(java.util.UUID.randomUUID());
+        String toWritten =
+            String.valueOf(java.util.UUID.randomUUID()); // Генерю каждый раз новый UUID просто для того что бы текст менялся
 
         try (SimpleFileWriter fileWriter = new SimpleFileWriter(PATH)) {
             fileWriter.printInFile(toWritten);
