@@ -10,10 +10,6 @@ import java.nio.file.PathMatcher;
 import java.util.regex.Pattern;
 
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {
-    default AbstractFilter and(AbstractFilter other) {
-        return entry -> this.accept(entry) && other.accept(entry);
-    }
-
     static AbstractFilter largerThan(int bytes) {
         return entry -> Files.size(entry) > bytes;
     }
@@ -41,7 +37,7 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
                             return false;
                         }
                     } else if ((currentObj instanceof Character)) {
-                        int charValue = (int) ((Character) currentObj).charValue();
+                        int charValue = ((Character) currentObj).charValue();
                         if (charValue != a) {
                             return false;
                         }
@@ -52,5 +48,9 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
                 throw new RuntimeException(e.getMessage());
             }
         };
+    }
+
+    default AbstractFilter and(AbstractFilter other) {
+        return entry -> this.accept(entry) && other.accept(entry);
     }
 }
