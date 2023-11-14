@@ -125,6 +125,6 @@ public class TestTask3 {
     }
 
     private String normalizePaths(String path) { // в разных осях, разные слеши, прямые или обратные, поэтому для теста нормализую
-        return Paths.get(path).toString();
+        return Paths.get(path).toUri().toString();
     }
 }
