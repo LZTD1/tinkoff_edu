@@ -30,13 +30,13 @@ public class TestTask3 {
             Paths.get("src/test/resources/hw6/filesToTask3"),
             filter
         )) {
-            entries.forEach(entry -> toExcept.add(normalizePaths(entry.toString())));
+            entries.forEach(entry -> toExcept.add(entry.toString()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            normalizePaths("src\\test\\resources\\hw6\\filesToTask3\\screen.png")
+            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"screen.png").toString()
         ));
     }
 
@@ -50,13 +50,13 @@ public class TestTask3 {
             Paths.get("src/test/resources/hw6/filesToTask3"),
             filter
         )) {
-            entries.forEach(entry -> toExcept.add(normalizePaths(entry.toString())));
+            entries.forEach(entry -> toExcept.add(entry.toString()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            normalizePaths("src\\test\\resources\\hw6\\filesToTask3\\somejava.java")
+            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"somejava.java").toString()
         ));
     }
 
@@ -70,13 +70,13 @@ public class TestTask3 {
             Paths.get("src/test/resources/hw6/filesToTask3"),
             filter
         )) {
-            entries.forEach(entry -> toExcept.add(normalizePaths(entry.toString())));
+            entries.forEach(entry -> toExcept.add(entry.toString()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            normalizePaths("src\\test\\resources\\hw6\\filesToTask3\\sometext.txt")
+            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"sometext.txt").toString()
         ));
     }
 
@@ -91,14 +91,14 @@ public class TestTask3 {
             Paths.get("src/test/resources/hw6/filesToTask3"),
             filter
         )) {
-            entries.forEach(entry -> toExcept.add(normalizePaths(entry.toString())));
+            entries.forEach(entry -> toExcept.add(entry.toString()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            normalizePaths("src\\test\\resources\\hw6\\filesToTask3\\screen2.jpg"),
-            normalizePaths("src\\test\\resources\\hw6\\filesToTask3\\screen.png")
+            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"screen2.jpg").toString(),
+            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"screen.png").toString()
         ));
     }
 
@@ -114,17 +114,13 @@ public class TestTask3 {
             Paths.get("src/test/resources/hw6/filesToTask3"),
             filter
         )) {
-            entries.forEach(entry -> toExcept.add(normalizePaths(entry.toString())));
+            entries.forEach(entry -> toExcept.add(entry.toString()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            normalizePaths("src\\test\\resources\\hw6\\filesToTask3\\screen.png")
+            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"screen.png").toString()
         ));
-    }
-
-    private String normalizePaths(String path) { // в разных осях, разные слеши, прямые или обратные, поэтому для теста нормализую
-        return Paths.get(path).toUri().toString();
     }
 }
