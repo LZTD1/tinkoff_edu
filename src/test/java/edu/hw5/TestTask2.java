@@ -1,11 +1,13 @@
 package edu.hw5;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import static edu.hw5.Task2.getAllScaryFridayOnTheYear;
+import static edu.hw5.Task2.getNearestScaryFriday;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class Task2Test {
+class TestTask2 {
 
     @Test
     void getAllScaryFridayOnTheYearTest() {
@@ -48,6 +50,17 @@ class Task2Test {
                 "2024-12-13",
                 "1925-11-13"
             )
+        );
+    }
+
+    @Test
+    void getNearestScaryFridayTest(){
+        LocalDate myDate = LocalDate.of(2024, 9, 14);
+
+        var result = getNearestScaryFriday(myDate);
+
+        assertThat(result).isEqualTo(
+            LocalDate.of(2024, 12, 13)
         );
     }
 }

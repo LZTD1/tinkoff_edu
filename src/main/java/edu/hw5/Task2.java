@@ -3,12 +3,23 @@ package edu.hw5;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Task2 {
 
     private final static int SEARCHED_DAY = 13;
+    private final static TemporalAdjuster NEXT_SCARY_FRIDAY = temporal -> {
+        LocalDate localDate = (LocalDate) temporal;
+        localDate = localDate.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
+
+        while (localDate.getDayOfMonth() != SEARCHED_DAY) {
+            localDate = localDate.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
+        }
+        return localDate;
+    };
 
     private Task2() {
     }
@@ -24,5 +35,9 @@ public class Task2 {
             }
         }
         return scaryFridays;
+    }
+
+    public static LocalDate getNearestScaryFriday(LocalDate userDate) {
+        return userDate.with(NEXT_SCARY_FRIDAY);
     }
 }

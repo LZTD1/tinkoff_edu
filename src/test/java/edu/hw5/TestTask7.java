@@ -1,51 +1,47 @@
 package edu.hw5;
 
-import org.junit.jupiter.api.Test;
-import static edu.hw5.Task7.validationOne;
-import static edu.hw5.Task7.validationThree;
-import static edu.hw5.Task7.validationTwo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import static edu.hw5.Task7.contains3charactersAndThirdSymbolIsZero;
+import static edu.hw5.Task7.sameSymbolsInStartAndEnd;
+import static edu.hw5.Task7.sizeBetween1and3;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestTask7 {
-    @Test
-    void testValidationOne() {
-        assertTrue(validationOne("100"));
-        assertTrue(validationOne("110"));
-        assertFalse(validationOne("10"));
-        assertTrue(validationOne("1000000000"));
-        assertFalse(validationOne("101"));
-        assertTrue(validationOne("000"));
-        assertFalse(validationOne("001"));
-        assertFalse(validationOne("00"));
-        assertTrue(validationOne("010"));
-        assertFalse(validationOne("011"));
-        assertTrue(validationOne("0000"));
+    @ParameterizedTest
+    @ValueSource(strings = {"110", "100", "1000000000", "000", "010", "0000"})
+    void testContains3charactersAndThirdSymbolIsZeroTrue(String binary) {
+        assertTrue(contains3charactersAndThirdSymbolIsZero(binary));
     }
 
-    @Test
-    void testValidationTwo() {
-        assertTrue(validationTwo("1001"));
-        assertFalse(validationTwo("1000"));
-        assertFalse(validationTwo("10"));
-        assertTrue(validationTwo("0000"));
-        assertFalse(validationTwo("0001"));
-        assertTrue(validationTwo("101"));
-        assertFalse(validationTwo("1010"));
-        assertFalse(validationTwo("01"));
+    @ParameterizedTest
+    @ValueSource(strings = {"101", "001", "00", "011", "10", "990"})
+    void testContains3charactersAndThirdSymbolIsZeroFalse(String binary) {
+        assertFalse(contains3charactersAndThirdSymbolIsZero(binary));
     }
 
-    @Test
-    void testValidationThree() {
-        assertTrue(validationThree("1"));
-        assertTrue(validationThree("01"));
-        assertTrue(validationThree("001"));
-        assertFalse(validationThree(""));
-        assertFalse(validationThree("0000"));
-        assertTrue(validationThree("0"));
-        assertTrue(validationThree("10"));
-        assertFalse(validationThree("1010"));
-        assertTrue(validationThree("11"));
-        assertFalse(validationThree("1111"));
+    @ParameterizedTest
+    @ValueSource(strings = {"1001", "0000", "101"})
+    void testSameSymbolsInStartAndEndTrue(String binary) {
+        assertTrue(sameSymbolsInStartAndEnd(binary));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"10", "0001", "1000", "1010", "01", "687656"})
+    void testSameSymbolsInStartAndEndFalse(String binary) {
+        assertFalse(sameSymbolsInStartAndEnd(binary));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "01", "001", "0", "10", "11"})
+    void testSizeBetween1and3True(String binary) {
+        assertTrue(sizeBetween1and3(binary));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"0000", "1010", "", "1111", "75"})
+    void testSizeBetween1and3False(String binary) {
+        assertFalse(sizeBetween1and3(binary));
     }
 }

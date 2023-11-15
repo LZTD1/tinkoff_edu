@@ -23,5 +23,5 @@ public abstract class FormatDate {
         return next.getDateFromString(stringDate);
     }
 
-    abstract public Optional<LocalDate> getDateFromString(String stringDate);
+    public abstract Optional<LocalDate> getDateFromString(String stringDate);
 }

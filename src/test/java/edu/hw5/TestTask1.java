@@ -12,7 +12,7 @@ public class TestTask1 {
     void testRegexSplit() {
         var a = getSplitedDiapazon("2022-04-01, 21:30 - 2022-04-02, 01:20");
 
-        assertThat(!a.isEmpty()).isTrue();
+        assertThat(a.isEmpty()).isFalse();
         assertThat(a.size()).isEqualTo(2);
         assertThat(a).isEqualTo(List.of(
             "2022-04-01, 21:30",

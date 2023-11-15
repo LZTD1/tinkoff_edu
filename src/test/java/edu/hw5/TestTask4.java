@@ -1,35 +1,27 @@
 package edu.hw5;
 
 import java.util.regex.Pattern;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask4 {
-    private static Pattern pattern;
 
-    @BeforeAll
-    static void setUp() {
-        pattern = Pattern.compile("[~!@#$%^&*|]");
-    }
+    private static final Pattern pattern = Pattern.compile("[~!@#$%^&*|]");
 
-    @Test
-    void testRegex() {
+    @ParameterizedTest
+    @ValueSource(strings = {"helloWorld~", "hel&loWorld", "helloW^orld", "|helloWorld"})
+    void testRegexTrue(String word) {
         assertThat(
-            pattern.matcher("helloWorld~").find()
-        ).isTrue();
-
-        assertThat(
-            pattern.matcher("hel&loWorld").find()
-        ).isTrue();
-
-        assertThat(
-            pattern.matcher("helloW^orld").find()
-        ).isTrue();
-
-        assertThat(
-            pattern.matcher("|helloWorld").find()
+            pattern.matcher(word).find()
         ).isTrue();
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"helloWorld", "alexandra"})
+    void testRegexFalse(String word) {
+        assertThat(
+            pattern.matcher(word).find()
+        ).isFalse();
+    }
 }
