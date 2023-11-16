@@ -6,13 +6,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
-import static edu.project3.AnalyzerLogListTest.MOCK_LOGS;
+import static edu.project3.LogAnalyzeTest.MOCK_LOGS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FileSaverTest {
     @Test
     void markdownSaveToFileTest() {
-        AnalyzerLogList logAnalyze = new AnalyzerLogList(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
         LogStatsSaver logSaver = new LogStatsSaver(
             logAnalyze.getAllStatistics(),
             LogStatsSaver.ExtensionFile.markdown
@@ -37,7 +37,7 @@ public class FileSaverTest {
 
     @Test
     void adocSaveToFileTest() {
-        AnalyzerLogList logAnalyze = new AnalyzerLogList(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
         LogStatsSaver logSaver = new LogStatsSaver(
             logAnalyze.getAllStatistics(),
             LogStatsSaver.ExtensionFile.adoc

@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AnalyzerLogList {
+public class LogAnalyze {
 
     private final List<LogReport> logs;
 
-    public AnalyzerLogList(List<LogReport> logs) {
+    public LogAnalyze(List<LogReport> logs) {
         this.logs = logs;
     }
 

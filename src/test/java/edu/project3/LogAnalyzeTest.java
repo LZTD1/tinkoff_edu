@@ -6,13 +6,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import static edu.project3.FileParserTest.getDateFromString;
+import static edu.project3.Utils.getDateFromString;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AnalyzerLogListTest {
+public class LogAnalyzeTest {
     @Test
     void getGeneralStatisticTest() {
-        AnalyzerLogList logAnalyze = new AnalyzerLogList(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
         HashMap<String, String> mainLogs = logAnalyze.getGeneralStatistic();
 
         assertThat(mainLogs).isEqualTo(
@@ -27,7 +27,7 @@ public class AnalyzerLogListTest {
 
     @Test
     void getRequestedResourcesTest() {
-        AnalyzerLogList logAnalyze = new AnalyzerLogList(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
         Map<String, Long> resources = logAnalyze.getRequestedResources();
 
         Map<String, Long> expected = new LinkedHashMap<>();
@@ -44,7 +44,7 @@ public class AnalyzerLogListTest {
 
     @Test
     void getRequestedCodeTest() {
-        AnalyzerLogList logAnalyze = new AnalyzerLogList(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
         Map<String, Long> resources = logAnalyze.getRequestedCode();
 
         Map<String, Long> expected = new LinkedHashMap<>();
