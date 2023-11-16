@@ -1,5 +1,6 @@
 package edu.project3;
 
+import edu.project3.Model.AnalyticsModel;
 import edu.project3.Model.LogReport;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -16,6 +17,14 @@ public class AnalyzerLogList {
 
     public AnalyzerLogList(List<LogReport> logs) {
         this.logs = logs;
+    }
+
+    public AnalyticsModel getAllStatistics() {
+        return new AnalyticsModel(
+            getGeneralStatistic(),
+            getRequestedResources(),
+            getRequestedCode()
+        );
     }
 
     public HashMap<String, String> getGeneralStatistic() {

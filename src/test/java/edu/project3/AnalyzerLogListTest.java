@@ -58,7 +58,7 @@ public class AnalyzerLogListTest {
         );
     }
 
-    private final List<LogReport> MOCK_LOGS =
+    public static final List<LogReport> MOCK_LOGS =
         List.of(
             new LogReport(
                 "5.9.121.211",
