@@ -73,7 +73,7 @@ public class Manager {
         List<LogReport> allReports;
         List<String> fileNames;
 
-        if (!mapArgs.get(PATH_KEY).contains("http")) {
+        if (!mapArgs.get(PATH_KEY).contains("http://") && !mapArgs.get(PATH_KEY).contains("https://")) {
             var result = directorySearcher(mapArgs.get(PATH_KEY));
 
             fileNames = (List<String>) result.get(0);
