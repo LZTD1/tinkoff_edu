@@ -2,27 +2,28 @@ package edu.project3.src;
 
 import edu.project3.src.Model.AnalyticsModel;
 import edu.project3.src.Model.LogReport;
-import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import static edu.project3.src.Utils.convertoSringToDate;
+import static edu.project3.src.Utils.convertStringToDate;
 
 public class LogAnalyze {
 
-    private final Date from;
-    private final Date to;
+    private final OffsetDateTime from;
+    private final OffsetDateTime to;
     private List<LogReport> logs;
 
     public LogAnalyze(List<LogReport> logs, String from, String to) {
         this.logs = logs;
-        this.from = !from.isEmpty() ? convertoSringToDate(from) : null;
-        this.to = !to.isEmpty() ? convertoSringToDate(to) : null;
+        this.from = !from.isEmpty() ? convertStringToDate(from) : null;
+        this.to = !to.isEmpty() ? convertStringToDate(to) : null;
 
         getLogsReportByDates();
     }
@@ -41,6 +42,7 @@ public class LogAnalyze {
 
         result.put("dateStart", getStartDate());
         result.put("endDate", getEndDate());
+
         result.put("countRequests", String.valueOf(this.logs.size()));
         result.put("averageResponseSize", getAverageSizeResponse() + "b");
 
@@ -52,13 +54,13 @@ public class LogAnalyze {
             .filter(entry -> entry.timeLog() != null
                     && (
                     this.from == null
-                        || entry.timeLog().equals(this.from)
-                        || entry.timeLog().after(this.from)
+                        || entry.timeLog().isEqual(this.from)
+                        || entry.timeLog().isAfter(this.from)
                 )
                     && (
                     this.to == null
-                        || entry.timeLog().equals(this.to)
-                        || entry.timeLog().before(this.to)
+                        || entry.timeLog().isEqual(this.to)
+                        || entry.timeLog().isBefore(this.to)
                 )
             )
             .toList();
@@ -112,10 +114,12 @@ public class LogAnalyze {
         );
     }
 
-    private String dateToString(Date date) {
+    private String dateToString(OffsetDateTime date) {
         String pattern = "dd.MM.yyyy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-        return dateFormat.format(date);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+
+        return date.format(formatter);
     }
 
     private LinkedHashMap<String, Long> sortMapByValues(Map<String, Long> unsorted) {

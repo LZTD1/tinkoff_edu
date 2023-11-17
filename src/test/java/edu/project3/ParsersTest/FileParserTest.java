@@ -12,6 +12,7 @@ import edu.project3.src.Model.LogReport;
 import edu.project3.src.Parsers.FileParser;
 import edu.project3.src.Parsers.Parser;
 import org.junit.jupiter.api.Test;
+import static edu.project3.src.Utils.getDateFromString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -37,20 +38,6 @@ public class FileParserTest {
     void testFailedReadFile() {
         assertThrows(FileNotExists.class, () ->
             new FileParser(Paths.get("src/test/resources/project3Test/aboba.log")));
-    }
-
-    protected static Date getDateFromString(String group) {
-        String pattern = "dd/MMM/yyyy:HH:mm:ss Z";
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.ENGLISH);
-        Date date = null;
-        try {
-            date = dateFormat.parse(group);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-        return date;
     }
 
     @Test

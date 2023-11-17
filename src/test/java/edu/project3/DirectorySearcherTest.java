@@ -24,7 +24,7 @@ public class DirectorySearcherTest {
     void findMoreFiles(){
         var dirSearcher = new DirectorySearcher("src/test/resources/project3Test/*.log");
 
-        assertThat(dirSearcher.getFilesFromPath()).isEqualTo(
+        assertThat(dirSearcher.getFilesFromPath()).containsExactlyElementsOf(
             List.of(
                 Path.of("src","test","resources","project3Test","badLog.log"),
                 Path.of("src","test","resources","project3Test","largeLog.log"),
@@ -36,7 +36,7 @@ public class DirectorySearcherTest {
     void findFileByFileWalker(){
         var dirSearcher = new DirectorySearcher("src/test/resources/project3Test/**/finded.txt");
 
-        assertThat(dirSearcher.getFilesFromPath()).isEqualTo(
+        assertThat(dirSearcher.getFilesFromPath()).containsExactlyElementsOf(
             List.of(
                 Path.of("src","test","resources","project3Test","recursiveWalker","finded.txt"),
                 Path.of("src","test","resources","project3Test","recursiveWalker2","finded.txt")
@@ -47,7 +47,7 @@ public class DirectorySearcherTest {
     void findFileByFileWalkerInTwo(){
         var dirSearcher = new DirectorySearcher("src/test/**/finded.txt");
 
-        assertThat(dirSearcher.getFilesFromPath()).isEqualTo(
+        assertThat(dirSearcher.getFilesFromPath()).containsExactlyElementsOf(
             List.of(
                 Path.of("src","test","resources","project3Test","recursiveWalker","finded.txt"),
                 Path.of("src","test","resources","project3Test","recursiveWalker2","finded.txt")
@@ -58,7 +58,7 @@ public class DirectorySearcherTest {
     void findFileByFileWalkerAndUnknownFile(){
         var dirSearcher = new DirectorySearcher("src/test/**/*.txt");
 
-        assertThat(dirSearcher.getFilesFromPath()).isEqualTo(
+        assertThat(dirSearcher.getFilesFromPath()).containsExactlyElementsOf(
             List.of(
                 Path.of("src","test","resources","project3Test","recursiveWalker","finded.txt"),
                 Path.of("src","test","resources","project3Test","recursiveWalker2","finded.txt")
@@ -69,7 +69,7 @@ public class DirectorySearcherTest {
     void findFileNotCompletedName(){
         var dirSearcher = new DirectorySearcher("src/test/resources/project3Test/mock*");
 
-        assertThat(dirSearcher.getFilesFromPath()).isEqualTo(
+        assertThat(dirSearcher.getFilesFromPath()).containsExactlyElementsOf(
             List.of(
                 Path.of("src","test","resources","project3Test","mockReport.adoc"),
                 Path.of("src","test","resources","project3Test","mockReport.md")

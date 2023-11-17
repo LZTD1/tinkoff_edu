@@ -2,6 +2,12 @@ package edu.project3.src;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.Locale;
 
@@ -10,31 +16,22 @@ public class Utils {
     private Utils() {
     }
 
-    public static Date getDateFromString(String dateString) {
+    public static OffsetDateTime getDateFromString(String dateString) {
         String pattern = "dd/MMM/yyyy:HH:mm:ss Z";
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.ENGLISH);
-        Date date;
-        try {
-            date = dateFormat.parse(dateString);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-        return date;
+        return OffsetDateTime.parse(
+            dateString,
+            DateTimeFormatter.ofPattern(pattern, new Locale("en"))
+        );
     }
 
-    public static Date convertoSringToDate(String dateString) {
+    public static OffsetDateTime convertStringToDate(String dateString) {
         String pattern = "yyyy-MM-dd";
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.ENGLISH);
-        Date date;
-        try {
-            date = dateFormat.parse(dateString);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneOffset.UTC);
 
-        return date;
+        LocalDate date = LocalDate.parse(dateString, formatter);
+
+        return date.atStartOfDay().atOffset(ZoneOffset.UTC);
     }
 }
