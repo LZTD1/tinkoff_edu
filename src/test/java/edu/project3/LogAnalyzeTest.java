@@ -1,18 +1,17 @@
 package edu.project3;
 
-import edu.project3.Model.LogReport;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import edu.project3.src.LogAnalyze;
 import org.junit.jupiter.api.Test;
-import static edu.project3.Utils.getDateFromString;
+import static edu.project3.TestUtils.MOCK_LOGS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogAnalyzeTest {
     @Test
     void getGeneralStatisticTest() {
-        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "", "");
         HashMap<String, String> mainLogs = logAnalyze.getGeneralStatistic();
 
         assertThat(mainLogs).isEqualTo(
@@ -26,8 +25,37 @@ public class LogAnalyzeTest {
     }
 
     @Test
+    void getGeneralStatisticWithDateToTest() {
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "", "2015-05-26");
+        HashMap<String, String> mainLogs = logAnalyze.getGeneralStatistic();
+
+        assertThat(mainLogs).isEqualTo(
+            Map.of(
+                "dateStart", "25.05.2015",
+                "endDate", "25.05.2015",
+                "countRequests", "4",
+                "averageResponseSize", "340b"
+            )
+        );
+    }
+    @Test
+    void getGeneralStatisticWithDateFromTest() {
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "2015-05-26", "");
+        HashMap<String, String> mainLogs = logAnalyze.getGeneralStatistic();
+
+        assertThat(mainLogs).isEqualTo(
+            Map.of(
+                "dateStart", "26.05.2015",
+                "endDate", "28.05.2015",
+                "countRequests", "7",
+                "averageResponseSize", "145b"
+            )
+        );
+    }
+
+    @Test
     void getRequestedResourcesTest() {
-        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "", "");
         Map<String, Long> resources = logAnalyze.getRequestedResources();
 
         Map<String, Long> expected = new LinkedHashMap<>();
@@ -44,7 +72,7 @@ public class LogAnalyzeTest {
 
     @Test
     void getRequestedCodeTest() {
-        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "", "");
         Map<String, Long> resources = logAnalyze.getRequestedCode();
 
         Map<String, Long> expected = new LinkedHashMap<>();
@@ -57,140 +85,4 @@ public class LogAnalyzeTest {
             expected
         );
     }
-
-    public static final List<LogReport> MOCK_LOGS =
-        List.of(
-            new LogReport(
-                "5.9.121.211",
-                getDateFromString("25/May/2015:11:05:27 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_1",
-                    "HTTP/1.1"
-                ),
-                404,
-                340,
-                "Debian APT-HTTP/1.3 (0.8.10.3)"
-            ),
-            new LogReport(
-                "5.9.121.211",
-                getDateFromString("25/May/2015:11:05:27 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_2",
-                    "HTTP/1.1"
-                ),
-                404,
-                340,
-                "Debian APT-HTTP/1.3 (0.8.10.3)"
-            ),
-            new LogReport(
-                "5.9.121.211",
-                getDateFromString("25/May/2015:11:05:27 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_3",
-                    "HTTP/1.1"
-                ),
-                404,
-                340,
-                "Debian APT-HTTP/1.3 (0.8.10.3)"
-            ),
-            new LogReport(
-                "5.9.121.211",
-                getDateFromString("25/May/2015:11:05:27 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_3",
-                    "HTTP/1.1"
-                ),
-                404,
-                340,
-                "Debian APT-HTTP/1.3 (0.8.10.3)"
-            ),
-            new LogReport(
-                "5.9.121.211",
-                getDateFromString("25/May/2015:11:05:27 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_4",
-                    "HTTP/1.1"
-                ),
-                404,
-                340,
-                "Debian APT-HTTP/1.3 (0.8.10.3)"
-            ),
-            new LogReport(
-                "5.9.121.211",
-                getDateFromString("25/May/2015:11:05:27 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_4",
-                    "HTTP/1.1"
-                ),
-                505,
-                340,
-                "Debian APT-HTTP/1.3 (0.8.10.3)"
-            ),
-            new LogReport(
-                "5.9.121.211",
-                getDateFromString("25/May/2015:11:05:27 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_4",
-                    "HTTP/1.1"
-                ),
-                505,
-                340,
-                "Debian APT-HTTP/1.3 (0.8.10.3)"
-            ),
-            new LogReport(
-                "10.0.2.236",
-                getDateFromString("28/May/2015:10:05:49 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_5",
-                    "HTTP/1.1"
-                ),
-                304,
-                0,
-                "Debian APT-HTTP/1.3 (1.0.1ubuntu2)"
-            ),
-            new LogReport(
-                "10.0.2.236",
-                getDateFromString("28/May/2015:10:05:49 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_5",
-                    "HTTP/1.1"
-                ),
-                304,
-                0,
-                "Debian APT-HTTP/1.3 (1.0.1ubuntu2)"
-            ),
-            new LogReport(
-                "10.0.2.236",
-                getDateFromString("28/May/2015:10:05:49 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_5",
-                    "HTTP/1.1"
-                ),
-                200,
-                0,
-                "Debian APT-HTTP/1.3 (1.0.1ubuntu2)"
-            ),
-            new LogReport(
-                "10.0.2.236",
-                getDateFromString("28/May/2015:10:05:49 +0000"),
-                new LogReport.RequestModel(
-                    LogReport.RequestModel.HttpMethod.GET,
-                    "/downloads/product_5",
-                    "HTTP/1.1"
-                ),
-                304,
-                0,
-                "Debian APT-HTTP/1.3 (1.0.1ubuntu2)"
-            )
-        );
 }

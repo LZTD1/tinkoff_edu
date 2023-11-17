@@ -1,7 +1,7 @@
-package edu.project3;
+package edu.project3.src;
 
-import edu.project3.Model.AnalyticsModel;
-import edu.project3.Model.LogReport;
+import edu.project3.src.Model.AnalyticsModel;
+import edu.project3.src.Model.LogReport;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
@@ -9,18 +9,27 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import static edu.project3.src.Utils.convertoSringToDate;
 
 public class LogAnalyze {
 
-    private final List<LogReport> logs;
+    private final Date from;
+    private final Date to;
+    private List<LogReport> logs;
 
-    public LogAnalyze(List<LogReport> logs) {
+    public LogAnalyze(List<LogReport> logs, String from, String to) {
         this.logs = logs;
+        this.from = !from.isEmpty() ? convertoSringToDate(from) : null;
+        this.to = !to.isEmpty() ? convertoSringToDate(to) : null;
+
+        getLogsReportByDates();
     }
 
-    public AnalyticsModel getAllStatistics() {
+    public AnalyticsModel getAllStatistics(List<String> fileNames) {
         return new AnalyticsModel(
+            fileNames,
             getGeneralStatistic(),
             getRequestedResources(),
             getRequestedCode()
@@ -30,12 +39,45 @@ public class LogAnalyze {
     public HashMap<String, String> getGeneralStatistic() {
         HashMap<String, String> result = new HashMap<>();
 
-        result.put("dateStart", dateToString(this.logs.get(0).timeLog()));
-        result.put("endDate", dateToString(this.logs.get(this.logs.size() - 1).timeLog()));
+        result.put("dateStart", getStartDate());
+        result.put("endDate", getEndDate());
         result.put("countRequests", String.valueOf(this.logs.size()));
         result.put("averageResponseSize", getAverageSizeResponse() + "b");
 
         return result;
+    }
+
+    private void getLogsReportByDates() {
+        this.logs = this.logs.stream()
+            .filter(entry -> entry.timeLog() != null
+                    && (
+                    this.from == null
+                        || entry.timeLog().equals(this.from)
+                        || entry.timeLog().after(this.from)
+                )
+                    && (
+                    this.to == null
+                        || entry.timeLog().equals(this.to)
+                        || entry.timeLog().before(this.to)
+                )
+            )
+            .toList();
+    }
+
+    private String getStartDate() {
+        Optional<LogReport> minObject = this.logs.stream()
+            .min(Comparator.comparing(LogReport::timeLog));
+
+        return minObject.map(logReport -> dateToString(logReport.timeLog()))
+            .orElse("-");
+    }
+
+    private String getEndDate() {
+        Optional<LogReport> maxObject = this.logs.stream()
+            .max(Comparator.comparing(LogReport::timeLog));
+
+        return maxObject.map(logReport -> dateToString(logReport.timeLog()))
+            .orElse("-");
     }
 
     public LinkedHashMap<String, Long> getRequestedResources() {

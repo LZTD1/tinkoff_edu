@@ -1,4 +1,4 @@
-package edu.project3.Exceptions;
+package edu.project3.src.Exceptions;
 
 public class BadLogLineException extends RuntimeException {
     public BadLogLineException(String s) {

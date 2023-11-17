@@ -1,20 +1,22 @@
 package edu.project3;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import edu.project3.src.LogAnalyze;
+import edu.project3.src.LogStatsSaver;
 import org.junit.jupiter.api.Test;
-import static edu.project3.LogAnalyzeTest.MOCK_LOGS;
+import static edu.project3.TestUtils.MOCK_LOGS;
+import static edu.project3.TestUtils.getFileExtension;
+import static edu.project3.TestUtils.readFileContent;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FileSaverTest {
     @Test
     void markdownSaveToFileTest() {
-        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "", "");
         LogStatsSaver logSaver = new LogStatsSaver(
-            logAnalyze.getAllStatistics(),
+            logAnalyze.getAllStatistics(List.of("directory/mockLogs")),
             LogStatsSaver.ExtensionFile.markdown
         );
 
@@ -37,9 +39,9 @@ public class FileSaverTest {
 
     @Test
     void adocSaveToFileTest() {
-        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS);
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "", "");
         LogStatsSaver logSaver = new LogStatsSaver(
-            logAnalyze.getAllStatistics(),
+            logAnalyze.getAllStatistics(List.of("directory/mockLogs")),
             LogStatsSaver.ExtensionFile.adoc
         );
 
@@ -58,24 +60,5 @@ public class FileSaverTest {
         );
 
         file.delete();
-    }
-
-    private static String getFileExtension(File file) {
-        String fileName = file.getName();
-        int dotIndex = fileName.lastIndexOf(".");
-        if (dotIndex != -1 && dotIndex < fileName.length() - 1) {
-            return fileName.substring(dotIndex + 1);
-        } else {
-            return "";
-        }
-    }
-
-    private static String readFileContent(Path filePath) {
-        try {
-            byte[] fileBytes = Files.readAllBytes(filePath);
-            return new String(fileBytes);
-        } catch (IOException e) {
-            return null;
-        }
     }
 }

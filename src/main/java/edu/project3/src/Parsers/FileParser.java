@@ -1,7 +1,7 @@
-package edu.project3.Parsers;
+package edu.project3.src.Parsers;
 
-import edu.project3.Exceptions.FileNotExists;
-import edu.project3.Model.LogReport;
+import edu.project3.src.Exceptions.FileNotExists;
+import edu.project3.src.Model.LogReport;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -21,7 +21,7 @@ public class FileParser extends Parser {
             this.filePath = filePath;
             this.file = filePath.toFile();
         } else {
-            throw new FileNotExists("The transferred file does not exist!");
+            throw new FileNotExists("The transferred file does not exist!" + filePath);
         }
     }
 

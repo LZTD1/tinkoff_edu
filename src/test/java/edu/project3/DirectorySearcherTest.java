@@ -1,5 +1,6 @@
 package edu.project3;
 
+import edu.project3.src.DirectorySearcher;
 import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;

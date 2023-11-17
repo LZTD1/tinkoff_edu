@@ -1,11 +1,11 @@
-package edu.project3.Parsers;
+package edu.project3.src.Parsers;
 
-import edu.project3.Exceptions.BadLogLineException;
-import edu.project3.Model.LogReport;
+import edu.project3.src.Exceptions.BadLogLineException;
+import edu.project3.src.Model.LogReport;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static edu.project3.Utils.getDateFromString;
+import static edu.project3.src.Utils.getDateFromString;
 
 public abstract class Parser {
 

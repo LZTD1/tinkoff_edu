@@ -1,16 +1,16 @@
 package edu.project3.ParsersTest;
 
-import edu.project3.Exceptions.BadLogLineException;
-import edu.project3.Exceptions.FileNotExists;
+import edu.project3.src.Exceptions.BadLogLineException;
+import edu.project3.src.Exceptions.FileNotExists;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import edu.project3.Model.LogReport;
-import edu.project3.Parsers.FileParser;
-import edu.project3.Parsers.Parser;
+import edu.project3.src.Model.LogReport;
+import edu.project3.src.Parsers.FileParser;
+import edu.project3.src.Parsers.Parser;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

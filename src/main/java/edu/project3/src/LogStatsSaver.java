@@ -1,7 +1,7 @@
-package edu.project3;
+package edu.project3.src;
 
-import edu.project3.Exceptions.ErrorCreatingFile;
-import edu.project3.Model.AnalyticsModel;
+import edu.project3.src.Exceptions.ErrorCreatingFile;
+import edu.project3.src.Model.AnalyticsModel;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class LogStatsSaver {
         inFile.add("[options=\"header\"]");
         inFile.add("|=======================");
         inFile.add("|Метрика|Значение");
-        inFile.add("|Файл(-ы)|someFile");
+        inFile.add("|Файл(-ы)|" + getListNamesFromModel());
         inFile.add("|Начальная дата|" + this.model.generalStatistic().get("dateStart"));
         inFile.add("|Конечная дата|" + this.model.generalStatistic().get("endDate"));
         inFile.add("|Количество запросов|" + this.model.generalStatistic().get("countRequests"));
@@ -101,7 +101,7 @@ public class LogStatsSaver {
         inFile.add("#### Общая информация");
         inFile.add("|Метрика|Значение|");
         inFile.add("| ------------ | ------------ |");
-        inFile.add("|Файл(-ы)|someFile|");
+        inFile.add("|Файл(-ы)|" + getListNamesFromModel() + "|");
         inFile.add("|Начальная дата|" + this.model.generalStatistic().get("dateStart") + DELIMITER);
         inFile.add("|Конечная дата|" + this.model.generalStatistic().get("endDate") + DELIMITER);
         inFile.add("|Количество запросов|" + this.model.generalStatistic().get("countRequests") + DELIMITER);
@@ -129,11 +129,19 @@ public class LogStatsSaver {
         return inFile;
     }
 
+    private String getListNamesFromModel() {
+        return String.join(",", this.model.fileNames());
+    }
+
     @SuppressWarnings("MagicNumber")
     private String getNameByCode(String code) {
         return switch (Integer.parseInt(code)) {
             case 200 -> "OK";
             case 404 -> "Not Found";
+            case 304 -> "Not Modified";
+            case 206 -> "Partial Content";
+            case 403 -> "Forbidden";
+            case 416 -> "Requested Range Not Satisfiable";
             case 505 -> "HTTP Version Not Supported";
             default -> "Unknown";
         };

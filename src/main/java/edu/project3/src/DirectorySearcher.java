@@ -1,6 +1,6 @@
-package edu.project3;
+package edu.project3.src;
 
-import edu.project3.Exceptions.FileNotExists;
+import edu.project3.src.Exceptions.FileNotExists;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;

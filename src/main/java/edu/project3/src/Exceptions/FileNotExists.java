@@ -1,4 +1,4 @@
-package edu.project3.Exceptions;
+package edu.project3.src.Exceptions;
 
 public class FileNotExists extends RuntimeException {
     public FileNotExists(String s) {

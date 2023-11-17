@@ -1,9 +1,9 @@
 package edu.project3.ParsersTest;
 
-import edu.project3.Exceptions.BadLogLineException;
-import edu.project3.Model.LogReport;
-import edu.project3.Parsers.Parser;
-import edu.project3.Parsers.WebsiteParser;
+import edu.project3.src.Exceptions.BadLogLineException;
+import edu.project3.src.Model.LogReport;
+import edu.project3.src.Parsers.Parser;
+import edu.project3.src.Parsers.WebsiteParser;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import static edu.project3.ParsersTest.FileParserTest.MOCKED_LOGS_REPORT_OBJECT;

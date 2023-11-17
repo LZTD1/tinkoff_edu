@@ -1,6 +1,6 @@
-package edu.project3.Parsers;
+package edu.project3.src.Parsers;
 
-import edu.project3.Model.LogReport;
+import edu.project3.src.Model.LogReport;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
