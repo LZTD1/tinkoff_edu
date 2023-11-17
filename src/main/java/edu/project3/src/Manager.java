@@ -15,8 +15,8 @@ import java.util.List;
 
 public class Manager {
 
-    private final String[] args;
     private final static String PATH_KEY = "--path";
+    private final String[] args;
 
     public Manager(String[] args) {
         this.args = args;
