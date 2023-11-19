@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestTask1 {
 
     @Test
-    void test(){
+    void atomicIncTest(){
         var myCounter = new AtomicCounter(0);
 
         Thread firstIncrementer = new Thread(() -> {
