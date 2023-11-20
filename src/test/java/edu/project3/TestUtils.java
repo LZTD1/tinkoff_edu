@@ -43,7 +43,7 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 404,
-                340,
+                7000,
                 "Debian APT-HTTP/1.3 (0.8.10.3)"
             ),
             new LogReport(
@@ -55,7 +55,7 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 404,
-                340,
+                6000,
                 "Debian APT-HTTP/1.3 (0.8.10.3)"
             ),
             new LogReport(
@@ -67,7 +67,7 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 404,
-                340,
+                5000,
                 "Debian APT-HTTP/1.3 (0.8.10.3)"
             ),
             new LogReport(
@@ -79,11 +79,11 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 404,
-                340,
+                4000,
                 "Debian APT-HTTP/1.3 (0.8.10.3)"
             ),
             new LogReport(
-                "5.9.121.211",
+                "10.0.2.236",
                 Utils.getDateFromString("26/May/2015:11:05:27 +0000"),
                 new LogReport.RequestModel(
                     LogReport.RequestModel.HttpMethod.GET,
@@ -91,7 +91,7 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 404,
-                340,
+                3000,
                 "Debian APT-HTTP/1.3 (0.8.10.3)"
             ),
             new LogReport(
@@ -103,7 +103,7 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 505,
-                340,
+                2500,
                 "Debian APT-HTTP/1.3 (0.8.10.3)"
             ),
             new LogReport(
@@ -115,11 +115,11 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 505,
-                340,
+                3300,
                 "Debian APT-HTTP/1.3 (0.8.10.3)"
             ),
             new LogReport(
-                "10.0.2.236",
+                "10.0.2.231",
                 Utils.getDateFromString("27/May/2015:10:05:49 +0000"),
                 new LogReport.RequestModel(
                     LogReport.RequestModel.HttpMethod.GET,
@@ -127,7 +127,7 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 304,
-                0,
+                7500,
                 "Debian APT-HTTP/1.3 (1.0.1ubuntu2)"
             ),
             new LogReport(
@@ -139,7 +139,7 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 304,
-                0,
+                6666,
                 "Debian APT-HTTP/1.3 (1.0.1ubuntu2)"
             ),
             new LogReport(
@@ -151,11 +151,11 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 200,
-                0,
+                250,
                 "Debian APT-HTTP/1.3 (1.0.1ubuntu2)"
             ),
             new LogReport(
-                "10.0.2.236",
+                "10.0.2.231",
                 Utils.getDateFromString("28/May/2015:10:05:49 +0000"),
                 new LogReport.RequestModel(
                     LogReport.RequestModel.HttpMethod.GET,
@@ -163,7 +163,7 @@ public class TestUtils {
                     "HTTP/1.1"
                 ),
                 304,
-                0,
+                12,
                 "Debian APT-HTTP/1.3 (1.0.1ubuntu2)"
             )
         );

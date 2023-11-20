@@ -16,6 +16,7 @@ import static edu.project3.src.Utils.convertStringToDate;
 public class LogAnalyze {
 
     private final OffsetDateTime from;
+    private final static int MAX_LIMIT_IN_HUGEST_REQUEST = 5;
     private final OffsetDateTime to;
     private List<LogReport> logs;
 
@@ -32,8 +33,27 @@ public class LogAnalyze {
             fileNames,
             getGeneralStatistic(),
             getRequestedResources(),
-            getRequestedCode()
+            getRequestedCode(),
+            getMostFiveHugeRequests(),
+            getMostRequestedIps()
         );
+    }
+
+    public List<LogReport> getMostFiveHugeRequests() {
+        return this.logs.stream()
+            .sorted(Comparator.comparing(LogReport::bytesSend).reversed())
+            .limit(MAX_LIMIT_IN_HUGEST_REQUEST)
+            .toList();
+    }
+
+    public Map<String, Long> getMostRequestedIps() {
+        Map<String, Long> unsorted = this.logs.stream()
+            .collect(Collectors.groupingBy(
+                LogReport::remoteAddress,
+                Collectors.counting()
+            ));
+
+        return sortMapByValues(unsorted);
     }
 
     public HashMap<String, String> getGeneralStatistic() {

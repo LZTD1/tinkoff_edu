@@ -6,7 +6,7 @@
 |Начальная дата|25.05.2015
 |Конечная дата|28.05.2015
 |Количество запросов|11
-|Средний размер ответа|216b
+|Средний размер ответа|4111b
 |=======================
 Запрашиваемые ресурсы
 [options="header"]
@@ -26,4 +26,22 @@
 |304|Not Modified|3
 |505|HTTP Version Not Supported|2
 |200|OK|1
+|=======================
+Топ 5 больших запросов
+[options="header"]
+|=======================
+|Реквест|Размер
+|LogReport[remoteAddress=10.0.2.231, timeLog=2015-05-27T10:05:49Z, request=RequestModel[method=GET, resource=/downloads/product_5, protocolVersion=HTTP/1.1], statusCode=304, bytesSend=7500, userAgent=Debian APT-HTTP/1.3 (1.0.1ubuntu2)]|7500
+|LogReport[remoteAddress=5.9.121.211, timeLog=2015-05-25T11:05:27Z, request=RequestModel[method=GET, resource=/downloads/product_1, protocolVersion=HTTP/1.1], statusCode=404, bytesSend=7000, userAgent=Debian APT-HTTP/1.3 (0.8.10.3)]|7000
+|LogReport[remoteAddress=10.0.2.236, timeLog=2015-05-27T10:05:49Z, request=RequestModel[method=GET, resource=/downloads/product_5, protocolVersion=HTTP/1.1], statusCode=304, bytesSend=6666, userAgent=Debian APT-HTTP/1.3 (1.0.1ubuntu2)]|6666
+|LogReport[remoteAddress=5.9.121.211, timeLog=2015-05-25T11:05:27Z, request=RequestModel[method=GET, resource=/downloads/product_2, protocolVersion=HTTP/1.1], statusCode=404, bytesSend=6000, userAgent=Debian APT-HTTP/1.3 (0.8.10.3)]|6000
+|LogReport[remoteAddress=5.9.121.211, timeLog=2015-05-25T11:05:27Z, request=RequestModel[method=GET, resource=/downloads/product_3, protocolVersion=HTTP/1.1], statusCode=404, bytesSend=5000, userAgent=Debian APT-HTTP/1.3 (0.8.10.3)]|5000
+|=======================
+Запрашиваемые адреса
+[options="header"]
+|=======================
+|Адрес|Количество
+|5.9.121.211|6
+|10.0.2.236|3
+|10.0.2.231|2
 |=======================

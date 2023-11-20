@@ -91,6 +91,27 @@ public class LogStatsSaver {
                 + DELIMITER + entry.getValue());
         }
         inFile.add("|=======================");
+
+        inFile.add("Топ 5 больших запросов");
+        inFile.add("[options=\"header\"]");
+        inFile.add("|=======================");
+        inFile.add("|Реквест|Размер");
+        for (var entry : this.model.mostFiveHugeRequest()) {
+            inFile.add(DELIMITER + entry.toString()
+                + DELIMITER + entry.bytesSend());
+        }
+        inFile.add("|=======================");
+
+        inFile.add("Запрашиваемые адреса");
+        inFile.add("[options=\"header\"]");
+        inFile.add("|=======================");
+        inFile.add("|Адрес|Количество");
+        for (var entry : this.model.mostRequestedIps().entrySet()) {
+            inFile.add(DELIMITER + entry.getKey()
+                + DELIMITER + entry.getValue());
+        }
+        inFile.add("|=======================");
+
         return inFile;
     }
 
@@ -124,6 +145,22 @@ public class LogStatsSaver {
                 + DELIMITER + getNameByCode(entry.getKey())
                 + DELIMITER + entry.getValue()
                 + DELIMITER);
+        }
+
+        inFile.add("#### Топ 5 больших запросов");
+        inFile.add("|Реквест|Размер|");
+        inFile.add("| ------------ | ------------ |");
+        for (var entry : this.model.mostFiveHugeRequest()) {
+            inFile.add(DELIMITER + entry.toString()
+                + DELIMITER + entry.bytesSend() + DELIMITER);
+        }
+
+        inFile.add("#### Запрашиваемые адреса");
+        inFile.add("|Адрес|Количество|");
+        inFile.add("| ------------ | ------------ |");
+        for (var entry : this.model.mostRequestedIps().entrySet()) {
+            inFile.add(DELIMITER + entry.getKey()
+                + DELIMITER + entry.getValue() + DELIMITER);
         }
 
         return inFile;

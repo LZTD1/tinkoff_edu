@@ -2,8 +2,10 @@ package edu.project3;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import edu.project3.src.LogAnalyze;
+import edu.project3.src.Model.LogReport;
 import org.junit.jupiter.api.Test;
 import static edu.project3.TestUtils.MOCK_LOGS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +21,7 @@ public class LogAnalyzeTest {
                 "dateStart", "25.05.2015",
                 "endDate", "28.05.2015",
                 "countRequests", "11",
-                "averageResponseSize", "216b"
+                "averageResponseSize", "4111b"
             )
         );
     }
@@ -34,7 +36,7 @@ public class LogAnalyzeTest {
                 "dateStart", "25.05.2015",
                 "endDate", "25.05.2015",
                 "countRequests", "4",
-                "averageResponseSize", "340b"
+                "averageResponseSize", "5500b"
             )
         );
     }
@@ -48,7 +50,7 @@ public class LogAnalyzeTest {
                 "dateStart", "26.05.2015",
                 "endDate", "28.05.2015",
                 "countRequests", "7",
-                "averageResponseSize", "145b"
+                "averageResponseSize", "3318b"
             )
         );
     }
@@ -83,6 +85,34 @@ public class LogAnalyzeTest {
 
         assertThat(resources).isEqualTo(
             expected
+        );
+    }
+    @Test
+    void getMostFiveHugeRequestsTest() {
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "", "");
+        List<LogReport> result = logAnalyze.getMostFiveHugeRequests();
+
+        assertThat(result).isEqualTo(
+            List.of(
+                MOCK_LOGS.get(7),
+                MOCK_LOGS.get(0),
+                MOCK_LOGS.get(8),
+                MOCK_LOGS.get(1),
+                MOCK_LOGS.get(2)
+            )
+        );
+    }
+    @Test
+    void getMostRequestedIpsTest() {
+        LogAnalyze logAnalyze = new LogAnalyze(MOCK_LOGS, "", "");
+        Map<String, Long> result = logAnalyze.getMostRequestedIps();
+
+        assertThat(result).isEqualTo(
+            Map.of(
+                "5.9.121.211", 6L,
+                "10.0.2.236", 3L,
+                "10.0.2.231", 2L
+            )
         );
     }
 }
