@@ -11,7 +11,7 @@ public class FactorialCalculate {
         this.factorialOf = factorialOf;
     }
 
-    public int calculate(){
+    public int calculate() {
         int[] array = IntStream.range(1, factorialOf + 1).toArray();
 
         int result = Arrays.stream(array)
