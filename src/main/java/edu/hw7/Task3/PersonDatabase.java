@@ -2,8 +2,7 @@ package edu.hw7.Task3;
 
 import org.jetbrains.annotations.Nullable;
 
-interface PersonDatabase {
-
+public interface PersonDatabase {
     void add(Person person);
 
     void delete(int id);
