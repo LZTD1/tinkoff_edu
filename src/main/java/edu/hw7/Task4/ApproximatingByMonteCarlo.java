@@ -2,34 +2,60 @@ package edu.hw7.Task4;
 
 import java.security.SecureRandom;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 public class ApproximatingByMonteCarlo {
 
     private final Random random = new SecureRandom();
-    private final int SIZE_SQUARE = 2;
-    private final int RADIUS_SQUARE = SIZE_SQUARE / 2;
+    private final double SIZE_SQUARE = 2.0;
+    private final double RADIUS_SQUARE = SIZE_SQUARE / 2.0;
     private final int countPoints;
-    private final int totalCount;
-    private final int circleCount;
+    private int circleCount;
 
     public ApproximatingByMonteCarlo(int numberOfSamplePoints) {
         this.countPoints = numberOfSamplePoints;
-        this.totalCount = 0;
         this.circleCount = 0;
+    }
+
+    public void iterate() {
+        for (int i = 0; i < this.countPoints; i++) {
+            if (isPointInCircle(generatePoint())) {
+                this.circleCount += 1;
+            }
+        }
+    }
+
+    public void multithreadingIterate(int threads) {
+        int iteratePerThread = this.countPoints / threads;
+        this.circleCount = IntStream.range(0, threads).parallel().reduce(0, (accumulator, element) ->
+            accumulator + multiThreadIterate(iteratePerThread)
+        );
     }
 
     public Point generatePoint() {
         return new Point(
-            random.nextDouble(0, SIZE_SQUARE),
-            random.nextDouble(0, SIZE_SQUARE)
+            ThreadLocalRandom.current().nextDouble(-1.0, 1.0),
+            ThreadLocalRandom.current().nextDouble(-1.0, 1.0)
         );
     }
-    public double getNearestPi(){
-        return 4 * ((double) circleCount / totalCount);
+
+    public double getNearestPi() {
+        return 4 * ((double) this.circleCount / this.countPoints);
+    }
+
+    private int multiThreadIterate(int iteratePerThread) {
+        int curCount = 0;
+        for (int i = 0; i < iteratePerThread; i++) {
+            if (isPointInCircle(generatePoint())) {
+                curCount += 1;
+            }
+        }
+        return curCount;
     }
 
     private boolean isPointInCircle(Point point) {
-        return point.x() * point.x() + point.y() * point.y() < RADIUS_SQUARE;
+        return (point.x() * point.x() + point.y() * point.y()) < (RADIUS_SQUARE * RADIUS_SQUARE);
     }
-
 }
