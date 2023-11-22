@@ -7,9 +7,11 @@ public class NotAtomicCounter {
     public NotAtomicCounter(int initialValue) {
         this.counter = initialValue;
     }
+
     public int getValue() {
         return this.counter;
     }
+
     public int increment() {
         this.counter += 1;
         return this.counter;

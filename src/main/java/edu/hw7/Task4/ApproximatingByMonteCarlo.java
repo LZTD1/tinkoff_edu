@@ -3,14 +3,13 @@ package edu.hw7.Task4;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class ApproximatingByMonteCarlo {
 
     private final Random random = new SecureRandom();
-    private final double SIZE_SQUARE = 2.0;
-    private final double RADIUS_SQUARE = SIZE_SQUARE / 2.0;
+    private final static double SIZE_SQUARE = 2.0;
+    private final static double RADIUS_SQUARE = SIZE_SQUARE / 2.0;
     private final int countPoints;
     private int circleCount;
 
@@ -41,6 +40,7 @@ public class ApproximatingByMonteCarlo {
         );
     }
 
+    @SuppressWarnings("MagicNumber")
     public double getNearestPi() {
         return 4 * ((double) this.circleCount / this.countPoints);
     }

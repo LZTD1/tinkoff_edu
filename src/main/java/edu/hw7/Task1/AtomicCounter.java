@@ -10,11 +10,11 @@ public class AtomicCounter {
         this.counter = new AtomicInteger(initialValue);
     }
 
-    public int getValue(){
+    public int getValue() {
         return this.counter.get();
     }
 
-    public int increment(){
+    public int increment() {
         return this.counter.incrementAndGet();
     }
 }
