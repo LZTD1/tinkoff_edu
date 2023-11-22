@@ -1,28 +1,36 @@
 package edu.hw8.Task1;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
-import java.nio.charset.StandardCharsets;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Server implements AutoCloseable {
 
     private final static Logger LOGGER = LogManager.getLogger();
+    private final ExecutorService threadPool;
+    private final ReentrantReadWriteLock locker;
     private ServerSocketChannel serverSocket;
     private Selector selector;
 
     public Server() {
+        this.threadPool = Executors.newFixedThreadPool(4);
+        this.locker = new ReentrantReadWriteLock(true);
+    }
+
+    public Server(int threads, ReentrantReadWriteLock locker) {
+        this.threadPool = Executors.newFixedThreadPool(threads);
+        this.locker = new ReentrantReadWriteLock(true);
     }
 
     public void start(int port) {
@@ -47,7 +55,15 @@ public class Server implements AutoCloseable {
                             register(selector, serverSocket);
                         }
                         if (key.isReadable()) {
-                            answer(buffer, key);
+                            this.threadPool.submit(
+                                () -> {
+                                    try {
+                                        answer(buffer, key);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            );
                         }
                     }
                 }
@@ -59,6 +75,9 @@ public class Server implements AutoCloseable {
     }
 
     private void answer(ByteBuffer buffer, SelectionKey key) throws IOException {
+        locker.writeLock().lock(); // Потому что один буфер на все потоки
+        // или лучше создавать каждому потоку по буферу?
+
         SocketChannel client = (SocketChannel) key.channel();
 
         int numBytesRead = client.read(buffer);
@@ -74,6 +93,8 @@ public class Server implements AutoCloseable {
         }
 
         client.close();
+
+        locker.writeLock().unlock();
     }
 
     private void register(Selector selector, ServerSocketChannel serverSocket) throws IOException {
