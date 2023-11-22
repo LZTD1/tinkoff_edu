@@ -118,6 +118,13 @@
             <version>2.9.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- Multithreading test -->
+        <dependency>
+            <groupId>com.googlecode.multithreadedtc</groupId>
+            <artifactId>multithreadedtc</artifactId>
+            <version>1.01</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
