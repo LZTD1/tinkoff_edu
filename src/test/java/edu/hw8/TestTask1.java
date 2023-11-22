@@ -95,16 +95,18 @@ public class TestTask1 {
         }
 
         @Test
-        void testClientServer() throws Exception {
+        void testGetServerMessage() throws Exception {
             Thread.sleep(1000);
 
             var client = new Client();
             client.start("localhost", 4004);
             client.sendToServer("Hello world!");
-            var response = client.readFromServer();
-            client.sendToServer("Hello world2!");
-            var response2 = client.readFromServer();
+            String response = client.readFromServer();
 
+            assertThat(response).isNotNull();
+            assertThat(response).isNotEmpty();
+
+            client.close();
         }
 
         @AfterEach

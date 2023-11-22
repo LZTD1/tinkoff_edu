@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Set;
 import org.apache.logging.log4j.LogManager;
@@ -65,12 +66,14 @@ public class Server implements AutoCloseable {
             buffer.flip();
             while (buffer.hasRemaining()) {
                 client.write(buffer);
+                LOGGER.info("SERVER | Answered to client " + client.getLocalAddress());
             }
             buffer.clear();
 
             numBytesRead = client.read(buffer);
         }
 
+        client.close();
     }
 
     private void register(Selector selector, ServerSocketChannel serverSocket) throws IOException {
