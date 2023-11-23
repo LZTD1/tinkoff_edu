@@ -1,5 +1,6 @@
 package edu.hw8.Task2;
 
+import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.stream.Stream;
@@ -7,27 +8,27 @@ import java.util.stream.Stream;
 public class MyNewFixedThreadPool implements ThreadPool {
 
     private final BlockingQueue<Runnable> blockingQueue;
-    private final Stream<Thread> threads;
+    private final Thread[] threads;
 
     public MyNewFixedThreadPool(int countThreads) {
         this.blockingQueue = new ArrayBlockingQueue<>(countThreads);
-
         this.threads = Stream.generate(() -> new Thread(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    Runnable task = blockingQueue.take();
-                    task.run();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
+                        Runnable task = blockingQueue.take();
+                        task.run();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
-            }
-        })).limit(countThreads);
+            })).limit(countThreads)
+            .toArray(Thread[]::new);
 
     }
 
     @Override
     public void start() {
-        this.threads.forEach(Thread::start);
+        Arrays.stream(this.threads).forEach(Thread::start);
     }
 
     @Override
@@ -41,6 +42,6 @@ public class MyNewFixedThreadPool implements ThreadPool {
 
     @Override
     public void close() throws Exception {
-        this.threads.forEach(Thread::interrupt);
+        Arrays.stream(this.threads).forEach(Thread::interrupt);
     }
 }
