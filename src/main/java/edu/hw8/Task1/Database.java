@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Database {
 
-    private HashMap<String, List<String>> quotes;
+    private final HashMap<String, List<String>> quotes;
 
     public Database() {
         this.quotes = new HashMap<>() {{
@@ -26,11 +26,13 @@ public class Database {
     }
 
     public List<String> getQuotes(String category) {
-        return this.quotes.get(category);
+        String myCategory = category.trim().toLowerCase();
+        return this.quotes.get(myCategory);
     }
 
     public String getQuote(String category) {
-        var listCategory = this.quotes.get(category);
+        String myCategory = category.trim().toLowerCase();
+        var listCategory = this.quotes.get(myCategory);
         return listCategory.get(ThreadLocalRandom.current().nextInt(listCategory.size()));
     }
 

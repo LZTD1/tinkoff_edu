@@ -1,28 +1,26 @@
 package edu.hw8.Task1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class Client implements AutoCloseable{
+public class Client implements AutoCloseable {
 
     private final static Logger LOGGER = LogManager.getLogger();
     private Socket clientSocket;
     private BufferedReader inStream;
     private BufferedWriter outStream;
 
-    public Client(){
+    public Client() {
     }
 
-    public void start(String host, int port){
+    public void start(String host, int port) {
         try {
             clientSocket = new Socket(InetAddress.getByName(host), port);
             createStreams();
@@ -31,7 +29,7 @@ public class Client implements AutoCloseable{
         }
     }
 
-    public void createStreams(){
+    public void createStreams() {
         try {
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
@@ -40,7 +38,7 @@ public class Client implements AutoCloseable{
         }
     }
 
-    public void sendToServer(String line){
+    public void sendToServer(String line) {
         try {
             outStream.write(line + "\n");
             outStream.flush();
