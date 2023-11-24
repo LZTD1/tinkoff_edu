@@ -21,14 +21,14 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class Server implements AutoCloseable {
 
     private final static Logger LOGGER = LogManager.getLogger();
-    private final ExecutorService threadPool;
     private final static int DEFAULT_MAX_CAPACITY = 5;
     private final static int DEFAULT_MAX_THREADS = 4;
     private final static int DEFAULT_BYTEBYFFER_CAPACITY = 256;
+    private final ExecutorService threadPool;
     private final ReentrantReadWriteLock locker;
     private final BlockingQueue blockingQueue;
-    private ServerSocketChannel serverSocket;
     private final Handler handler;
+    private ServerSocketChannel serverSocket;
     private Selector selector;
 
     public Server(Handler handler) {

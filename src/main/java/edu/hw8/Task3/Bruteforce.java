@@ -1,6 +1,5 @@
 package edu.hw8.Task3;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class Bruteforce {
@@ -10,14 +9,14 @@ public class Bruteforce {
     private final char[] alphabet;
     private final int threadsCount;
 
-    public Bruteforce(String alphabet, int maxLength, BlockingQueue<String> queue, int threads){
+    public Bruteforce(String alphabet, int maxLength, BlockingQueue<String> queue, int threads) {
         this.alphabet = alphabet.toCharArray();
         this.threadsCount = threads;
         this.queue = queue;
         this.maxLength = maxLength;
     }
 
-    public void bruteForce(){
+    public void bruteForce() {
         for (int i = 2; i <= maxLength; i++) {
             bruteForceByLength("", i);
         }
@@ -32,7 +31,7 @@ public class Bruteforce {
                     bruteForceByLength(current + c, len);
                 }
             }
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
