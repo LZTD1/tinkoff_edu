@@ -59,9 +59,21 @@ public class Client implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
-        clientSocket.close();
-        inStream.close();
-        outStream.close();
+    public void close() {
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        try {
+            inStream.close();
+        } catch (IOException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        try {
+            outStream.close();
+        } catch (IOException e) {
+            LOGGER.warn(e.getMessage());
+        }
     }
 }

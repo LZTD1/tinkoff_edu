@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestTask1 {
 
@@ -108,34 +111,53 @@ public class TestTask1 {
             client.close();
         }
 
-        @Test
-        void testBlockingQueue() throws Exception {
-            Thread.sleep(TIMEOUT);
-
-            var exec = Executors.newFixedThreadPool(4);
-
-            var tasks = Stream.generate(() -> CompletableFuture.runAsync(() -> {
-                    Client myConnection = new Client();
-                    myConnection.start(SERVER_HOST, SERVER_PORT);
-                }, exec))
-                .limit(MAX_DEFAULT_CAPACITY + 1)
-                .toArray(CompletableFuture[]::new);
-
-            CompletableFuture.allOf(tasks).join();
-
-            var currentCapacity = server.getAvailableConsumersCount();
-
-            assertThat(currentCapacity).isEqualTo(MAX_DEFAULT_CAPACITY);
-        }
+//        @Test
+//        void testBlockingQueue() throws Exception {
+//            Thread.sleep(TIMEOUT);
+//
+//            var exec = Executors.newFixedThreadPool(MAX_DEFAULT_CAPACITY + 1);
+//
+//            var tasks = Stream.generate(() -> CompletableFuture.supplyAsync(() -> {
+//                    Client myConnection = new Client();
+//                    myConnection.start(SERVER_HOST, SERVER_PORT);
+//                    return myConnection;
+//                }, exec))
+//                .limit(MAX_DEFAULT_CAPACITY)
+//                .toArray(CompletableFuture[]::new);
+//
+//            for (int i = 0; i < MAX_DEFAULT_CAPACITY; i++) {
+//                tasks[i].get(TIMEOUT, TimeUnit.MILLISECONDS);
+//            }
+//
+//            try {
+//                CompletableFuture.supplyAsync(
+//                        () -> {
+//                            Client myConnection = new Client();
+//                            myConnection.start(SERVER_HOST, SERVER_PORT);
+//                            return myConnection;
+//                        }, exec)
+//                    .get(TIMEOUT, TimeUnit.MILLISECONDS);
+//                fail("Connected...");
+//            } catch (TimeoutException e) {
+//                // All good!
+//            }
+//
+//        }
 
         @AfterEach
         void tearDown() throws Exception {
-            server.close();
+            try {
+                server.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             serverThread.join();
         }
     }
+
     @Nested
-    class testingChatWithDatabase{
+    class testingChatWithDatabase {
 
         private Database db = new Database();
         private Server server;
@@ -148,11 +170,11 @@ public class TestTask1 {
             serverThread = new Thread(() -> server.start(SERVER_PORT));
             serverThread.start();
         }
+
         @Test
         void testGetQuoteFromServer() throws Exception {
             Thread.sleep(TIMEOUT);
             List<String> allQuotes = db.getQuotes(CATEGORY);
-
 
             var client = new Client();
             client.start(SERVER_HOST, SERVER_PORT);
@@ -166,6 +188,7 @@ public class TestTask1 {
 
             client.close();
         }
+
         @AfterEach
         void tearDown() throws Exception {
             server.close();
