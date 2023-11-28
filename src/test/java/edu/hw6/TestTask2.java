@@ -9,7 +9,7 @@ import static edu.hw6.Task2.cloneFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask2 {
-    @AfterAll @BeforeAll static void cleanUp() {
+    @AfterAll static void cleanUp() {
         Paths.get("src/test/resources/hw6/fileForCopy - копия (1).txt").toFile().delete();
         Paths.get("src/test/resources/hw6/fileForCopy - копия (2).txt").toFile().delete();
         Paths.get("src/test/resources/hw6/fileForCopy - копия (3).txt").toFile().delete();

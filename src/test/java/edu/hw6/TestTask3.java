@@ -9,20 +9,18 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import static edu.hw6.Task3.AbstractFilter.globMatches;
-import static edu.hw6.Task3.AbstractFilter.largerThan;
-import static edu.hw6.Task3.AbstractFilter.magicNumber;
-import static edu.hw6.Task3.AbstractFilter.regexContains;
+import static edu.hw6.Task3.AttributeFilter.regular;
+import static edu.hw6.Task3.FileMatching.globMatches;
+import static edu.hw6.Task3.FileMatching.magicNumber;
+import static edu.hw6.Task3.FileMatching.regexContains;
+import static edu.hw6.Task3.FileProperties.largerThan;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask3 {
 
-    public static final AbstractFilter regularFile = Files::isRegularFile;
-    public static final AbstractFilter readable = Files::isReadable;
-
     @Test
     void testFindMagicNumbers() {
-        AbstractFilter filter = regularFile
+        AbstractFilter filter = regular()
             .and(magicNumber(0x89, 'P', 'N', 'G'));
         ArrayList<String> toExcept = new ArrayList<>();
 
@@ -36,13 +34,13 @@ public class TestTask3 {
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"screen.png").toString()
+            Paths.get("src", "test", "resources", "hw6", "filesToTask3", "screen.png").toString()
         ));
     }
 
     @Test
     void testFindByRegex() {
-        AbstractFilter filter = regularFile
+        AbstractFilter filter = regular()
             .and(regexContains("^some.+java$"));
         ArrayList<String> toExcept = new ArrayList<>();
 
@@ -56,13 +54,13 @@ public class TestTask3 {
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"somejava.java").toString()
+            Paths.get("src", "test", "resources", "hw6", "filesToTask3", "somejava.java").toString()
         ));
     }
 
     @Test
     void testFindByGlob() {
-        AbstractFilter filter = regularFile
+        AbstractFilter filter = regular()
             .and(globMatches("*.txt"));
         ArrayList<String> toExcept = new ArrayList<>();
 
@@ -76,13 +74,13 @@ public class TestTask3 {
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"sometext.txt").toString()
+            Paths.get("src", "test", "resources", "hw6", "filesToTask3", "sometext.txt").toString()
         ));
     }
 
     @Test
     void testFindByLarger() {
-        AbstractFilter filter = regularFile
+        AbstractFilter filter = regular()
             .and(largerThan(2_000));
 
         ArrayList<String> toExcept = new ArrayList<>();
@@ -97,14 +95,14 @@ public class TestTask3 {
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"screen2.jpg").toString(),
-            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"screen.png").toString()
+            Paths.get("src", "test", "resources", "hw6", "filesToTask3", "screen2.jpg").toString(),
+            Paths.get("src", "test", "resources", "hw6", "filesToTask3", "screen.png").toString()
         ));
     }
 
     @Test
     void testFindByLargeAndMagicNumbers() {
-        AbstractFilter filter = regularFile
+        AbstractFilter filter = regular()
             .and(largerThan(2_000))
             .and(magicNumber(0x89, 'P', 'N', 'G'));
 
@@ -120,7 +118,7 @@ public class TestTask3 {
         }
 
         assertThat(toExcept).containsExactlyInAnyOrderElementsOf(List.of(
-            Paths.get("src" ,"test" ,"resources" ,"hw6" ,"filesToTask3" ,"screen.png").toString()
+            Paths.get("src", "test", "resources", "hw6", "filesToTask3", "screen.png").toString()
         ));
     }
 }

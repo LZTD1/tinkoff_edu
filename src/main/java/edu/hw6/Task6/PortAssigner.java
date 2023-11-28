@@ -9,14 +9,13 @@ import java.util.Optional;
 
 public class PortAssigner implements AutoCloseable {
 
-    private final CsvToBean<PortModel> csvToBean;
     private final FileReader reader;
     private final List<PortModel> portsModels;
 
     public PortAssigner() throws FileNotFoundException {
         this.reader =
             new FileReader("src/main/resources/ports.csv"); // file from https://www.iana.org/assignments/service-names-port-numbers/
-        this.csvToBean = new CsvToBeanBuilder<PortModel>(this.reader)
+        CsvToBean<PortModel> csvToBean = new CsvToBeanBuilder<PortModel>(this.reader)
             .withType(PortModel.class)
             .withIgnoreLeadingWhiteSpace(true)
             .build();

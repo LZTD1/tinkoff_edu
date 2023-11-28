@@ -35,62 +35,6 @@ public class DiskMap implements Map<String, String> {
         diskMapFromPath(path);
     }
 
-    private void diskMapFromPath(Path path) {
-        var myMap = path.toFile();
-        if (myMap.exists()) {
-            this.pathFile = path.toString();
-            parseMapFromFile();
-        } else {
-            throw new ErrorLoadMapFromFile("File is not exist!");
-        }
-    }
-
-    private void parseMapFromFile() {
-        String line;
-        try (BufferedReader bufferreader = new BufferedReader(new FileReader(this.pathFile))) {
-            while ((line = bufferreader.readLine()) != null) {
-                String[] data = line.split(":", 2);
-                this.hashMap.put(data[0], data[1]);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @SuppressWarnings("MagicNumber")
-    private String getRandomNameFile() {
-
-        return new Random().ints(LENGTH_FILENAME, 48, 123)
-            .filter(num -> (num < 58 || num > 64) && (num < 91 || num > 96))
-            .mapToObj(c -> String.valueOf((char) c))
-            .collect(Collectors.joining());
-    }
-
-    private void constructFile() {
-        this.pathFile = getRandomNameFile() + ".txt";
-
-        File file = new File(pathFile);
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            throw new ErrorCreatingFile("Ошибка при создании файла: " + e.getMessage());
-        }
-    }
-
-    private void updateMap() {
-        try (FileWriter writer = new FileWriter(this.pathFile)) {
-
-            StringBuilder sb = new StringBuilder();
-            for (Map.Entry<String, String> entry : this.hashMap.entrySet()) {
-                sb.append(entry.getKey()).append(":").append(entry.getValue()).append(System.lineSeparator());
-            }
-            String toInserted = sb.toString();
-            writer.write(toInserted);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public int size() {
         return this.hashMap.size();
@@ -175,5 +119,61 @@ public class DiskMap implements Map<String, String> {
 
     public HashMap<String, String> getHashMap() {
         return hashMap;
+    }
+
+    private void diskMapFromPath(Path path) {
+        var myMap = path.toFile();
+        if (myMap.exists()) {
+            this.pathFile = path.toString();
+            parseMapFromFile();
+        } else {
+            throw new ErrorLoadMapFromFile("File is not exist!");
+        }
+    }
+
+    private void parseMapFromFile() {
+        String line;
+        try (BufferedReader bufferreader = new BufferedReader(new FileReader(this.pathFile))) {
+            while ((line = bufferreader.readLine()) != null) {
+                String[] data = line.split(":", 2);
+                this.hashMap.put(data[0], data[1]);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @SuppressWarnings("MagicNumber")
+    private String getRandomNameFile() {
+
+        return new Random().ints(LENGTH_FILENAME, 48, 123)
+            .filter(num -> (num < 58 || num > 64) && (num < 91 || num > 96))
+            .mapToObj(c -> String.valueOf((char) c))
+            .collect(Collectors.joining());
+    }
+
+    private void constructFile() {
+        this.pathFile = getRandomNameFile() + ".txt";
+
+        File file = new File(pathFile);
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            throw new ErrorCreatingFile("Ошибка при создании файла: " + e.getMessage());
+        }
+    }
+
+    private void updateMap() {
+        try (FileWriter writer = new FileWriter(this.pathFile)) {
+
+            StringBuilder sb = new StringBuilder();
+            for (Map.Entry<String, String> entry : this.hashMap.entrySet()) {
+                sb.append(entry.getKey()).append(":").append(entry.getValue()).append(System.lineSeparator());
+            }
+            String toInserted = sb.toString();
+            writer.write(toInserted);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

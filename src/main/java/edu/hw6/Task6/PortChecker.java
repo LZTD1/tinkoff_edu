@@ -17,7 +17,6 @@ public class PortChecker {
     private final static int MAX_PORT = 49151;
 
     public PortChecker() {
-
     }
 
     public List<Integer> getBusyPorts() {
@@ -68,7 +67,7 @@ public class PortChecker {
                 Optional<PortModel> result = pa.getPortAssign(port);
                 if (result.isPresent()) {
                     PortModel data = result.get();
-                    LOGGER.info(port + " | " + data.getServiceName() + " | " + data.getDescription());
+                    LOGGER.info("{} | {} | {}", port, data.getServiceName(), data.getDescription());
                 } else {
                     LOGGER.info(port + " | unknown | unknown");
                 }

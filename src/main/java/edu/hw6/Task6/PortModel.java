@@ -9,9 +9,6 @@ public class PortModel {
     @CsvBindByName(column = "Port Number")
     private String portNumber;
 
-    @CsvBindByName(column = "Transport Protocol")
-    private String transportProtocol;
-
     @CsvBindByName(column = "Description")
     private String description;
 

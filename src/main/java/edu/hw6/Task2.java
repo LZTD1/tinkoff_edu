@@ -37,11 +37,9 @@ public class Task2 {
     }
 
     private static void copyFileUsingNIO(File sourceFile, File destinationFile) throws IOException {
-        FileInputStream inputStream = new FileInputStream(sourceFile);
-        FileOutputStream outputStream = new FileOutputStream(destinationFile);
         try (
-            inputStream;
-            outputStream;
+            FileInputStream inputStream = new FileInputStream(sourceFile);
+            FileOutputStream outputStream = new FileOutputStream(destinationFile);
             FileChannel inChannel = inputStream.getChannel();
             FileChannel outChannel = outputStream.getChannel()
         ) {

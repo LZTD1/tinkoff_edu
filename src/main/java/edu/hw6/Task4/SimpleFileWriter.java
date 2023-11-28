@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedOutputStream;
+import org.apache.logging.log4j.LogManager;
 
 public class SimpleFileWriter implements AutoCloseable {
 
@@ -19,6 +20,7 @@ public class SimpleFileWriter implements AutoCloseable {
     private CheckedOutputStream checkedStream;
     private OutputStreamWriter outputStreamWriter;
     private BufferedOutputStream bufferedStream;
+    private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
     public SimpleFileWriter(String path) throws IOException {
         this.path = path;
@@ -38,13 +40,11 @@ public class SimpleFileWriter implements AutoCloseable {
     private void checkedStreamWriter() {
         this.checkedStream = new CheckedOutputStream(this.outputStream, new Adler32());
         bufferedStreamWriter();
-
     }
 
     private void bufferedStreamWriter() {
         this.bufferedStream = new BufferedOutputStream(this.checkedStream);
         outputStreamWriter();
-
     }
 
     private void outputStreamWriter() {
@@ -62,10 +62,27 @@ public class SimpleFileWriter implements AutoCloseable {
     }
 
     @Override
-    public void close() throws IOException {
-        this.outputStream.close();
-        this.checkedStream.close();
-        this.outputStreamWriter.close();
-        this.bufferedStream.close();
+    public void close() {
+        try {
+            this.outputStream.close();
+        } catch (IOException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        try {
+            this.checkedStream.close();
+        } catch (IOException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        try {
+            this.outputStreamWriter.close();
+        } catch (IOException e) {
+            LOGGER.warn(e.getMessage());
+        }
+        try {
+            this.bufferedStream.close();
+        } catch (IOException e) {
+            LOGGER.warn(e.getMessage());
+        }
+
     }
 }
