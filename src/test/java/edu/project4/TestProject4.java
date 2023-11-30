@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestProject4 {
     @Test
     void testFlameGenerateValidMatrix(){
-        var myFlame = new Flame(2, 10, 100, 1.0, false);
+        var myFlame = new Flame(2, 10, 100, 1.0, false, 1);
 
         short[][][] before = myFlame.getMatrixDisplay();
         myFlame.render();
@@ -19,7 +19,7 @@ public class TestProject4 {
     }
     @Test
     void testAfterCorrection(){
-        var myFlame = new Flame(2, 10, 100, 1.0, false);
+        var myFlame = new Flame(2, 10, 100, 1.0, false, 1);
 
         myFlame.render();
         short[][][] before = myFlame.getMatrixDisplay();

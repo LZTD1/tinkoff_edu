@@ -50,7 +50,7 @@ public class Flame {
     private final boolean mirroring;
     private int maxFrequency;
 
-    public Flame(int threads, int samples, int iterations, double gamma, boolean mirroring) {
+    public Flame(int threads, int samples, int iterations, double gamma, boolean mirroring, int superPxSize) {
         this.threads = threads;
         this.executor = Executors.newFixedThreadPool(threads);
         this.samples = samples;
@@ -59,7 +59,7 @@ public class Flame {
         this.gammaCorrection = gamma;
         this.mirroring = mirroring;
 
-        this.superPxSize = 1;
+        this.superPxSize = superPxSize;
         this.xmin = XMIN;
         this.xmax = XMAX;
         this.ymin = YMIN;

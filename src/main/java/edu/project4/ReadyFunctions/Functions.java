@@ -9,8 +9,9 @@ import edu.project4.Etinties.Variant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import static edu.project4.FactorialAssets.FactorialFactory.BUBBLE;
+import static edu.project4.FactorialAssets.FactorialFactory.DIAMOND;
 import static edu.project4.FactorialAssets.FactorialFactory.HANDKERCHIEF;
-import static edu.project4.FactorialAssets.FactorialFactory.LINEAR;
 
 public class Functions {
 
@@ -19,22 +20,27 @@ public class Functions {
     public final static Coefficients DEFAULT_COEF_PARAMS = new Coefficients(1, 0, 0, 0, 1, 0);
     public final static Parameters DEFAULT_VARIANT_PARAMS = new Parameters(0, 0, 0, 0);
     public final static Parameters RANDOM_VARIANT_PARAMS =
-        new Parameters(RANDOM.nextInt(2), RANDOM.nextInt(2), RANDOM.nextInt(2), RANDOM.nextInt(2));
+        new Parameters(
+            RANDOM.nextDouble(-1.0, 1.0),
+            RANDOM.nextDouble(-1.0, 1.0),
+            RANDOM.nextDouble(-1.0, 1.0),
+            RANDOM.nextDouble(-1.0, 1.0)
+        );
     public final static Coefficients RANDOM_COEF_PARAMS = new Coefficients(
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0)
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0)
     );
     public final static PostTransformation RANDOM_PT_PARAMS = new PostTransformation(
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0),
-        RANDOM.nextDouble(2.0)
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0),
+        RANDOM.nextDouble(-1.0, 1.0)
     );
 
     private final List<Function> functions;
@@ -47,20 +53,33 @@ public class Functions {
         this.functions = new ArrayList<Function>() {{
 
             add(new Function(
+                Colors.BLUE,
+                DEFAULT_COEF_PARAMS,
+                DEFAULT_PT_PARAMS,
+                new ArrayList<Variant>() {{
+                    add(new Variant(
+                        1,
+                        DIAMOND,
+                        DEFAULT_VARIANT_PARAMS
+                    ));
+                }}
+            ));
+            add(new Function(
                 Colors.GREEN,
                 DEFAULT_COEF_PARAMS,
                 DEFAULT_PT_PARAMS,
                 new ArrayList<Variant>() {{
                     add(new Variant(
                         1,
-                        HANDKERCHIEF,
+                        BUBBLE,
                         DEFAULT_VARIANT_PARAMS
                     ));
                     add(new Variant(
                         1,
-                        LINEAR,
+                        HANDKERCHIEF,
                         DEFAULT_VARIANT_PARAMS
                     ));
+
                 }}
             ));
         }};
