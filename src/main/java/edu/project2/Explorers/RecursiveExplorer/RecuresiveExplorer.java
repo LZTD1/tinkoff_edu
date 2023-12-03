@@ -116,13 +116,14 @@ public class RecuresiveExplorer implements Explorer {
         var mazeHeight = this.maze.getHeight();
         var mazeWidth = this.maze.getWidth();
 
-        if (fromX > 0 && fromX < mazeWidth
+        var inMaze = fromX > 0 && fromX < mazeWidth
             && toX > 0 && toX < mazeWidth
             && fromY > 0 && fromY < mazeHeight
-            && toY > 0 && toY < mazeHeight) {
-            return;
-        } else {
-            throw new IncorrectRoutePointsError("You have entered incorrect route points, they do not exist in matrix!");
+            && toY > 0 && toY < mazeHeight;
+
+        if (!inMaze) {
+            throw new IncorrectRoutePointsError("You have entered incorrect route points,"
+                + " they do not exist in matrix!");
         }
     }
 

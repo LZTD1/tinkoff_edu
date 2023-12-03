@@ -50,7 +50,7 @@ public class SimplifyMazeGeneratorWithStack implements MazeGenerator {
                 cr.get(0) - lastMovment.get(0) / 2,
                 cr.get(1) - lastMovment.get(1) / 2
             );
-            if(renderPerFrame){
+            if (renderPerFrame) {
                 drawMaze(newMaze);
             }
         }

@@ -131,7 +131,8 @@ public class SimplifyExplorer implements Explorer {
             && toY > 0 && toY < mazeHeight;
 
         if (!inMaze) {
-            throw new IncorrectRoutePointsError("You have entered incorrect route points, they do not exist in matrix!");
+            throw new IncorrectRoutePointsError("You have entered incorrect route points,"
+                + " they do not exist in matrix!");
         }
     }
 
