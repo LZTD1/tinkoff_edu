@@ -69,7 +69,7 @@ public class PortChecker {
                     PortModel data = result.get();
                     LOGGER.info("{} | {} | {}", port, data.getServiceName(), data.getDescription());
                 } else {
-                    LOGGER.info(port + " | unknown | unknown");
+                    LOGGER.info("{} | unknown | unknown", port);
                 }
             }
         } catch (Exception e) {

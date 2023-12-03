@@ -9,11 +9,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import static edu.hw6.Task3.AttributeFilter.regular;
-import static edu.hw6.Task3.FileMatching.globMatches;
-import static edu.hw6.Task3.FileMatching.magicNumber;
-import static edu.hw6.Task3.FileMatching.regexContains;
-import static edu.hw6.Task3.FileProperties.largerThan;
+import static edu.hw6.Task3.AbstractFilters.Attributes.RegularFilter.regular;
+import static edu.hw6.Task3.AbstractFilters.FileMatchings.GlobFilter.globMatches;
+import static edu.hw6.Task3.AbstractFilters.FileMatchings.MagicFilter.magicNumber;
+
+import static edu.hw6.Task3.AbstractFilters.FileMatchings.RegexFilter.regexContains;
+import static edu.hw6.Task3.AbstractFilters.FileProperties.LargerFilter.largerThan;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestTask3 {
