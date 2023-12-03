@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import static edu.project2.ConsoleDrawer.drawMaze;
 
 public class RecursionTank {
     private static final int GOTO_BACK = -2;
@@ -35,7 +36,7 @@ public class RecursionTank {
         );
     }
 
-    public void move(List<Integer> currentPosition, Maze maze) {
+    public void move(List<Integer> currentPosition, Maze maze, boolean renderPerFrame) {
         List<List<Integer>> variablesMovments = new ArrayList<>();
 
         variablesMovments.add(List.of(GOTO_FRONT, 0));
@@ -57,7 +58,8 @@ public class RecursionTank {
                         currentPosition.get(0) + variablesMovment.get(0) / 2,
                         currentPosition.get(1) + variablesMovment.get(1) / 2
                     );
-                    move(List.of(newX, newY), maze);
+                    drawMaze(maze);
+                    move(List.of(newX, newY), maze, renderPerFrame);
                 }
 
             }

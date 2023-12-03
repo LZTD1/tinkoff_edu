@@ -1,6 +1,6 @@
 package edu.project2;
 
-import edu.project2.Exceptions.InvalidMazeConstructor;
+import edu.project2.Exceptions.InvalidMazeConstructorError;
 
 public class Maze {
 
@@ -32,10 +32,10 @@ public class Maze {
 
     private void mazeFabricSize(MazeValues[][] maze) {
         if (maze.length == 0 || maze[0].length == 0) {
-            throw new InvalidMazeConstructor("Maze is invalid! Because length or width uncorrect!");
+            throw new InvalidMazeConstructorError("Maze is invalid! Because length or width uncorrect!");
         }
         if (maze.length % 2 == 0 || maze[0].length % 2 == 0) {
-            throw new InvalidMazeConstructor("Maze is invalid! Because the maze must be even");
+            throw new InvalidMazeConstructorError("Maze is invalid! Because the maze must be even");
         }
 
         this.height = maze.length;

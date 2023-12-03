@@ -1,14 +1,16 @@
 package edu.project2.Explorers.RecursiveExplorer;
 
-import edu.project2.Exceptions.IncorrectRoutePoints;
+import edu.project2.Exceptions.IncorrectRoutePointsError;
 import edu.project2.Exceptions.RouteCalculationError;
+import edu.project2.Interfaces.Explorer;
 import edu.project2.Maze;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 
-public class RecuresiveExplorer {
+public class RecuresiveExplorer implements Explorer {
     private final Random rand = new Random();
     private final Maze maze;
     private List<Integer> currentPosition;
@@ -21,10 +23,10 @@ public class RecuresiveExplorer {
         this.maze = maze;
     }
 
-    public Stack<List<Integer>> getRoute(List<List<Integer>> routePoints) {
+    public Deque<List<Integer>> getRoute(List<List<Integer>> routePoints) {
         initializeRoute(routePoints);
-        Stack<List<Integer>> movementExplorer = new Stack<>();
-        Stack<List<Integer>> route = moveExplorer(this.currentPosition, movementExplorer);
+        Deque<List<Integer>> movementExplorer = new ArrayDeque<>();
+        Deque<List<Integer>> route = moveExplorer(this.currentPosition, movementExplorer);
 
         maze.setEmpty(this.toX, this.toY);
 
@@ -37,7 +39,6 @@ public class RecuresiveExplorer {
 
     private void initializeRoute(List<List<Integer>> routePoints) {
         this.currentPosition = new ArrayList<>();
-        var myMaze = this.maze.getMaze();
 
         int fromX = routePoints.get(0).get(0);
         int fromY = routePoints.get(0).get(1);
@@ -55,7 +56,7 @@ public class RecuresiveExplorer {
         this.currentPosition.add(1, fromY);
     }
 
-    private Stack<List<Integer>> moveExplorer(List<Integer> currentPosition, Stack<List<Integer>> movement) {
+    private Deque<List<Integer>> moveExplorer(List<Integer> currentPosition, Deque<List<Integer>> movement) {
         List<List<Integer>> variableMovements = List.of(List.of(1, 0), List.of(0, 1), List.of(-1, 0), List.of(0, -1));
 
         for (List<Integer> variableMovement : variableMovements) {
@@ -76,7 +77,7 @@ public class RecuresiveExplorer {
                     }
                     visitPoints.add(List.of(newX, newY));
 
-                    Stack<List<Integer>> result = moveExplorer(List.of(newX, newY), movement);
+                    Deque<List<Integer>> result = moveExplorer(List.of(newX, newY), movement);
                     if (result != null) {
                         return result;
                     }
@@ -121,7 +122,7 @@ public class RecuresiveExplorer {
             && toY > 0 && toY < mazeHeight) {
             return;
         } else {
-            throw new IncorrectRoutePoints("You have entered incorrect route points, they do not exist in matrix!");
+            throw new IncorrectRoutePointsError("You have entered incorrect route points, they do not exist in matrix!");
         }
     }
 
@@ -129,7 +130,7 @@ public class RecuresiveExplorer {
         if (!this.maze.getValueOfPosition(fromX, fromY).equals(Maze.MazeValues.EMPTY)
             || !this.maze.getValueOfPosition(toX, toY).equals(Maze.MazeValues.EMPTY)) {
 
-            throw new IncorrectRoutePoints("You have entered incorrect route points, there are walls!");
+            throw new IncorrectRoutePointsError("You have entered incorrect route points, there are walls!");
         }
     }
 

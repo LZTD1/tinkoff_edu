@@ -1,5 +1,8 @@
 package edu.project2;
 
+import java.util.Deque;
+import java.util.List;
+
 public class ConsoleDrawer {
 
     private ConsoleDrawer() {

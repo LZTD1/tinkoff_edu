@@ -4,6 +4,7 @@ import edu.project2.Interfaces.MazeGenerator;
 import edu.project2.Maze;
 import java.util.Arrays;
 import java.util.List;
+import static edu.project2.ConsoleDrawer.drawMaze;
 
 public class SimplifyMazeGeneratorWithStack implements MazeGenerator {
 
@@ -11,7 +12,12 @@ public class SimplifyMazeGeneratorWithStack implements MazeGenerator {
     }
 
     @Override
-    public Maze generateMaze(Maze maze) {
+    public Maze generateMazeWithDraw(Maze maze) {
+        return generateMaze(maze, true);
+    }
+
+    @Override
+    public Maze generateMaze(Maze maze, boolean renderPerFrame) {
         Maze newMaze = getNewObjectMaze(maze);
 
         Tank tank = new Tank(
@@ -44,12 +50,20 @@ public class SimplifyMazeGeneratorWithStack implements MazeGenerator {
                 cr.get(0) - lastMovment.get(0) / 2,
                 cr.get(1) - lastMovment.get(1) / 2
             );
+            if(renderPerFrame){
+                drawMaze(newMaze);
+            }
         }
         newMaze.setEmpty(
             cr.get(0),
             cr.get(1)
         );
         return newMaze;
+    }
+
+    @Override
+    public Maze generateMaze(Maze maze) {
+        return generateMaze(maze, false);
     }
 
     @Override

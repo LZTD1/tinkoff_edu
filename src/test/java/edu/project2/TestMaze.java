@@ -1,104 +1,166 @@
 package edu.project2;
 
-import edu.project2.Exceptions.IncorrectRoutePoints;
-import edu.project2.Exceptions.InvalidMazeConstructor;
+import edu.project2.Exceptions.IncorrectRoutePointsError;
+import edu.project2.Exceptions.InvalidMazeConstructorError;
 import edu.project2.Exceptions.RouteCalculationError;
-import edu.project2.Explorers.Explorer.Explorer;
+import edu.project2.Explorers.Explorer.SimplifyExplorer;
+import edu.project2.Explorers.RecursiveExplorer.RecuresiveExplorer;
+import edu.project2.Interfaces.Explorer;
 import edu.project2.Interfaces.MazeGenerator;
 import edu.project2.MazeGenerators.RecursionMazeGenerator.RecursionMazeGenerator;
-import edu.project2.Explorers.RecursiveExplorer.RecuresiveExplorer;
 import edu.project2.MazeGenerators.SimplifyGenerator.SimplifyMazeGeneratorWithStack;
-import org.junit.jupiter.api.Test;
-
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
-
+import java.util.stream.Stream;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
 
 public class TestMaze {
-    @Test
-    void testFillMaze(){
-        Maze myMaze = new Maze(10);
-        MazeGenerator mazeGen = new SimplifyMazeGeneratorWithStack();
 
-        var filledMaze = mazeGen.fillMaze(myMaze);
+    @Nested
+    class TestMazeGenerators {
+        @ParameterizedTest
+        @MethodSource("mazeGeneratorProvider")
+        void testFillMaze(MazeGenerator mazeGen) {
+            Maze myMaze = new Maze(10);
 
-        for(Maze.MazeValues[] rows : filledMaze.getMaze()){
-            assertThat(rows).containsOnly(Maze.MazeValues.WALL);
+            var filledMaze = mazeGen.fillMaze(myMaze);
+
+            for (Maze.MazeValues[] rows : filledMaze.getMaze()) {
+                assertThat(rows).containsOnly(Maze.MazeValues.WALL);
+            }
+            for (Maze.MazeValues[] rows : myMaze.getMaze()) {
+                assertThat(rows).containsOnly((Maze.MazeValues) null);
+            }
         }
-        for(Maze.MazeValues[] rows : myMaze.getMaze()){
-            assertThat(rows).containsOnly((Maze.MazeValues) null);
+
+        @ParameterizedTest
+        @MethodSource("mazeGeneratorProvider")
+        void isValidGenerated(MazeGenerator mazeGen) {
+            Maze myMaze = new Maze(20);
+
+            var filledMaze = mazeGen.fillMaze(myMaze);
+            var genMaze = mazeGen.generateMaze(filledMaze);
+
+            var isGeneratedOk = mazeGen.isMazeValid(genMaze);
+            var isGeneratedFalse = mazeGen.isMazeValid(filledMaze);
+
+            assertThat(isGeneratedOk).isTrue();
+            assertThat(isGeneratedFalse).isFalse();
+        }
+
+        static Stream<Arguments> mazeGeneratorProvider() {
+            return Stream.of(
+                Arguments.of(new SimplifyMazeGeneratorWithStack()),
+                Arguments.of(new RecursionMazeGenerator())
+            );
         }
     }
-    @Test
-    void isValidGenerated(){
-        Maze myMaze = new Maze(15);
-        MazeGenerator mazeGen = new SimplifyMazeGeneratorWithStack();
 
-        var filledMaze = mazeGen.fillMaze(myMaze);
-        var genMaze = mazeGen.generateMaze(filledMaze);
+    @Nested
+    class TestMazeObject {
+        @Test
+        void testInsertInvalidMaze() {
 
-        var isGeneratedOk = mazeGen.isMazeValid(genMaze);
-        var isGeneratedFalse = mazeGen.isMazeValid(filledMaze);
+            List<List<Maze.MazeValues>> myMazeMatrix = List.of(
+                List.of(
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                )
+            );
+            // Convert to mazeArray
+            Maze.MazeValues[][] mazeArray = myMazeMatrix.stream()
+                .map(row -> row.toArray(new Maze.MazeValues[0]))
+                .toArray(Maze.MazeValues[][]::new);
 
-        assertThat(isGeneratedOk).isTrue();
-        assertThat(isGeneratedFalse).isFalse();
-    }
-    @Test
-    void testRoute(){
-        Maze myMaze = new Maze(15);
-        MazeGenerator mazeGen = new SimplifyMazeGeneratorWithStack();
+            assertThrows(InvalidMazeConstructorError.class, () -> {
+                new Maze(mazeArray);
+            });
+        }
 
-        var filledMaze = mazeGen.fillMaze(myMaze);
-        var genMaze = mazeGen.generateMaze(filledMaze);
-
-        var myExplorer = new Explorer(genMaze);
-        Stack<List<Integer>> route = myExplorer.getRoute(List.of(
-            List.of(1, 1), // From
-            List.of(13, 13) // To
-        ));
-
-        assertThat(route.isEmpty()).isFalse();
-        assertThat(myExplorer.getCurrentPosition()).isEqualTo(List.of(13, 13));
-    }
-
-    @Test
-    void testTouteFailed_RouteOutBounds(){
-        Maze myMaze = new Maze(15);
-        MazeGenerator mazeGen = new SimplifyMazeGeneratorWithStack();
-
-        var filledMaze = mazeGen.fillMaze(myMaze);
-        var genMaze = mazeGen.generateMaze(filledMaze);
-
-        var myExplorer = new Explorer(genMaze);
-
-        assertThrows(IncorrectRoutePoints.class, ()->{
-            myExplorer.getRoute(List.of(
-                List.of(1, 1), // From
-                List.of(255, 255) // To
-            ));
-        });
-    }
-    @Test
-    void testTouteFailed_RouteInWall(){
-        Maze myMaze = new Maze(15);
-        MazeGenerator mazeGen = new SimplifyMazeGeneratorWithStack();
-
-        var filledMaze = mazeGen.fillMaze(myMaze);
-        var genMaze = mazeGen.generateMaze(filledMaze);
-
-        var myExplorer = new Explorer(genMaze);
-
-        assertThrows(IncorrectRoutePoints.class, ()->{
-            myExplorer.getRoute(List.of(
-                List.of(1, 1), // From
-                List.of(10, 10) // To
-            ));
-        });
-    }
-    @Test
-    void testRouteFailed_NoRoutesExists(){
+        @Test
+        void testInsertOwnMaze() {
 
         /*
             Plan:
@@ -116,58 +178,282 @@ public class TestMaze {
 
          */
 
+            List<List<Maze.MazeValues>> myMazeMatrix = List.of(
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.EMPTY,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                ),
+                List.of(
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL,
+                    Maze.MazeValues.WALL
+                )
+            );
+            // Convert to mazeArray
+            Maze.MazeValues[][] mazeArray = myMazeMatrix.stream()
+                .map(row -> row.toArray(new Maze.MazeValues[0]))
+                .toArray(Maze.MazeValues[][]::new);
 
-        List<List<Maze.MazeValues>> myMazeMatrix = List.of(
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)
-        );
-        // Convert to mazeArray
-        Maze.MazeValues[][] mazeArray = myMazeMatrix.stream()
-            .map(row -> row.toArray(new Maze.MazeValues[0]))
-            .toArray(Maze.MazeValues[][]::new);
+            Maze myMaze = new Maze(mazeArray);
 
-        Maze myMaze = new Maze(mazeArray);
+            assertThat(myMaze.getMaze()).isEqualTo(mazeArray);
+        }
+    }
 
-        var myExplorer = new Explorer(myMaze);
+    @Nested
+    class TestExplorers{
+        static Maze myMaze = new Maze(15);
+        static MazeGenerator mazeGen = new RecursionMazeGenerator();
+        static Maze filledMaze = mazeGen.fillMaze(myMaze);
+        static Maze genMaze = mazeGen.generateMaze(filledMaze);
 
-        assertThrows(RouteCalculationError.class, ()->{
-            myExplorer.getRoute(List.of(
+        @ParameterizedTest
+        @MethodSource("explorerProvider")
+        void testRoute(Explorer myExplorer) {
+
+            Deque<List<Integer>> route = myExplorer.getRoute(List.of(
                 List.of(1, 1), // From
-                List.of(6, 6) // To
+                List.of(13, 13) // To
             ));
-        });
-    }
-    @Test
-    void testInsertInvalidMaze(){
 
-        List<List<Maze.MazeValues>> myMazeMatrix = List.of(
-          List.of(Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-          List.of(Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-          List.of(Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-          List.of(Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)
+            assertThat(route.isEmpty()).isFalse();
+            assertThat(myExplorer.getCurrentPosition()).isEqualTo(List.of(13, 13));
+        }
+
+        @ParameterizedTest
+        @MethodSource("explorerProvider")
+        void testTouteFailed_RouteOutBounds(Explorer myExplorer) {
+
+            assertThrows(IncorrectRoutePointsError.class, () -> {
+                myExplorer.getRoute(List.of(
+                    List.of(1, 1), // From
+                    List.of(255, 255) // To
+                ));
+            });
+        }
+
+        @ParameterizedTest
+        @MethodSource("explorerProvider")
+        void testTouteFailed_RouteInWall(Explorer myExplorer) {
+
+            assertThrows(IncorrectRoutePointsError.class, () -> {
+                myExplorer.getRoute(List.of(
+                    List.of(1, 1), // From
+                    List.of(10, 10) // To
+                ));
+            });
+        }
+
+        static Stream<Arguments> explorerProvider() {
+            return Stream.of(
+                Arguments.of(new SimplifyExplorer(genMaze)),
+                Arguments.of(new RecuresiveExplorer(genMaze))
+            );
+        }
+    }
+
+    @Nested
+    class InvalidRouteGenerateTest {
+        static  List<List<Maze.MazeValues>> myMazeMatrix = List.of(
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            ),
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            ),
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            ),
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            ),
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            ),
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            ),
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.EMPTY,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            ),
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            ),
+            List.of(
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL,
+                Maze.MazeValues.WALL
+            )
         );
         // Convert to mazeArray
-        Maze.MazeValues[][] mazeArray = myMazeMatrix.stream()
+        static Maze.MazeValues[][] maze = myMazeMatrix.stream()
             .map(row -> row.toArray(new Maze.MazeValues[0]))
             .toArray(Maze.MazeValues[][]::new);
+        static Maze mockInvalidMaze = new Maze(maze);
 
-        assertThrows(InvalidMazeConstructor.class, ()->{
-            new Maze(mazeArray);
-        });
-    }
-    @Test
-    void testInsertOwnMaze(){
+        @ParameterizedTest
+        @MethodSource("explorerProvider")
+        void testRouteFailed_NoRoutesExists(Explorer myExplorer) {
 
         /*
             Plan:
@@ -185,74 +471,20 @@ public class TestMaze {
 
          */
 
+            assertThrows(RouteCalculationError.class, () -> {
+                myExplorer.getRoute(List.of(
+                    List.of(1, 1), // From
+                    List.of(6, 6) // To
+                ));
+            });
+        }
 
-        List<List<Maze.MazeValues>> myMazeMatrix = List.of(
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.EMPTY, Maze.MazeValues.WALL, Maze.MazeValues.WALL)  ,
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL),
-            List.of(Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL, Maze.MazeValues.WALL)
-        );
-        // Convert to mazeArray
-        Maze.MazeValues[][] mazeArray = myMazeMatrix.stream()
-            .map(row -> row.toArray(new Maze.MazeValues[0]))
-            .toArray(Maze.MazeValues[][]::new);
-
-        Maze myMaze = new Maze(mazeArray);
-
-        assertThat(myMaze.getMaze()).isEqualTo(mazeArray);
+        static Stream<Arguments> explorerProvider() {
+            return Stream.of(
+                Arguments.of(new SimplifyExplorer(mockInvalidMaze)),
+                Arguments.of(new RecuresiveExplorer(mockInvalidMaze))
+            );
+        }
     }
 
-    @Test
-    void getRecursionMaze(){
-        Maze myMaze = new Maze(20);
-        MazeGenerator mazeGen = new RecursionMazeGenerator();
-
-        var filledMaze = mazeGen.fillMaze(myMaze);
-        var genMaze = mazeGen.generateMaze(filledMaze);
-
-        var isGeneratedOk = mazeGen.isMazeValid(genMaze);
-        var isGeneratedFalse = mazeGen.isMazeValid(filledMaze);
-
-        assertThat(isGeneratedOk).isTrue();
-        assertThat(isGeneratedFalse).isFalse();
-    }
-    @Test
-    void testRoute2(){
-        Maze myMaze = new Maze(15);
-        MazeGenerator mazeGen = new RecursionMazeGenerator();
-
-        var filledMaze = mazeGen.fillMaze(myMaze);
-        var genMaze = mazeGen.generateMaze(filledMaze);
-
-        var myExplorer = new Explorer(genMaze);
-        Stack<List<Integer>> route = myExplorer.getRoute(List.of(
-            List.of(1, 1), // From
-            List.of(13, 13) // To
-        ));
-
-        assertThat(route.isEmpty()).isFalse();
-        assertThat(myExplorer.getCurrentPosition()).isEqualTo(List.of(13, 13));
-    }
-    @Test
-    void testRoute_Recursion(){
-        Maze myMaze = new Maze(15);
-        MazeGenerator mazeGen = new RecursionMazeGenerator();
-
-        var filledMaze = mazeGen.fillMaze(myMaze);
-        var genMaze = mazeGen.generateMaze(filledMaze);
-
-        var myExplorer = new RecuresiveExplorer(genMaze);
-        Stack<List<Integer>> route = myExplorer.getRoute(List.of(
-            List.of(1, 1), // From
-            List.of(9, 9) // To
-        ));
-
-        assertThat(route.isEmpty()).isFalse();
-        assertThat(myExplorer.getCurrentPosition()).isEqualTo(List.of(9, 9));
-    }
 }

@@ -1,28 +1,29 @@
 package edu.project2.Explorers.Explorer;
 
-import edu.project2.Exceptions.IncorrectRoutePoints;
+import edu.project2.Exceptions.IncorrectRoutePointsError;
 import edu.project2.Exceptions.RouteCalculationError;
+import edu.project2.Interfaces.Explorer;
 import edu.project2.Maze;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 
-public class Explorer {
+public class SimplifyExplorer implements Explorer {
 
     private final Random rand = new Random();
     private final Maze maze;
-    private final Stack<List<Integer>> movmentExplorer = new Stack<>();
+    private final Deque<List<Integer>> movmentExplorer = new ArrayDeque<>();
     private List<Integer> currentPosition;
 
-    public Explorer(Maze maze) {
+    public SimplifyExplorer(Maze maze) {
         this.maze = maze;
     }
 
-    public Stack<List<Integer>> getRoute(List<List<Integer>> routePoints) {
+    public Deque<List<Integer>> getRoute(List<List<Integer>> routePoints) {
         List<List<Integer>> visitedPoints = new ArrayList<>();
         this.currentPosition = new ArrayList<>();
-        var myMaze = this.maze.getMaze();
 
         int fromX = routePoints.get(0).get(0);
         int fromY = routePoints.get(0).get(1);
@@ -124,13 +125,13 @@ public class Explorer {
         var mazeHeight = this.maze.getHeight();
         var mazeWidth = this.maze.getWidth();
 
-        if (fromX > 0 && fromX < mazeWidth
+        var inMaze = fromX > 0 && fromX < mazeWidth
             && toX > 0 && toX < mazeWidth
             && fromY > 0 && fromY < mazeHeight
-            && toY > 0 && toY < mazeHeight) {
-            return;
-        } else {
-            throw new IncorrectRoutePoints("You have entered incorrect route points, they do not exist in matrix!");
+            && toY > 0 && toY < mazeHeight;
+
+        if (!inMaze) {
+            throw new IncorrectRoutePointsError("You have entered incorrect route points, they do not exist in matrix!");
         }
     }
 
@@ -138,7 +139,7 @@ public class Explorer {
         if (!this.maze.getValueOfPosition(fromX, fromY).equals(Maze.MazeValues.EMPTY)
             || !this.maze.getValueOfPosition(toX, toY).equals(Maze.MazeValues.EMPTY)) {
 
-            throw new IncorrectRoutePoints("You have entered incorrect route points, there are walls!");
+            throw new IncorrectRoutePointsError("You have entered incorrect route points, there are walls!");
         }
     }
 

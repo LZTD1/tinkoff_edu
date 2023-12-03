@@ -1,10 +1,11 @@
 package edu.project2.MazeGenerators.SimplifyGenerator;
 
 import edu.project2.Maze;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Random;
-import java.util.Stack;
 
 public class Tank {
     private static final int GOTO_BACK = -2;
@@ -12,7 +13,7 @@ public class Tank {
     private final int mazeWidth;
     private final int mazeHeight;
     private final Random rand = new Random();
-    private final Stack<List<Integer>> movment = new Stack<>();
+    private final Deque<List<Integer>> movment = new ArrayDeque<>();
     private final Maze maze;
     private List<Integer> currentPosition = new ArrayList<Integer>();
 

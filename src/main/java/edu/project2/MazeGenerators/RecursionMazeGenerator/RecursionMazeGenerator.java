@@ -11,7 +11,12 @@ public class RecursionMazeGenerator implements MazeGenerator {
     private RecursionTank tank;
 
     @Override
-    public Maze generateMaze(Maze maze) {
+    public Maze generateMazeWithDraw(Maze maze) {
+        return generateMaze(maze, true);
+    }
+
+    @Override
+    public Maze generateMaze(Maze maze, boolean renderPerFrame) {
         this.maze = getNewObjectMaze(maze);
 
         this.tank = new RecursionTank(
@@ -23,9 +28,14 @@ public class RecursionMazeGenerator implements MazeGenerator {
         );
 
         List<Integer> cr = this.tank.getCurrentPosition();
-        tank.move(cr, this.maze);
+        tank.move(cr, this.maze, renderPerFrame);
 
         return this.maze;
+    }
+
+    @Override
+    public Maze generateMaze(Maze maze) {
+        return generateMaze(maze, false);
     }
 
     @Override
