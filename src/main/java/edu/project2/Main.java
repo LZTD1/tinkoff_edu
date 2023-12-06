@@ -6,6 +6,8 @@ import edu.project2.MazeGenerators.RecursionMazeGenerator.RecursionMazeGenerator
 import edu.project2.MazeGenerators.SimplifyGenerator.SimplifyMazeGeneratorWithStack;
 import java.util.Deque;
 import java.util.List;
+import static edu.project2.ConsoleDrawer.drawMaze;
+import static edu.project2.ConsoleDrawer.drawRoute;
 
 @SuppressWarnings("all")
 public class Main {
@@ -16,19 +18,19 @@ public class Main {
         MazeGenerator recGen = new RecursionMazeGenerator();
 
         var filledMaze = mazeGen.fillMaze(myMaze);
-        var genMaze = mazeGen.generateMazeWithDraw(filledMaze); // Добавил метод для
-        // визуального просмотра генерации на каждом этапе
-
-//        drawMaze(genMaze);
+        var genMaze = mazeGen.generateMaze(filledMaze);
 
         var myExplorer = new SimplifyExplorer(genMaze);
         Deque<List<Integer>> myRoute;
         myRoute = myExplorer.getRoute(
             List.of(
-                List.of(1, 1), // From
-                List.of(13, 13) // To
+                List.of(1, 1),
+                List.of(13, 13)
             )
         );
-        System.out.println(myRoute);
+
+        drawMaze(genMaze);
+        drawRoute(1, 1, myRoute, genMaze);
+        drawMaze(genMaze);
     }
 }

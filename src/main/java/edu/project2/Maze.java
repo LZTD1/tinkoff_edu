@@ -75,6 +75,14 @@ public class Maze {
         this.maze[y][x] = MazeValues.FINISH;
     }
 
+    public void setPoint(int x, int y) {
+        this.maze[y][x] = MazeValues.POINT;
+    }
+
+    public void setRoute(int x, int y) {
+        this.maze[y][x] = MazeValues.ROUTE;
+    }
+
     public MazeValues getValueOfPosition(int x, int y) {
         return this.maze[y][x];
     }
@@ -102,6 +110,9 @@ public class Maze {
         EMPTY,
         WALL,
         EXPLORER,
-        FINISH, TANK
+        FINISH,
+        TANK,
+        POINT,
+        ROUTE
     }
 }

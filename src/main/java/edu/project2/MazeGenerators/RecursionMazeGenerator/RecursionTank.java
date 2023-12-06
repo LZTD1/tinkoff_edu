@@ -20,7 +20,7 @@ public class RecursionTank {
         this.maze = maze;
         this.mazeWidth = this.maze.getWidth();
         this.mazeHeight = this.maze.getHeight();
-        this.currentPosition = List.of(// Для точной центровки танка в середине, дабы не ломать стены
+        this.currentPosition = List.of(
             currentPosition.get(0) % 2 == 0 ? currentPosition.get(0) + 1 : currentPosition.get(0),
             currentPosition.get(1) % 2 == 0 ? currentPosition.get(1) + 1 : currentPosition.get(1)
         );
@@ -31,8 +31,8 @@ public class RecursionTank {
         this.mazeWidth = this.maze.getWidth();
         this.mazeHeight = this.maze.getHeight();
         this.currentPosition = List.of(
-            1, // X
-            1 // Y
+            1,
+            1
         );
     }
 

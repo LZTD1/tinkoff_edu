@@ -1,5 +1,8 @@
 package edu.project2;
 
+import java.util.Deque;
+import java.util.List;
+
 public class ConsoleDrawer {
 
     private ConsoleDrawer() {
@@ -19,6 +22,10 @@ public class ConsoleDrawer {
                     System.out.print("?");
                 } else if (myMaze[i][j] == Maze.MazeValues.FINISH) {
                     System.out.print("☑");
+                } else if (myMaze[i][j] == Maze.MazeValues.ROUTE) {
+                    System.out.print("·");
+                } else if (myMaze[i][j] == Maze.MazeValues.POINT) {
+                    System.out.print("⦿");
                 } else {
                     System.out.print(" ");
                 }
@@ -26,5 +33,18 @@ public class ConsoleDrawer {
             }
             System.out.println();
         }
+    }
+
+    public static void drawRoute(int startX, int startY, Deque<List<Integer>> route, Maze maze) {
+        var currentX = startX;
+        var currentY = startY;
+
+        maze.setPoint(currentX, currentY);
+        for (var direction : route) {
+            currentX += direction.get(0);
+            currentY += direction.get(1);
+            maze.setRoute(currentX, currentY);
+        }
+        maze.setPoint(currentX, currentY);
     }
 }

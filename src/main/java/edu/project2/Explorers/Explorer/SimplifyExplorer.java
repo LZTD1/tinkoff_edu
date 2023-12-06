@@ -91,28 +91,24 @@ public class SimplifyExplorer implements Explorer {
 
         if (this.maze.getValueOfPosition(this.currentPosition.get(0) + 1, this.currentPosition.get(1))
             != Maze.MazeValues.WALL) {
-            // Значит можно идти в право
             if (!visitedPoints.contains(List.of(this.currentPosition.get(0) + 1, this.currentPosition.get(1)))) {
                 directions.add(List.of(1, 0));
             }
         }
         if (this.maze.getValueOfPosition(this.currentPosition.get(0) - 1, this.currentPosition.get(1))
             != Maze.MazeValues.WALL) {
-            // Значит можно идти в влево
             if (!visitedPoints.contains(List.of(this.currentPosition.get(0) - 1, this.currentPosition.get(1)))) {
                 directions.add(List.of(-1, 0));
             }
         }
         if (this.maze.getValueOfPosition(this.currentPosition.get(0), this.currentPosition.get(1) + 1)
             != Maze.MazeValues.WALL) {
-            // Значит можно идти в вверх
             if (!visitedPoints.contains(List.of(this.currentPosition.get(0), this.currentPosition.get(1) + 1))) {
                 directions.add(List.of(0, 1));
             }
         }
         if (this.maze.getValueOfPosition(this.currentPosition.get(0), this.currentPosition.get(1) - 1)
             != Maze.MazeValues.WALL) {
-            // Значит можно идти в вниз
             if (!visitedPoints.contains(List.of(this.currentPosition.get(0), this.currentPosition.get(1) - 1))) {
                 directions.add(List.of(0, -1));
             }

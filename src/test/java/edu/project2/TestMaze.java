@@ -291,7 +291,7 @@ public class TestMaze {
     }
 
     @Nested
-    class TestExplorers{
+    class TestExplorers {
         static Maze myMaze = new Maze(15);
         static MazeGenerator mazeGen = new RecursionMazeGenerator();
         static Maze filledMaze = mazeGen.fillMaze(myMaze);
@@ -344,7 +344,7 @@ public class TestMaze {
 
     @Nested
     class InvalidRouteGenerateTest {
-        static  List<List<Maze.MazeValues>> myMazeMatrix = List.of(
+        static List<List<Maze.MazeValues>> myMazeMatrix = List.of(
             List.of(
                 Maze.MazeValues.WALL,
                 Maze.MazeValues.WALL,
@@ -488,3 +488,4 @@ public class TestMaze {
     }
 
 }
+
