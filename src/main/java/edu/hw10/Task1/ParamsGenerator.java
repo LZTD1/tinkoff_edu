@@ -1,6 +1,6 @@
 package edu.hw10.Task1;
 
-import edu.hw10.Task1.Exceptions.NoInformationForParametersError;
+import edu.hw10.Task1.Exceptions.NoFoundValueError;
 import edu.hw10.Task1.Transformations.GenerateInteger;
 import edu.hw10.Task1.Transformations.GenerateString;
 import edu.hw10.Task1.Transformations.Transformation;
@@ -24,9 +24,11 @@ public class ParamsGenerator {
 
         for (int i = 0; i < parameters.length; i++) {
             if (TYPES.containsKey(parameters[i].getType())) {
-                parametersValues[i] = TYPES.get(parameters[i].getType()).get();
+                parametersValues[i] = TYPES.get(
+                    parameters[i].getType()
+                ).get(parameters[i].getAnnotations());
             } else {
-                throw new NoInformationForParametersError(parameters[i].getType().getName());
+                throw new NoFoundValueError(parameters[i].getType().getName());
             }
         }
 

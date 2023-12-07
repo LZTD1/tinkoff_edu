@@ -1,6 +1,9 @@
 package edu.hw10.Task1.Transformations;
 
-@FunctionalInterface
+import java.lang.annotation.Annotation;
+
 public interface Transformation {
-    Object get();
+    Object get(Annotation[] annotations);
+
+    Object annotationsFabric(Annotation[] annotations);
 }

@@ -16,6 +16,7 @@ public class RandomObjectGenerator {
     public Object nextObject(Class toInstance) {
         Constructor[] constructor = toInstance.getDeclaredConstructors();
         var instance = getInstance(constructor[0]);
+
         return instance;
     }
 
@@ -76,6 +77,7 @@ public class RandomObjectGenerator {
 
     private Object getInstance(Constructor constructor) {
         Parameter[] parameters = constructor.getParameters();
+
         if (parameters.length == 0) {
             return getInstanceWithoutParameters(constructor);
         } else {

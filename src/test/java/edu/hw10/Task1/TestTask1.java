@@ -1,6 +1,7 @@
 package edu.hw10.Task1;
 
 import edu.hw10.Task1.Classes.SimpleClass;
+import edu.hw10.Task1.Classes.SimpleClassWithAnnotation;
 import edu.hw10.Task1.Classes.SimpleClassWithFabric;
 import edu.hw10.Task1.Classes.SimpleClassWithFabricAndParams;
 import edu.hw10.Task1.Classes.SimpleClassWithFabricError;
@@ -8,7 +9,7 @@ import edu.hw10.Task1.Classes.SimpleClassWithParams;
 import edu.hw10.Task1.Classes.SimpleRecord;
 import edu.hw10.Task1.Exceptions.MethodIsNofAFabricError;
 import edu.hw10.Task1.Exceptions.MethodIsNotFindedError;
-import edu.hw10.Task1.Exceptions.NoInformationForParametersError;
+import edu.hw10.Task1.Exceptions.NoFoundValueError;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -85,9 +86,19 @@ public class TestTask1 {
         var rog = new RandomObjectGenerator();
 
         assertThrows(
-            NoInformationForParametersError.class,
+            NoFoundValueError.class,
             () -> rog.nextObject(SimpleClassWithFabricError.class, "fabricMethod")
         );
+    }
+    @Test
+    void testSimpleClassWithAnnotation() {
+        var rog = new RandomObjectGenerator();
+
+        SimpleClassWithAnnotation object = (SimpleClassWithAnnotation) rog.nextObject(SimpleClassWithAnnotation.class);
+
+        assertThat(object.getString()).isNotNull();
+        assertThat(object.getValue()).isBetween(Integer.MIN_VALUE, object.MAX_VALUE);
+        assertThat(object.getValue2()).isBetween(object.MIN_VALUE, Integer.MAX_VALUE);
     }
 
 }
