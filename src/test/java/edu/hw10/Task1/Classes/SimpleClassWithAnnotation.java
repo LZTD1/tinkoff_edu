@@ -6,12 +6,11 @@ import edu.hw10.Task1.Anntotaions.NotNull;
 
 public class SimpleClassWithAnnotation {
 
+    public final int MAX_VALUE = 1000;
+    public final int MIN_VALUE = 500;
     private final String string;
     private final int value;
     private final int value2;
-
-    public final int MAX_VALUE = 1000;
-    public final int MIN_VALUE = 500;
 
     public SimpleClassWithAnnotation(
         @NotNull String string,

@@ -90,6 +90,7 @@ public class TestTask1 {
             () -> rog.nextObject(SimpleClassWithFabricError.class, "fabricMethod")
         );
     }
+
     @Test
     void testSimpleClassWithAnnotation() {
         var rog = new RandomObjectGenerator();
