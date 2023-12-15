@@ -1,16 +1,14 @@
 package edu.project5;
 
 import java.lang.invoke.CallSite;
-import java.lang.invoke.LambdaConversionException;
 import java.lang.invoke.LambdaMetafactory;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
+import java.util.function.Supplier;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Scope;
@@ -25,12 +23,23 @@ import org.openjdk.jmh.runner.options.TimeValue;
 import static java.lang.invoke.MethodType.methodType;
 
 @State(Scope.Thread)
+@SuppressWarnings("all")
 public class ReflectionBenchmark {
+
+    private Student student;
+    private Method method;
+    private MethodHandle handle;
+    private CallSite callSite;
+    private Supplier<String> lambdaFunction;
+
+    record Student(String name, String surname) {
+    }
+
     public static void main(String[] args) throws RunnerException {
         Options options = new OptionsBuilder()
             .include(ReflectionBenchmark.class.getSimpleName())
-            .shouldFailOnError(true)
-            .shouldDoGC(true)
+            .shouldFailOnError(true) // thrown on error
+            .shouldDoGC(true) // garbage collector before each
             .mode(Mode.AverageTime)
             .timeUnit(TimeUnit.NANOSECONDS)
             .forks(1)
@@ -38,21 +47,11 @@ public class ReflectionBenchmark {
             .warmupIterations(1)
             .warmupTime(TimeValue.seconds(5))
             .measurementIterations(1)
-            .measurementTime(TimeValue.seconds(120))
+            .measurementTime(TimeValue.seconds(240))
             .build();
 
         new Runner(options).run();
     }
-
-    record Student(String name, String surname) {
-    }
-
-    private Student student;
-    private Method method;
-    private MethodHandle handle;
-    private CallSite callSite;
-    private Function<Student, String> lambdaFunction;
-    private MethodHandles.Lookup lookup = MethodHandles.lookup();
 
     @Setup
     public void setup() throws Throwable {
@@ -60,11 +59,19 @@ public class ReflectionBenchmark {
         method = student.getClass().getMethod("name");
 
         MethodHandles.Lookup lookup = MethodHandles.lookup();
-        MethodType methodType = methodType(String.class);
+        MethodType methodType = methodType(String.class); // Returned type
         handle = lookup.findVirtual(Student.class, "name", methodType);
 
-        callSite = LambdaMetafactory.metafactory(lookup, "apply", methodType(Student.class), methodType, lookup.findVirtual(Student.class, "name", methodType(String.class)), methodType);
-        lambdaFunction = (Function<Student, String>) callSite.getTarget().invokeExact();
+        callSite = LambdaMetafactory.metafactory(
+            lookup,
+            "get",
+            MethodType.methodType(Supplier.class, Student.class), //signature CallSite
+            MethodType.methodType(Object.class), // Signature and return type
+            handle, // method to invoke
+            MethodType.methodType(String.class) // Casting to String
+        );
+
+        lambdaFunction = (Supplier<String>) callSite.getTarget().invokeExact(student);
     }
 
     @Benchmark
@@ -84,9 +91,10 @@ public class ReflectionBenchmark {
         Object name = handle.invoke(student);
         bh.consume(name);
     }
+
     @Benchmark
-    public void lambdaMetafactory(Blackhole bh) throws Throwable {
-        String name = lambdaFunction.apply(student);
+    public void lambdaMetafactory(Blackhole bh) {
+        String name = lambdaFunction.get();
         bh.consume(name);
     }
 }
