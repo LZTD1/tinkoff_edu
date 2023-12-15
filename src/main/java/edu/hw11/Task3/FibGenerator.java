@@ -16,9 +16,13 @@ public class FibGenerator {
         return new ByteBuddy()
             .subclass(Object.class)
             .name("FibCalc")
-            .defineMethod("returnFive", int.class, Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC)
+            .defineMethod(
+                "returnFive",
+                int.class,
+                Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC
+            )
             .intercept(
-                MethodDelegation.to(new Impl())
+                new Implementation.Simple(new Impl())
             )
             .make()
             .load(
@@ -39,7 +43,7 @@ public class FibGenerator {
             methodVisitor.visitCode();
 
             // Загрузка константы 5 на стек
-            methodVisitor.visitLdcInsn(4);
+            methodVisitor.visitLdcInsn(5);
             methodVisitor.visitInsn(Opcodes.IRETURN);
 
             methodVisitor.visitMaxs(2, 2);
