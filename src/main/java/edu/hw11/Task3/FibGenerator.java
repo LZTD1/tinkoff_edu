@@ -1,6 +1,5 @@
 package edu.hw11.Task3;
 
-import java.lang.reflect.Method;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.implementation.Implementation;
@@ -9,7 +8,11 @@ import net.bytebuddy.jar.asm.Label;
 import net.bytebuddy.jar.asm.MethodVisitor;
 import net.bytebuddy.jar.asm.Opcodes;
 
+@SuppressWarnings("all")
 public class FibGenerator {
+
+    private FibGenerator() {
+    }
 
     public static Class<?> generateFibClass() {
         return new ByteBuddy()
@@ -33,38 +36,44 @@ public class FibGenerator {
 
     public static class Impl implements ByteCodeAppender {
 
+        public Impl() {
+        }
+
         @Override
         public Size apply(
             MethodVisitor mv,
             Implementation.Context context,
             MethodDescription methodDescription
         ) {
-            var lbl = new Label();
+            var biggerThanThree = new Label();
 
+            mv.visitVarInsn(Opcodes.ILOAD, 0); // Load to stack N
+            mv.visitInsn(Opcodes.ICONST_3); // Load to stack 3
+            mv.visitJumpInsn(Opcodes.IF_ICMPGE, biggerThanThree); // Compare if N >= 3
+            // if smaller
+            mv.visitInsn(Opcodes.ICONST_1); // Load to stack 1
+            mv.visitInsn(Opcodes.IRETURN); // Return from func
 
-            // Загружаем значение на вершину стека
-            mv.visitInsn(Opcodes.ICONST_3);
+            mv.visitLabel(biggerThanThree); // if N >= 3
+            mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null); // Copy frame stat
+            mv.visitVarInsn(Opcodes.ILOAD, 0); // Load to stack N
+            mv.visitInsn(Opcodes.ICONST_2); // Load to stack 2
+            mv.visitInsn(Opcodes.ISUB); // Subtraction N - 2
+            // Invoke same method
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, "FibCalc", "fib", "(I)I", false);
 
+            mv.visitVarInsn(Opcodes.ILOAD, 0); // Load to stack N
+            mv.visitInsn(Opcodes.ICONST_1); // Load to stack 1
+            mv.visitInsn(Opcodes.ISUB); // Subtraction N - 1
+            // Invoke same method
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, "FibCalc", "fib", "(I)I", false);
 
-            mv.visitLabel(lbl);
+            mv.visitInsn(Opcodes.IADD); // Summarizing fib(n-2) + fib(n-1)
+            mv.visitInsn(Opcodes.IRETURN); // Return from func
 
-            mv.visitInsn(Opcodes.ICONST_5);
-
-
-            mv.visitInsn(Opcodes.IRETURN);
-
-            return new Size(2, 1);
+            return new Size(3, 1);
         }
 
     }
 
-    public static void main(String[] args) throws Exception {
-        Class<?> fibClass = generateFibClass();
-        Object fibInstance = fibClass.getDeclaredConstructor().newInstance();
-
-        Method fibMethod = fibClass.getMethod("fib", int.class);
-        System.out.println(
-            fibMethod.invoke(fibInstance, 45)
-        );
-    }
 }
