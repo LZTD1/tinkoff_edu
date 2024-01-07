@@ -58,8 +58,8 @@ public class Flame {
         this.functions = new Functions();
         this.gammaCorrection = gamma;
         this.mirroring = mirroring;
-
         this.superPxSize = superPxSize;
+
         this.xmin = XMIN;
         this.xmax = XMAX;
         this.ymin = YMIN;
@@ -101,38 +101,45 @@ public class Flame {
                 try {
                     Point point = iterate(currentX, currentY, function, j);
 
-                    if (j > MINIMAL_ITERATION) {
-                        if (ifPointInDiapazon(point)) {
-                            var newPoint = getCorrectedPoint(point);
-                            if (ifPointInImage(newPoint)) {
-                                this.lock.lock();
-                                try {
-                                    double[] colors = function.color().getColorValues();
-
-                                    this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_RED] =
-                                        (short) ((colors[CHANNEL_RED]
-                                            + this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_RED])
-                                            / 2.0);
-
-                                    this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_GREEN] =
-                                        (short) ((colors[CHANNEL_GREEN]
-                                            + this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_GREEN])
-                                            / 2.0);
-
-                                    this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_BLUE] =
-                                        (short) ((colors[CHANNEL_BLUE]
-                                            + this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_BLUE])
-                                            / 2.0);
-
-                                    this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_HITCOUNTER] +=
-                                        1; // Hitcounter
-
-                                } finally {
-                                    this.lock.unlock();
-                                }
-                            }
-                        }
+                    if (j <= MINIMAL_ITERATION) {
+                        continue;
                     }
+
+                    if (!containsInRange(point)) {
+                        continue;
+                    }
+
+                    var newPoint = getCorrectedPoint(point);
+                    if (!containsInCanvas(newPoint)) {
+                        continue;
+                    }
+
+                    this.lock.lock();
+                    try {
+                        double[] colors = function.color().getColorValues();
+
+                        this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_RED] =
+                            (short) ((colors[CHANNEL_RED]
+                                + this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_RED])
+                                / 2.0);
+
+                        this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_GREEN] =
+                            (short) ((colors[CHANNEL_GREEN]
+                                + this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_GREEN])
+                                / 2.0);
+
+                        this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_BLUE] =
+                            (short) ((colors[CHANNEL_BLUE]
+                                + this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_BLUE])
+                                / 2.0);
+
+                        this.matrixDisplay[(int) newPoint.y()][(int) newPoint.x()][CHANNEL_HITCOUNTER] +=
+                            1; // Hitcounter
+
+                    } finally {
+                        this.lock.unlock();
+                    }
+
                 } catch (Exception e) {
                     LOGGER.warn("Stopped sample "
                         + i + " in step "
@@ -158,7 +165,7 @@ public class Flame {
                 localData = pixelCompression(pixels, numberOfThread);
 
                 this.lock.lock();
-                this.maxFrequency = Math.max(localData.get(0), this.maxFrequency);
+                this.maxFrequency = Math.max(localData.getFirst(), this.maxFrequency);
                 this.lock.unlock();
 
                 gammaCorrection(pixels, numberOfThread, image);
@@ -258,7 +265,7 @@ public class Flame {
         return copy;
     }
 
-    private boolean ifPointInImage(Point point) {
+    private boolean containsInCanvas(Point point) {
         return 0 < point.x() && point.x() < this.resolutionX * this.superPxSize
             && 0 < point.y() && point.y() < this.resolutionY * this.superPxSize;
     }
@@ -272,7 +279,7 @@ public class Flame {
         );
     }
 
-    private boolean ifPointInDiapazon(Point point) {
+    private boolean containsInRange(Point point) {
         return (this.xmin < point.x() && point.x() < this.xmax)
             && (this.ymin < point.y() && point.y() < this.ymax);
     }

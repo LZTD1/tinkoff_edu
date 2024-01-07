@@ -1,17 +1,14 @@
 package edu.project4.ReadyFunctions;
 
 import edu.project4.Etinties.Coefficients;
-import edu.project4.Etinties.Colors;
 import edu.project4.Etinties.Function;
 import edu.project4.Etinties.Parameters;
 import edu.project4.Etinties.PostTransformation;
-import edu.project4.Etinties.Variant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import static edu.project4.FactorialAssets.FactorialFactory.BUBBLE;
-import static edu.project4.FactorialAssets.FactorialFactory.DIAMOND;
-import static edu.project4.FactorialAssets.FactorialFactory.HANDKERCHIEF;
+import static edu.project4.Etinties.Function.DEFAULT_PRESET_BUBBLE;
+import static edu.project4.Etinties.Function.DEFAULT_PRESET_DIAMOND;
 
 public class Functions {
 
@@ -51,37 +48,8 @@ public class Functions {
 
     public Functions() {
         this.functions = new ArrayList<Function>() {{
-
-            add(new Function(
-                Colors.BLUE,
-                DEFAULT_COEF_PARAMS,
-                DEFAULT_PT_PARAMS,
-                new ArrayList<Variant>() {{
-                    add(new Variant(
-                        1,
-                        DIAMOND,
-                        DEFAULT_VARIANT_PARAMS
-                    ));
-                }}
-            ));
-            add(new Function(
-                Colors.GREEN,
-                DEFAULT_COEF_PARAMS,
-                DEFAULT_PT_PARAMS,
-                new ArrayList<Variant>() {{
-                    add(new Variant(
-                        1,
-                        BUBBLE,
-                        DEFAULT_VARIANT_PARAMS
-                    ));
-                    add(new Variant(
-                        1,
-                        HANDKERCHIEF,
-                        DEFAULT_VARIANT_PARAMS
-                    ));
-
-                }}
-            ));
+            add(DEFAULT_PRESET_DIAMOND);
+            add(DEFAULT_PRESET_BUBBLE);
         }};
     }
 
